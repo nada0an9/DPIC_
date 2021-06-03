@@ -1,0 +1,30 @@
+﻿@model WebApplication27.Models.departmentModel
+
+<div>
+
+    @using (Html.BeginForm("deleteDep", "Department", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.DEPARTMENT_ID)
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    <p>Are you sure you want to delete @Html.DisplayFor(Model => Model.DEPARTMENT_NAME) Department</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+
+            </div>
+        </DIV>
+
+            }
+
+
+        </div>
+

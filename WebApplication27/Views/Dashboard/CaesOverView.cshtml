@@ -1,0 +1,34 @@
+﻿
+
+@model WebApplication27.Models.GroupedUserCountViewModel
+  
+                <table class="table" style="overflow:auto">
+                    <thead>
+                        <tr>
+                            <td>Employee Full Name </td>
+                            <td>Cases</td>
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model.Items)
+                    {
+
+                        <tr>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.Count)
+                            </td>
+
+
+                        </tr>
+
+
+
+                    }
+
+                </table>

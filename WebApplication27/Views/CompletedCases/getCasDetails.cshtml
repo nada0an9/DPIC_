@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Case Details";
+}
+@model WebApplication27.Models.caseDetailsStage
+
+<div class="card shadow-sm" style="margin-top:7%">
+
+
+    <nav>
+        <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-link" id="step1-tab" style=" color:gray" ata-toggle="tab" href="#step1">Case Description</a>
+            @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+            {
+                <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+            }            <a class="nav-link" id="step3-tab" style=" color:gray" data-toggle="tab" href="#step3">Categories</a>
+            <a class="nav-link" id="step1-tab" style=" color:gray" href="#step1">Questions</a>
+            <a class="nav-link" id="step2-tab" style=" color: #428bca;text-decoration: underline;" dhref="#step2">Case Details</a>
+            <a class="nav-link" id="step3-tab" style=" color:gray" href="#step3">Answer</a>
+            <a class="nav-link" id="step2-tab" style=" color:gray" href="#step2">Record</a>
+        </div>
+    </nav>
+    <div class="card-body">
+        @if (Model != null)
+        {
+            <div class="tab-content py-4" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="step1">
+                    <div class="mb-3">
+                        <label>Ultimate Question</label><span class="text-danger">  *</span>
+                        @Html.TextAreaFor(Models => Models.ULTIMATE_QUESTION, new { @class = "form-control", required = "required" })
+                    </div>
+                    <div class="mb-3">
+                        <label>Ultimate Category</label><span class="text-danger">  *</span>
+                        @Html.TextBoxFor(Models => Models.ULTIMATE_CATEGORY, new { @class = "form-control", required = "required" })
+
+                    </div>
+
+                </div>
+
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+
+                        <a href="@Url.Action("getListQuestions", "CompletedCases", new { CASE_ID = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+
+                    </div>
+                    <div class="col-auto">
+
+                        <a href="@Url.Action("Completed", "Case")" class="btn" style="background-color: #428bca; color: #fff">Close</a>
+                        <a href="@Url.Action("getCaseAnswer", "CompletedCases", new { CASE_ID = Model.CASE_ID })" class="btn" style="background-color: #428bca; color: #fff">Next</a>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <p>no data found</p>
+        }
+
+        </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

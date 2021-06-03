@@ -1,0 +1,33 @@
+﻿@model WebApplication27.Models.categoriesModel
+
+
+<div>
+    @using (Html.BeginForm("delete", "Categories", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.CATEGORY_ID)
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    <p>Are you sure you want to delete @Html.DisplayFor(Model => Model.CATEGORY_NAME) Category</p>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
+
+
+

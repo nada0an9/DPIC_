@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Edit Name";
+}
+@model WebApplication27.Models.Profile
+
+
+<div class="d-flex justify-content-center" style="margin-top:5rem">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <h5 class="card-title">Personal Information</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    @using (Html.BeginForm("UpdateName", "Accounts", FormMethod.Post))
+
+                    {
+                        <div class="form-group col-md-6">
+
+                            <label>Full Name</label><br />
+                            @Html.TextBoxFor(Models => Models.FULL_NAME, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.FULL_NAME, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <br />
+                            <button type="submit" class="form-control" style="background-color: #428bca;color: #fff">Save</button>
+
+                        </div>
+                        @Html.HiddenFor(Models => Models.EMAIL)
+                        @Html.HiddenFor(Models => Models.PASSWORD)
+                    }
+                </li>
+       
+            </ul>
+        </div>
+    </div>
+</div>
+
+

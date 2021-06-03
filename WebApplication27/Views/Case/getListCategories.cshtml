@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Categories";
+}
+@model WebApplication27.Models.CaseViewModel
+
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+
+<div class="card shadow-sm" style="margin-top:7%">
+    @if (Model != null)
+    {
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style=" color:gray" data-toggle="tab" href="#step1">Case Description</a>
+                @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+                {
+                    <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+                }
+                <a class="nav-link" id="step3-tab" style="color: #428bca;text-decoration: underline;" data-toggle="tab" href="#step3">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:gray" href="#step1">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray" href="#step2">Case Details</a>
+                <a class="nav-link" id="step3-tab" style=" color:gray" href="#step3">Answer</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray" href="#step2">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+
+            <div class="tab-content py-4" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="step1">
+
+                    @using (Html.BeginForm("SaveListCategories", "Case", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => Model.CASE_ID)
+
+                        <span id="error" class="field-validation-error">
+                            <span class="text-danger">Select any Category </span>
+                        </span>
+
+                        <div class="form-group">
+                            <lable>Categories</lable><span class="text-danger">  *</span><br />
+                            <div id="list1" class="dropdown-check-list" style="width:100%">
+                                <span class="form-control col-md-12">Select</span>
+
+                                <ul class="items">
+                                    <li>
+                                        <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                        <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+
+                                            @for (int i = 0; i < Model.CategoryList.Count(); i++)
+                                            {
+                                                <li>
+                                                    @if (Model.CategoryList[i].defult == "Yes")
+                                                    {
+                                                        @Html.DisplayFor(m => Model.CategoryList[i].Checked, new { @class = "requierd-check", @checked = true, value = true, @disabled = "disabled" })
+                                                        @Html.DisplayFor(m => Model.CategoryList[i].name, new { @class = "requierd-check", @checked = true, value = true, @disabled = "disabled" })
+                                                        @Html.CheckBoxFor(m => Model.CategoryList[i].Checked, new { @class = "requierd-check", value = true, @checked = true, style = "display: none", id = "hidedCheck" })
+                                                        @Html.HiddenFor(m => Model.CategoryList[i].Checked)
+
+
+                                                    }
+                                                    @if (Model.CategoryList[i].defult == "No")
+                                                    {
+                                                        @Html.CheckBoxFor(m => Model.CategoryList[i].Checked, new { @class = "requierd-check" })
+                                                        @Html.DisplayFor(m => Model.CategoryList[i].name, new { @class = "requierd-check", @checked = true, value = true, @disabled = "disabled" })
+
+
+                                                    }
+                                                    @Html.HiddenFor(m => Model.CategoryList[i].id)
+                                                    @Html.HiddenFor(m => Model.CategoryList[i].name)
+                                                    @Html.HiddenFor(m => Model.CASE_ID)
+
+
+                                                </li>
+
+                                            }
+                                        </ul>
+
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                        </div><br />
+
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                @if (@ViewBag.type == "General Questions")
+                                {
+                                    <a href="@Url.Action("getCaseDescription", "Case" , new { id= Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("getPatientInformation", "Case" , new { id= Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+
+                                }
+
+                            </div>
+                            <div class="col-auto">
+
+                                <button type="submit" name="SaveAsPending" id="btn3" class="btn" style="background-color: #428bca; color: #fff">Save as Pending Case</button>
+                                <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                                    Save and continue
+                                </button>
+                            </div>
+                        </div>
+
+
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <p>No Data Found</p>
+    }
+</div>
+
+@section scripts {
+
+    <script>
+
+        //search on list
+        $(document).ready(function () {
+            var checkList = document.getElementById('list1');
+            checkList.classList.add('visible');
+
+
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        //validation list
+        var declarationsError = $('#error').hide();
+        $('#btn2, #btn3').click(function () {
+
+            if ($(".requierd-check:checkbox:checked").length > 0) {
+                declarationsError.hide();
+                return true;
+            }
+            else {
+                declarationsError.show();
+                return false;
+            }
+        });
+    </script>
+}

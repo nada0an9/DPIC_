@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewBag.Title = "Patient Information";
+}
+
+
+
+@model WebApplication27.Models.patientInformationStage
+
+<div class="card shadow-sm" style="margin-top:7%">
+
+    <nav>
+        <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-link" id="step1-tab" style=" color:gray">Case Description</a>
+            <a class="nav-link" id="step2-tab" style="color: #428bca;text-decoration: underline;">Patient Information</a>
+            <a class="nav-link" id="step3-tab" style=" color:gray">Categories</a>
+            <a class="nav-link" id="step1-tab" style=" color:gray">Questions</a>
+            <a class="nav-link" id="step2-tab" style=" color:gray">Case Details</a>
+            <a class="nav-link" id="step3-tab" style=" color:gray">Answer</a>
+            <a class="nav-link" id="step2-tab" style=" color:gray">Record</a>
+        </div>
+    </nav>
+    <div class="card-body">
+
+        @if (Model != null && Model.ComorbidityList.Count != 0)
+        {
+
+            <div class="tab-content py-4" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="step1">
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label>Does the patient have an MRN ?</label><span class="text-danger">  *</span><br />
+                            @Html.RadioButtonFor(Models => Models.patientMRN, "Yes", new { @class = "patientMRN", id = "patientMRNYes" }) Yes<br />
+                            @Html.RadioButtonFor(Models => Models.patientMRN, "No", new { @class = "patientMRN", id = "patientMRNNo" }) No<br />
+                            @Html.ValidationMessageFor(Models => Models.patientMRN, "", new { @class = "text-danger" })
+                        </div>
+                        @if (Model.patientMRN == "Yes")
+                        {
+                            <div class="form-group col-md-4">
+                                <label>MRN</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.MRN, new { @class = "form-control", id = "field1", maxlength = 7 })
+                                @Html.ValidationMessageFor(Models => Models.MRN, "", new { @class = "text-danger" })
+
+
+                            </div>
+                        }
+                            <div class="form-group col-md-4">
+                                <label>Name</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.NAME, new { @class = "form-control", id = "field2" })
+                                @Html.ValidationMessageFor(Models => Models.NAME, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Age</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.AGE, new { @class = "form-control", id = "field3" })
+                                @Html.ValidationMessageFor(Models => Models.AGE, "", new { @class = "text-danger" })
+
+
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Gender</label><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.GENDER, "Female", new { @class = "gender" }) Female<br />
+                                @Html.RadioButtonFor(Models => Models.GENDER, "Male", new { @class = "gender" }) Male<br />
+                                @Html.ValidationMessageFor(Models => Models.GENDER, "", new { @class = "text-danger" })
+
+                            </div>
+                            @if (Model.GENDER == "Female")
+                            {
+                                <div class="form-group col-md-4">
+                                    <label>Pregnant</label><span class="text-danger">  *</span><br />
+                                    @Html.RadioButtonFor(Models => Models.PREGNANT_OR_NOT, "Yes", new { @class = "" }) Yes<br />
+                                    @Html.RadioButtonFor(Models => Models.PREGNANT_OR_NOT, "No", new { @class = "" }) No<br />
+                                    @Html.ValidationMessageFor(Models => Models.PREGNANT_OR_NOT, "", new { @class = "text-danger" })
+
+                                </div>
+                            }
+                            @if (Model.PREGNANT_OR_NOT == "Yes")
+                            {
+                                <div class="form-group col-md-4">
+                                    <label>Trimester / Week</label><span class="text-danger">  *</span>
+                                    @Html.TextBoxFor(Models => Models.PREGNANT_WEEK, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(Models => Models.PREGNANT_WEEK, "", new { @class = "text-danger" })
+
+                                </div>
+                            }
+                            <div class="form-group col-md-4">
+                                <label>Allergy History</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.ALLERGY_HISTORY, new { @class = "form-control", id = "field5" })
+                                @Html.ValidationMessageFor(Models => Models.ALLERGY_HISTORY, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Weight (Kg)</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.WEIGHT, new { @class = "form-control", id = "field6" })
+                                @Html.ValidationMessageFor(Models => Models.WEIGHT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Hight </label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.HEIGHT, new { @class = "form-control", id = "field7" })
+                                @Html.ValidationMessageFor(Models => Models.HEIGHT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Diagnosis</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.DIAGNOSIS, new { @class = "form-control", id = "field8" })
+                                @Html.ValidationMessageFor(Models => Models.DIAGNOSIS, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Serum Creatinine</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.SERUM_CREATININE, new { @class = "form-control", id = "field9" })
+                                @Html.ValidationMessageFor(Models => Models.SERUM_CREATININE, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Liver Function</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.LIVER_FUNCTION, new { @class = "form-control", id = "field10" })
+                                @Html.ValidationMessageFor(Models => Models.LIVER_FUNCTION, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Electrolytes (Ca, Mg, K, P)  </label>
+                                @Html.TextAreaFor(Models => Models.ELECTROLYTES, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.ELECTROLYTES, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Other Relevant Laboratory Result</label>
+                                @Html.TextAreaFor(Models => Models.LABORATORY_RESULT, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.LABORATORY_RESULT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Current / Past Medications</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.MEDICATIONS, new { @class = "form-control", id = "field11" })
+                                @Html.ValidationMessageFor(Models => Models.MEDICATIONS, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label>Other Related Sings and Symptoms </label>
+                                @Html.TextAreaFor(Models => Models.RELATED_SINGS, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.RELATED_SINGS, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="Case_Describtion">Comorbidities</label><span class="text-danger">  *</span><br />
+
+
+                                @for (int i = 0; i < Model.ComorbidityList.Count(); i++)
+
+                                {
+                                    @Html.HiddenFor(m => Model.CASE_ID)
+                                    @Html.CheckBoxFor(m => Model.ComorbidityList[i].Checked, new { @class = "comorbiditiesCH", id = "comorbidities" })
+                                    @Html.DisplayFor(m => Model.ComorbidityList[i].name)
+                                    @Html.HiddenFor(m => Model.ComorbidityList[i].id)
+                                    @Html.HiddenFor(m => Model.ComorbidityList[i].name)
+                                    if (Model.ComorbidityList[i].name == "Other")
+                                    {
+                                        @Html.TextBoxFor(m => Model.ComorbidityList[i].other, new { @class = "form-control", placeholder = "Other Comorbidity" })
+                                        @Html.ValidationMessageFor(m => Model.ComorbidityList[i].other, "", new { @class = "text-danger" })
+
+                                    }
+                                    <br />
+
+
+
+
+                                }
+
+
+
+                            </div>
+
+
+                        </div>
+
+                </div>
+
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+
+                        <a href="@Url.Action("CaseDescriptionSatge", "CompletedCases" , new { CASE_ID = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+
+                    </div>
+                    <div class="col-auto">
+
+                        <a href="@Url.Action("Completed", "Case" )" class="btn" style="background-color: #428bca; color: #fff">Close</a>
+                        <a href="@Url.Action("getListCategories", "CompletedCases", new { CASE_ID = Model.CASE_ID })" class="btn" style="background-color: #428bca; color: #fff">Next</a>
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>No data found</p>
+        }
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

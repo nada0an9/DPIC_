@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DB_Model">
+    <EntitySetMapping Name="CASE_CATEGORIES">
+      <EntityTypeMapping TypeName="Model.CASE_CATEGORIES">
+        <MappingFragment StoreEntitySet="CASE_CATEGORIES">
+          <ScalarProperty Name="CASE_ID" ColumnName="CASE_ID" />
+          <ScalarProperty Name="CATEGORY_ID" ColumnName="CATEGORY_ID" />
+          <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CASE_COMORBIDITY">
+      <EntityTypeMapping TypeName="Model.CASE_COMORBIDITY">
+        <MappingFragment StoreEntitySet="CASE_COMORBIDITY">
+          <ScalarProperty Name="CASE_ID" ColumnName="CASE_ID" />
+          <ScalarProperty Name="COMORBIDITY_ID" ColumnName="COMORBIDITY_ID" />
+          <ScalarProperty Name="COMORBIDITY_NAME" ColumnName="COMORBIDITY_NAME" />
+          <ScalarProperty Name="OTHER_COMORBIDITY" ColumnName="OTHER_COMORBIDITY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CASE_REFERENCES">
+      <EntityTypeMapping TypeName="Model.CASE_REFERENCES">
+        <MappingFragment StoreEntitySet="CASE_REFERENCES">
+          <ScalarProperty Name="CASE_ID" ColumnName="CASE_ID" />
+          <ScalarProperty Name="REFERENCE_ID" ColumnName="REFERENCE_ID" />
+          <ScalarProperty Name="REFERENCE_NAME" ColumnName="REFERENCE_NAME" />
+          <ScalarProperty Name="OTHER_REFRENSES" ColumnName="OTHER_REFRENSES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CASES">
+      <EntityTypeMapping TypeName="Model.Case">
+        <MappingFragment StoreEntitySet="CASES">
+          <ScalarProperty Name="ULTIMATE_CATEGORY" ColumnName="ULTIMATE_CATEGORY" />
+          <ScalarProperty Name="ULTIMATE_QUESTION" ColumnName="ULTIMATE_QUESTION" />
+          <ScalarProperty Name="CASE_ID" ColumnName="CASE_ID" />
+          <ScalarProperty Name="CASE_START_DATE" ColumnName="CASE_START_DATE" />
+          <ScalarProperty Name="CASE_DESCRIBTION" ColumnName="CASE_DESCRIBTION" />
+          <ScalarProperty Name="REQUESTER_ID" ColumnName="REQUESTER_ID" />
+          <ScalarProperty Name="CASE_TYPE" ColumnName="CASE_TYPE" />
+          <ScalarProperty Name="MRN" ColumnName="MRN" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="AGE" ColumnName="AGE" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="PREGNANT_OR_NOT" ColumnName="PREGNANT_OR_NOT" />
+          <ScalarProperty Name="PREGNANT_WEEK" ColumnName="PREGNANT_WEEK" />
+          <ScalarProperty Name="ALLERGY_HISTORY" ColumnName="ALLERGY_HISTORY" />
+          <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+          <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+          <ScalarProperty Name="DIAGNOSIS" ColumnName="DIAGNOSIS" />
+          <ScalarProperty Name="ELECTROLYTES" ColumnName="ELECTROLYTES" />
+          <ScalarProperty Name="LIVER_FUNCTION" ColumnName="LIVER_FUNCTION" />
+          <ScalarProperty Name="LABORATORY_RESULT" ColumnName="LABORATORY_RESULT" />
+          <ScalarProperty Name="SERUM_CREATININE" ColumnName="SERUM_CREATININE" />
+          <ScalarProperty Name="MEDICATIONS" ColumnName="MEDICATIONS" />
+          <ScalarProperty Name="RELATED_SINGS" ColumnName="RELATED_SINGS" />
+          <ScalarProperty Name="HAS_MRN_OR_NOT" ColumnName="HAS_MRN_OR_NOT" />
+          <ScalarProperty Name="URGENCY" ColumnName="URGENCY" />
+          <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+          <ScalarProperty Name="RESEARCHER_NAME" ColumnName="RESEARCHER_NAME" />
+          <ScalarProperty Name="ANSWER_GIVEN" ColumnName="ANSWER_GIVEN" />
+          <ScalarProperty Name="NOT_REACHABLE_COMMENT" ColumnName="NOT_REACHABLE_COMMENT" />
+          <ScalarProperty Name="RECEIVER_ID" ColumnName="RECEIVER_ID" />
+          <ScalarProperty Name="RECEIVER_NAME" ColumnName="RECEIVER_NAME" />
+          <ScalarProperty Name="CONTACT_ATTEMPT" ColumnName="CONTACT_ATTEMPT" />
+          <ScalarProperty Name="CASE_STATUS" ColumnName="CASE_STATUS" />
+          <ScalarProperty Name="IS_DIFFER" ColumnName="IS_DIFFER" />
+          <ScalarProperty Name="CASE_END_DATE" ColumnName="CASE_END_DATE" />
+          <ScalarProperty Name="TIME_SPAN_DAY" ColumnName="TIME_SPAN_DAY" />
+          <ScalarProperty Name="TIME_SPAN_MINUTES" ColumnName="TIME_SPAN_MINUTES" />
+          <ScalarProperty Name="TIME_SPAN_HOUR" ColumnName="TIME_SPAN_HOUR" />
+          <ScalarProperty Name="CURRENT_STAGE" ColumnName="CURRENT_STAGE" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERMISSIONS">
+      <EntityTypeMapping TypeName="Model.PERMISSION">
+        <MappingFragment StoreEntitySet="PERMISSIONS">
+          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
+          <ScalarProperty Name="PERMISSION_NAME" ColumnName="PERMISSION_NAME" />
+          <ScalarProperty Name="CONTROLLER_NAME" ColumnName="CONTROLLER_NAME" />
+          <ScalarProperty Name="ACTION_NAME" ColumnName="ACTION_NAME" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="PERMISSION_DESCRIPTION" ColumnName="PERMISSION_DESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGIONS">
+      <EntityTypeMapping TypeName="Model.REGION">
+        <MappingFragment StoreEntitySet="REGIONS">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="REGION_ID" ColumnName="REGION_ID" />
+          <ScalarProperty Name="REGION_NAME" ColumnName="REGION_NAME" />
+          <ScalarProperty Name="VISIBILITY_STATUS" ColumnName="VISIBILITY_STATUS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REQUESTERS">
+      <EntityTypeMapping TypeName="Model.REQUESTER">
+        <MappingFragment StoreEntitySet="REQUESTERS">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="REQUESTER_ID" ColumnName="REQUESTER_ID" />
+          <ScalarProperty Name="REQUESTER_NAME" ColumnName="REQUESTER_NAME" />
+          <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+          <ScalarProperty Name="CALLING_FROM" ColumnName="CALLING_FROM" />
+          <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLES">
+      <EntityTypeMapping TypeName="Model.ROLE">
+        <MappingFragment StoreEntitySet="ROLES">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="Model.USER">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPARTMENTS">
+      <EntityTypeMapping TypeName="Model.DEPARTMENT">
+        <MappingFragment StoreEntitySet="DEPARTMENTS">
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="REGION_ID" ColumnName="REGION_ID" />
+          <ScalarProperty Name="VSIBILITY_STATUS" ColumnName="VSIBILITY_STATUS" />
+          <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
+          <ScalarProperty Name="COST_CODE" ColumnName="COST_CODE" />
+          <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CASE_QUESTIONS">
+      <EntityTypeMapping TypeName="Model.CASE_QUESTIONS">
+        <MappingFragment StoreEntitySet="CASE_QUESTIONS">
+          <ScalarProperty Name="CHOICE_ID" ColumnName="CHOICE_ID" />
+          <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+          <ScalarProperty Name="QUESTION_NAME" ColumnName="QUESTION_NAME" />
+          <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+          <ScalarProperty Name="CASE_ID" ColumnName="CASE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REFERENCES">
+      <EntityTypeMapping TypeName="Model.REFERENCE">
+        <MappingFragment StoreEntitySet="REFERENCES">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+          <ScalarProperty Name="VISIBILIT_STATUS" ColumnName="VISIBILIT_STATUS" />
+          <ScalarProperty Name="REFERENCE_NAME" ColumnName="REFERENCE_NAME" />
+          <ScalarProperty Name="REFERENCE_ID" ColumnName="REFERENCE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATEGORIES">
+      <EntityTypeMapping TypeName="Model.CATEGORy">
+        <MappingFragment StoreEntitySet="CATEGORIES">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+          <ScalarProperty Name="DEFUALT" ColumnName="DEFUALT" />
+          <ScalarProperty Name="VSIBILITY_STATUS" ColumnName="VSIBILITY_STATUS" />
+          <ScalarProperty Name="CATEGORY_TYPE" ColumnName="CATEGORY_TYPE" />
+          <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+          <ScalarProperty Name="CATEGORY_ID" ColumnName="CATEGORY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMORBIDITies">
+      <EntityTypeMapping TypeName="Model.COMORBIDITY">
+        <MappingFragment StoreEntitySet="COMORBIDITY">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+          <ScalarProperty Name="VISIBILIT_STATUS" ColumnName="VISIBILIT_STATUS" />
+          <ScalarProperty Name="COMORBIDITY_NAME" ColumnName="COMORBIDITY_NAME" />
+          <ScalarProperty Name="COMORBIDITY_ID" ColumnName="COMORBIDITY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MULTIPLE_CHOICE">
+      <EntityTypeMapping TypeName="Model.MULTIPLE_CHOICE">
+        <MappingFragment StoreEntitySet="MULTIPLE_CHOICE">
+          <ScalarProperty Name="VISIBILITY_STATUS" ColumnName="VISIBILITY_STATUS" />
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+          <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+          <ScalarProperty Name="CHOICE_NAM" ColumnName="CHOICE_NAM" />
+          <ScalarProperty Name="CHOICE_ID" ColumnName="CHOICE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QUESTIONS">
+      <EntityTypeMapping TypeName="Model.QUESTION">
+        <MappingFragment StoreEntitySet="QUESTIONS">
+          <ScalarProperty Name="CHANGED_DATE" ColumnName="CHANGED_DATE" />
+          <ScalarProperty Name="CREATED_BY" ColumnName="CREATED_BY" />
+          <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+          <ScalarProperty Name="DISPLAY_ORDER" ColumnName="DISPLAY_ORDER" />
+          <ScalarProperty Name="DEFAULT_QUESTION" ColumnName="DEFAULT_QUESTION" />
+          <ScalarProperty Name="VISIBILITY_STATUS" ColumnName="VISIBILITY_STATUS" />
+          <ScalarProperty Name="ANSWER_TYPE" ColumnName="ANSWER_TYPE" />
+          <ScalarProperty Name="CATEGORY_ID" ColumnName="CATEGORY_ID" />
+          <ScalarProperty Name="QUESTION1" ColumnName="QUESTION" />
+          <ScalarProperty Name="QUESTION_ID" ColumnName="QUESTION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ROLE_PERMISSIONS">
+      <EntityTypeMapping TypeName="Model.ROLE_PERMISSIONS">
+        <MappingFragment StoreEntitySet="ROLE_PERMISSIONS">
+          <ScalarProperty Name="COLUMN1" ColumnName="COLUMN1" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="PERMISSION_ID" ColumnName="PERMISSION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_ROLE">
+      <EntityTypeMapping TypeName="Model.USER_ROLE">
+        <MappingFragment StoreEntitySet="USER_ROLE">
+          <ScalarProperty Name="COLUMN1" ColumnName="COLUMN1" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

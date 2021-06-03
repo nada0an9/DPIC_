@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+@model WebApplication27.Models.requesterModel
+
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Add Requester</legend>
+                <form method="post" action="@Url.Action("Add", "Requesters")">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Requester ID</label><span class="text-danger">  *</span><br />
+                            @Html.TextBoxFor(Models => Models.REQUESTER_ID, new { @class = "form-control", required = "required", maxlength = 10, minlength = 10, onkeypress = "return validateNumber(event)" })
+                            @Html.ValidationMessageFor(m => m.REQUESTER_ID, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Requester Name</label><span class="text-danger">  *</span><br />
+
+                            @Html.TextBoxFor(Models => Models.REQUESTER_NAME, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.REQUESTER_NAME, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Contact</label><span class="text-danger">  *</span><br />
+                            @Html.TextBoxFor(Models => Models.CONTACT, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CONTACT, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Department</label><span class="text-danger">  *</span><br />
+                            @Html.DropDownListFor(Models => Models.DEPARTMENT_ID, Model.CityList, "Select", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.DEPARTMENT_ID, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Calling From</label><span class="text-danger">  *</span><br />
+                            @Html.RadioButtonFor(Models => Models.CALLING_FROM, "Inside Hospital", new { name = "Calling", required = "required" }) Inside Hospital <br />
+                            @Html.RadioButtonFor(Models => Models.CALLING_FROM, "Outside Hospital", new { name = "Calling", required = "required" }) Outside Hospital
+                            @Html.ValidationMessageFor(m => m.CALLING_FROM, "", new { @class = "text-danger" })
+
+                        </div>
+                        <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Save </button>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model WebApplication27.Models.CaseViewModel
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="d-flex flex-grow-1">
+        <span class="w-100 d-lg-none d-block"></span>
+        <a class="navbar-brand d-none d-lg-inline-block" href="#">
+            DPIC
+        </a>
+
+        <div class="w-100 text-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+
+
+
+
+    <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+            <li class="nav-item">
+
+
+
+
+                <a href="@Url.Action("Home", "Accounts")" class="nav-link">
+                    Home
+                </a>
+
+            </li>
+            @foreach (var item in Model.PermissionList.GroupBy(x => x.PERMISSION_ID).Select(x => x.First()).Where(x => x.TYPE == "new case").ToList())
+            {
+                if (item.PERMISSION_NAME == "New Case")
+                {
+                    <li class="nav-item">
+
+                        <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="nav-link">
+                            @item.PERMISSION_NAME
+                        </a>
+
+
+
+
+                    </li>
+
+                }
+                <li class="nav-item">
+
+                    <a href="@Url.Action("Filter", "Case")" class="nav-link"> Cases </a>
+
+                </li>
+            }
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Settings
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+                    @foreach (var item in Model.PermissionList.GroupBy(x => x.PERMISSION_ID).Select(x => x.First()).Where(x => x.TYPE == "settings").ToList())
+                    {
+                        <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="dropdown-item">
+                            @item.PERMISSION_NAME
+
+                        </a>
+
+                    }
+                    <a href="@Url.Action("Profile", "Accounts")" class="dropdown-item">My Account</a>
+
+                    <a href="@Url.Action("LogOut", "Accounts")" class="dropdown-item">Logout</a>
+
+
+                </div>
+            </li>
+            <li class="nav-item">
+                @foreach (var item in Model.PermissionList.GroupBy(x => x.PERMISSION_ID).Select(x => x.First()).Where(x => x.TYPE == "Requesters").ToList())
+
+                {
+
+
+
+                    <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="nav-link">
+                        @item.PERMISSION_NAME
+                    </a>
+
+
+
+
+                }
+
+            </li>
+
+        </ul>
+    </div>
+
+
+</nav>

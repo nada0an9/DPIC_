@@ -1,0 +1,340 @@
+﻿
+@{
+    ViewBag.Title = "Patient Information";
+}
+
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+
+@model WebApplication27.Models.patientInformationStage
+
+
+<div class="card shadow-sm" style="margin-top:7%">
+    @if (Model != null)
+    {
+
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style=" color:gray">Case Description</a>
+                <a class="nav-link" id="step2-tab" style="color: #428bca;text-decoration: underline;">Patient Information</a>
+                <a class="nav-link" id="step3-tab" style=" color:gray">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:gray">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray">Case Details</a>
+                <a class="nav-link" id="step3-tab" style=" color:gray">Answer</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+            @using (Html.BeginForm("UpdatePatientInformation", "Case", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken();
+                @Html.HiddenFor(m => Model.CASE_ID)
+
+                <div class="tab-content py-4" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="step1">
+                        <div class="row">
+
+                            <div class="form-group col-md-4">
+                                <label>Does the patient have an MRN ?</label><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.patientMRN, "Yes", new { @class = "patientMRN", id = "patientMRNYes" }) Yes<br />
+                                @Html.RadioButtonFor(Models => Models.patientMRN, "No", new { @class = "patientMRN", id = "patientMRNNo" }) No<br />
+                                @Html.ValidationMessageFor(Models => Models.patientMRN, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4" id="MRN_Div" style="display:none">
+
+                                <label>MRN</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.MRN, new { @class = "form-control", id = "field1", maxlength = 7 })
+                                @Html.ValidationMessageFor(Models => Models.MRN, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Name</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.NAME, new { @class = "form-control", id = "field2" })
+                                @Html.ValidationMessageFor(Models => Models.NAME, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Age</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.AGE, new { @class = "form-control", id = "field3" })
+                                @Html.ValidationMessageFor(Models => Models.AGE, "", new { @class = "text-danger" })
+
+
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Gender</label><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.GENDER, "Female", new { @class = "gender", id = "Female" }) Female<br />
+                                @Html.RadioButtonFor(Models => Models.GENDER, "Male", new { @class = "gender", id = "Male" }) Male<br />
+                                @Html.ValidationMessageFor(Models => Models.GENDER, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4" id="Pregnant" style="display:none">
+                                <label>Pregnant</label><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.PREGNANT_OR_NOT, "Yes", new { id = "Yes" }) Yes<br />
+                                @Html.RadioButtonFor(Models => Models.PREGNANT_OR_NOT, "No", new { id = "No" }) No<br />
+                                @Html.ValidationMessageFor(Models => Models.PREGNANT_OR_NOT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4" id="Trimester" style="display:none">
+                                <label>Trimester / Week</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.PREGNANT_WEEK, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.PREGNANT_WEEK, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Allergy History</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.ALLERGY_HISTORY, new { @class = "form-control", id = "field5" })
+                                @Html.ValidationMessageFor(Models => Models.ALLERGY_HISTORY, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Weight (Kg)</label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.WEIGHT, new { @class = "form-control", id = "field6" })
+                                @Html.ValidationMessageFor(Models => Models.WEIGHT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Hight </label><span class="text-danger">  *</span>
+                                @Html.TextBoxFor(Models => Models.HEIGHT, new { @class = "form-control", id = "field7" })
+                                @Html.ValidationMessageFor(Models => Models.HEIGHT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Diagnosis</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.DIAGNOSIS, new { @class = "form-control", id = "field8" })
+                                @Html.ValidationMessageFor(Models => Models.DIAGNOSIS, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Serum Creatinine</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.SERUM_CREATININE, new { @class = "form-control", id = "field9" })
+                                @Html.ValidationMessageFor(Models => Models.SERUM_CREATININE, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Liver Function</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.LIVER_FUNCTION, new { @class = "form-control", id = "field10" })
+                                @Html.ValidationMessageFor(Models => Models.LIVER_FUNCTION, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Electrolytes (Ca, Mg, K, P)  </label>
+                                @Html.TextAreaFor(Models => Models.ELECTROLYTES, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.ELECTROLYTES, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Other Relevant Laboratory Result</label>
+                                @Html.TextAreaFor(Models => Models.LABORATORY_RESULT, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.LABORATORY_RESULT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Current / Past Medications</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.MEDICATIONS, new { @class = "form-control", id = "field11" })
+                                @Html.ValidationMessageFor(Models => Models.MEDICATIONS, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label>Other Related Sings and Symptoms </label>
+                                @Html.TextAreaFor(Models => Models.RELATED_SINGS, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(Models => Models.RELATED_SINGS, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="form-group">
+                                    <lable>Comorbidities</lable><span class="text-danger">  *</span>
+                                </div>
+                                <div id="list1" class="dropdown-check-list" style="width:100%">
+                                    <span class="form-control col-md-12 anchor">Select</span>
+
+                                    <ul class="items">
+                                        <li>
+                                            <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                            <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+                                                @for (int i = 0; i < Model.ComorbidityList.Count(); i++)
+                                                {
+                                                    <li>
+                                                        @Html.CheckBoxFor(m => Model.ComorbidityList[i].Checked, new { @class = "requierd-check", id = "comorbidities" })
+                                                        @Html.DisplayFor(m => Model.ComorbidityList[i].name, new { @class = "Permissions", id = "List" })
+                                                        @Html.HiddenFor(m => Model.ComorbidityList[i].id)
+                                                        @Html.HiddenFor(m => Model.ComorbidityList[i].name)
+                                                        @if (Model.ComorbidityList[i].name == "Other")
+                                                        {
+                                                            @Html.TextBoxFor(m => Model.ComorbidityList[i].other, new { @class = "form-control", placeholder = "Other Comorbidity", maxlength = 150 })
+                                                            @Html.ValidationMessageFor(m => Model.ComorbidityList[i].other, "", new { @class = "text-danger" })
+
+                                                        }
+
+                                                    </li>
+
+                                                }
+                                            </ul>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <span id="comorbidities-error" class="field-validation-error">
+                                    <span class="text-danger">Select any comorbidities </span>
+                                </span>
+                                @if (TempData["Danger"] != null)
+                                {
+
+                                    <p class="text-danger">@TempData["Danger"]</p>
+                                }
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <a href="@Url.Action("getCaseDescription", "Case", new { id = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+                        </div>
+                        <div class="col-auto">
+
+                            <button type="submit" name="SaveAsPending" id="btn3" class="btn" style="background-color: #428bca; color: #fff">Save as Pending Case</button>
+                            <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                                Save and continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+
+    }
+    else
+    {
+        <p>No data found</p>
+    }
+
+</div>
+
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+        //validation
+        var declarationsError = $('#comorbidities-error').hide();
+        $('#btn2, #btn3').click(function () {
+
+            $("#field2").prop('required', true);
+            $(".gender").prop('required', true);
+            $("#field3").prop('required', true);
+            $("#field5").prop('required', true);
+            $("#field6").prop('required', true);
+            $("#field7").prop('required', true);
+            $("#field8").prop('required', true);
+            $("#field9").prop('required', true);
+            $("#field10").prop('required', true);
+            $("#field11").prop('required', true);
+
+            if ($(".requierd-check:checkbox:checked").length > 0) {
+                declarationsError.hide();
+                return true;
+            }
+            else {
+                declarationsError.show();
+                return false;
+            }
+        });
+        //hide and show
+        $(document).ready(function () {
+            if ($('#Female').is(':checked')) {
+                document.getElementById('Pregnant').style.display = 'block';
+                document.getElementById('Trimester').style.display = 'none';
+
+            }
+            if ($('#Male').is(':checked')) {
+                document.getElementById('Pregnant').style.display = 'none';
+                document.getElementById('Trimester').style.display = 'none';
+
+
+            }
+            if ($('#Yes').is(':checked')) {
+
+                document.getElementById('Pregnant').style.display = 'block';
+                document.getElementById('Trimester').style.display = 'block';
+
+            }
+            if ($('#No').is(':checked')) {
+
+                document.getElementById('Pregnant').style.display = 'block';
+                document.getElementById('Trimester').style.display = 'none';
+
+            }
+            if ($('#patientMRNYes').is(':checked')) {
+                document.getElementById('MRN_Div').style.display = 'block';
+
+            }
+            if ($('#patientMRNNo').is(':checked')) {
+                document.getElementById('MRN_Div').style.display = 'none';
+                document.getElementById('field1').value = '';
+
+
+            }
+        });
+        //hide and show
+        $('#Female').click(function () {
+            document.getElementById('Pregnant').style.display = 'block';
+            document.getElementById('Trimester').style.display = 'none';
+        });
+        $('#Male').click(function () {
+            document.getElementById('Pregnant').style.display = 'none';
+            document.getElementById('Trimester').style.display = 'none';
+        });
+        $('#Yes').click(function () {
+            document.getElementById('Pregnant').style.display = 'block';
+            document.getElementById('Trimester').style.display = 'block';
+
+        });
+        $('#No').click(function () {
+            document.getElementById('Pregnant').style.display = 'block';
+            document.getElementById('Trimester').style.display = 'none';
+
+        });
+        $('#patientMRNYes').click(function () {
+            document.getElementById('MRN_Div').style.display = 'block';
+        });
+        $('#patientMRNNo').click(function () {
+            document.getElementById('MRN_Div').style.display = 'none';
+
+        });
+
+        //to open comorbidities list
+        var checkList = document.getElementById('list1');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (checkList.classList.contains('visible'))
+                checkList.classList.remove('visible');
+            else
+                checkList.classList.add('visible');
+        }
+
+        //search on comorbidities list
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+    </script>
+
+}
+
+
+
+

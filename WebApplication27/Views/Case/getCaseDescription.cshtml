@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "Case Description";
+}
+
+@model WebApplication27.Models.caseDescriptionStage
+
+
+<div class="card shadow-sm" style="margin-top:7%">
+
+    @if (Model != null)
+    {
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style="color: #428bca;text-decoration: underline;" data-toggle="tab" href="#step1">Case Description</a>
+                @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+                {
+                    <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+                }
+                <a class="nav-link" id="step3-tab" style=" color:#ccc" data-toggle="tab" href="#step3">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:#ccc" href="#step1">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color:#ccc" href="#step2">Case Details</a>
+                <a class="nav-link" id="step3-tab" style=" color:#ccc" href="#step3">Answer</a>
+                <a class="nav-link" id="step2-tab" style=" color:#ccc" href="#step2">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+
+            @using (Html.BeginForm("updateCaseDescription", "Case", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => Model.CASE_ID)
+                @Html.ValidationSummary(true)
+                <div class="tab-content py-4" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="step1">
+
+                        <div class="mb-3">
+                            <label>Requester Name</label><span class="text-danger">  *</span><br />
+                            @Html.DropDownListFor(Models => Models.REQUESTER_ID, ViewBag.Requester as SelectList, "Select", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.REQUESTER_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+                            <label for="Case_Describtion">Case Description</label><span class="text-danger">  *</span>
+                            @Html.TextAreaFor(Models => Models.CASE_DESCRIBTION, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.CASE_DESCRIBTION, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mb-3">
+
+                            <label class="radio control-label">Case Type  <span class="text-danger">  *</span></label><br />
+                            @Html.RadioButtonFor(Models => Models.CASE_TYPE, "Patient Specific Question", false)Patient Spesific Question<br />
+                            @Html.RadioButtonFor(Models => Models.CASE_TYPE, "General Questions", false)General Question<br />
+                            @Html.ValidationMessageFor(model => model.CASE_TYPE, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="radio control-label">Case Urgency <span class="text-danger">  *</span></label><br />
+                            @Html.RadioButtonFor(Models => Models.URGENCY, "Urgent", new { @class = "requireded", name = "Urgency" }) Urgent (On the Same Day)<br />
+                            @Html.RadioButtonFor(Models => Models.URGENCY, "Regular", new { @class = "requireded", name = "Urgency" })Regular (Maximium 5 Working Day)<br />
+                            @Html.ValidationMessageFor(model => model.URGENCY, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between">
+                        <div class="col-auto"></div>
+
+                        <div class="col-auto">
+                            <button type="submit" class="btn" style="background-color: #428bca; color: #fff" data-enchanter="next">
+                                Save and continue
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+
+    }
+    else
+    {
+        <p>No Data Found</p>
+    }
+
+</div>
+
+
+
+
+

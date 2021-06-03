@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model WebApplication27.Models.comorbidityModel
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+
+        <div class="card w-75">
+            <div class="card-body">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Add Comorbidity</legend>
+                    <form method="post" action="@Url.Action("Save", "Comorbidities")">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <label>Comorbidity Name</label><span class="text-danger">  *</span><br />
+                            @Html.TextBoxFor(Models => Models.COMORBIDITY_NAME, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.COMORBIDITY_NAME, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label><span class="text-danger">  *</span><br />
+                            @Html.RadioButtonFor(Models => Models.VISIBILIT_STATUS, "Visible", new { required = "required", name = "Status" }) Visible<br />
+                            @Html.RadioButtonFor(Models => Models.VISIBILIT_STATUS, "Hide", new { required = "required", name = "Status" }) Hide
+                            @Html.ValidationMessageFor(m => m.VISIBILIT_STATUS, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <lable>Display Order</lable><span class="text-danger">  *</span><br />
+                            @Html.TextBoxFor(Models => Models.DISPLAY_ORDER, new { @class = "form-control", required = "required", onkeypress = "return validateNumber(event)" })
+                            @Html.ValidationMessageFor(m => m.DISPLAY_ORDER, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Save </button>
+
+
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>

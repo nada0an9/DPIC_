@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Case Details";
+}
+@model WebApplication27.Models.caseDetailsStage
+
+
+
+
+<div class="card shadow-sm" style="margin-top:7%">
+
+    @if (Model != null)
+    {
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style=" color:gray" ata-toggle="tab" href="#step1">Case Description</a>
+
+                @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+                {
+                    <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+                }            <a class="nav-link" id="step3-tab" style=" color:gray" data-toggle="tab" href="#step3">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:gray" href="#step1">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color: #428bca;text-decoration: underline;" dhref="#step2">Case Details</a>
+                <a class="nav-link" id="step3-tab" style=" color:gray" href="#step3">Answer</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray" href="#step2">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+            @using (Html.BeginForm("UpdateCaseDetails", "Case", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(m => Model.CASE_ID)
+
+                    <div class="tab-content py-4" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="step1">
+                            <div class="mb-3">
+                                <label>Ultimate Question</label><span class="text-danger">  *</span>
+                                @Html.TextAreaFor(Models => Models.ULTIMATE_QUESTION, new { @class = "form-control", id = "Question" })
+                                @Html.ValidationMessageFor(model => model.ULTIMATE_QUESTION, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="mb-3">
+                                <label>Ultimate Category</label><span class="text-danger">  *</span>
+                                @Html.DropDownListFor(Models => Models.ULTIMATE_CATEGORY, ViewBag.catelist as SelectList, "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ULTIMATE_CATEGORY, "", new { @class = "text-danger" })
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                <a href="@Url.Action("getListQuestions", "Case", new { id = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+                            </div>
+                            <div class="col-auto">
+
+                                <button type="submit" name="SaveAsPending" id="btn3" class="btn" style="background-color: #428bca; color: #fff">Save as Pending Case</button>
+                                <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                                    Save and continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            
+
+        </div>
+    }
+    else
+    { <p>No data Found</p>}
+
+</div>
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        $('#btn2, #btn3').click(function () {
+            $(".requireded").prop('required', true);
+            $("#Question").prop('required', true);
+
+        });
+
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿
+@model WebApplication27.Models.choiceModel
+
+<div>
+
+    @using (Html.BeginForm("edit", "MultipleChoice", FormMethod.Post))
+    {@Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.CHOICE_ID)
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+                                            <lable>Choice Name</lable><span class="text-danger">  *</span><br />
+                                            @Html.TextBoxFor(Models => Models.CHOICE_NAM, new { @class = "form-control", required = "required" })
+                                        </div>
+                                        <div class="form-group">
+                                            <lable>Referenced Question</lable><span class="text-danger">  *</span><br />
+                                            @Html.DropDownListFor(Models => Models.QUESTION_ID, ViewBag.question as SelectList, "Select", new { @class = "form-control", required = "required" })
+                                        </div>
+                                        <div class="form-group">
+                                            <lable>Display Order</lable><span class="text-danger">  *</span><br />
+                                            @Html.TextBoxFor(Models => Models.DISPLAY_ORDER, new { @class = "form-control", required = "required", onkeypress = "return validateNumber(event)" })
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Save changes</button>
+                                        </div>
+                                    </div>}
+</div>
+<script type="text/javascript">
+
+        function validateNumber(e) {
+            const pattern = /^[0-9]$/;
+
+            return pattern.test(e.key)
+        }
+</script>
+
+

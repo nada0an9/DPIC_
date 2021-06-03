@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model WebApplication27.Models.rolesModel
+
+
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Add Role</legend>
+                <form method="post" action="@Url.Action("Save", "Role")">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @*alert messages*@
+
+                    <div class="form-group">
+                        <label>Role Name</label><span class="text-danger">  *</span><br />
+                        @Html.TextBoxFor(Models => Models.ROLE_NAME, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.ROLE_NAME, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <lable>Permissions</lable><span class="text-danger">  *</span><span id="error" class="field-validation-error">
+                         <span class="text-danger">At least one permission needs to be selected </span>
+                        </span><br />
+                        <div id="list1" class="dropdown-check-list" style="width:100%">
+                            <span class="form-control col-md-12 anchor">Select</span>
+
+                            <ul class="items">
+                                <li>
+                                    <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                    <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+
+                                        @for (int i = 0; i < Model.PermissionList.Count(); i++)
+                                        {
+                                            <li>
+
+                                                @Html.CheckBoxFor(m => Model.PermissionList[i].Checked, new { @class = "requierd-check", id = "" })
+                                                @Html.DisplayFor(m => Model.PermissionList[i].PERMISSION_DESCRIPTION, new { @class = "Permissions", id = "List" })
+                                                @Html.HiddenFor(m => Model.PermissionList[i].PERMISSION_ID, new { @class = "", id = "Category" })
+
+
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                        @if (TempData["Danger"] != null)
+                        {
+
+                            <p class="text-danger">@TempData["Danger"]</p>
+                        }
+
+                    </div>
+                    <br />
+                    <button type="submit" id="btn2"  style="background-color: #428bca; color: #fff" class="btn">Save </button>
+
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    //search in Permissions list
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myList li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+        //open Permissions list
+    var checkList = document.getElementById('list1');
+    checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+        if (checkList.classList.contains('visible'))
+            checkList.classList.remove('visible');
+        else
+            checkList.classList.add('visible');
+    }
+    //validation list
+    var declarationsError = $('#error').hide();
+    $('#btn2').click(function () {
+
+        if ($(".requierd-check:checkbox:checked").length > 0) {
+            declarationsError.hide();
+            return true;
+        }
+        else {
+            declarationsError.show();
+            return false;
+        }
+    });
+</script>

@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@model WebApplication27.Models.categoriesModel
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Add Category</legend>
+                    <form method="post" action="@Url.Action("Save", "Categories")">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>
+                                    Category Name
+                                </label><span class="text-danger">  *</span><br />
+                                @Html.TextBoxFor(Models => Models.CATEGORY_NAME, new { @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(Model => Model.CATEGORY_NAME, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>
+                                    Category Type
+                                </label><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.CATEGORY_TYPE, "Patient Specific Question", new { required = "required", name = "Type" }) Patient Specific Question<br />
+                                @Html.RadioButtonFor(Models => Models.CATEGORY_TYPE, "General Questions", new { required = "required", name = "Type" }) General Questions<br />
+                                @Html.ValidationMessageFor(Model => Model.CATEGORY_TYPE, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <lable>Status</lable><span class="text-danger">  *</span><br />
+
+                                @Html.RadioButtonFor(Models => Models.VSIBILITY_STATUS, "Visible", new { required = "required", name = "Status" }) Visible<br />
+                                @Html.RadioButtonFor(Models => Models.VSIBILITY_STATUS, "Hide", new { required = "required", name = "Status" }) Hide
+                                @Html.ValidationMessageFor(Model => Model.CATEGORY_TYPE, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <lable>Required</lable><span class="text-danger">  *</span><br />
+                                @Html.RadioButtonFor(Models => Models.DEFUALT, "Yes", new { required = "required", name = "Required" }) Yes<br />
+                                @Html.RadioButtonFor(Models => Models.DEFUALT, "No", new { required = "required", name = "Required" }) No
+                                @Html.ValidationMessageFor(Model => Model.DEFUALT, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-12">
+                                <lable>Display Order</lable><span class="text-danger">  *</span><br />
+                                @Html.TextBoxFor(Models => Models.DISPLAY_ORDER, new { @class = "form-control", required = "required", onkeypress = "return validateNumber(event)" })
+                                @Html.ValidationMessageFor(Model => Model.DISPLAY_ORDER, "", new { @class = "text-danger" })
+                            </div>
+
+                            <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Save</button>
+
+                        </div>
+                    </form>
+                </fieldset>
+</div>
+</div>
+</div>

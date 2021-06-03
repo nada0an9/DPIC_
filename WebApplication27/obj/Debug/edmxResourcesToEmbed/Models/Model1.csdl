@@ -1,0 +1,764 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CASE_CATEGORIES">
+    <Key>
+      <PropertyRef Name="CASE_ID" />
+      <PropertyRef Name="CATEGORY_ID" />
+    </Key>
+    <Property Name="CASE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="CATEGORY_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="CATEGORY_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Case" Relationship="Self.FK_CASE_ID_2" FromRole="CASE_CATEGORIES" ToRole="CASES" />
+    <NavigationProperty Name="CATEGORy" Relationship="Model.FK_CATEGORY_ID_2" FromRole="CASE_CATEGORIES" ToRole="CATEGORy" />
+  </EntityType>
+  <EntityType Name="CASE_COMORBIDITY">
+    <Key>
+      <PropertyRef Name="CASE_ID" />
+      <PropertyRef Name="COMORBIDITY_ID" />
+    </Key>
+    <Property Name="CASE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="COMORBIDITY_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="COMORBIDITY_NAME" Type="String" MaxLength="220" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_COMORBIDITY" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Case" Relationship="Self.FK_CASE_ID_4" FromRole="CASE_COMORBIDITY" ToRole="CASES" />
+    <NavigationProperty Name="COMORBIDITY" Relationship="Model.FK_COMORBIDITY_ID" FromRole="CASE_COMORBIDITY" ToRole="COMORBIDITY" />
+  </EntityType>
+  <EntityType Name="CASE_REFERENCES">
+    <Key>
+      <PropertyRef Name="CASE_ID" />
+      <PropertyRef Name="REFERENCE_ID" />
+    </Key>
+    <Property Name="CASE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="REFERENCE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="REFERENCE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="OTHER_REFRENSES" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Case" Relationship="Self.FK_CASE_ID_3" FromRole="CASE_REFERENCES" ToRole="CASES" />
+    <NavigationProperty Name="REFERENCE" Relationship="Model.FK_REFRENSES_ID_" FromRole="CASE_REFERENCES" ToRole="REFERENCE" />
+  </EntityType>
+  <EntityType Name="Case">
+    <Key>
+      <PropertyRef Name="CASE_ID" />
+    </Key>
+    <Property Name="CASE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CASE_START_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="CASE_DESCRIBTION" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="REQUESTER_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="CASE_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MRN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AGE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GENDER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PREGNANT_OR_NOT" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="PREGNANT_WEEK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ALLERGY_HISTORY" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="HEIGHT" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="WEIGHT" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="DIAGNOSIS" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="ELECTROLYTES" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="LIVER_FUNCTION" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="LABORATORY_RESULT" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="SERUM_CREATININE" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="MEDICATIONS" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="RELATED_SINGS" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="HAS_MRN_OR_NOT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="URGENCY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ANSWER" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="RESEARCHER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ANSWER_GIVEN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="NOT_REACHABLE_COMMENT" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="RECEIVER_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="RECEIVER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CONTACT_ATTEMPT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CASE_STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DIFFER" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="CASE_END_DATE" Type="DateTime" />
+    <Property Name="TIME_SPAN_DAY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="TIME_SPAN_MINUTES" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="TIME_SPAN_HOUR" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CURRENT_STAGE" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" />
+    <NavigationProperty Name="CASE_CATEGORIES" Relationship="Self.FK_CASE_ID_2" FromRole="CASES" ToRole="CASE_CATEGORIES" />
+    <NavigationProperty Name="CASE_COMORBIDITY" Relationship="Self.FK_CASE_ID_4" FromRole="CASES" ToRole="CASE_COMORBIDITY" />
+    <NavigationProperty Name="CASE_REFERENCES" Relationship="Self.FK_CASE_ID_3" FromRole="CASES" ToRole="CASE_REFERENCES" />
+    <NavigationProperty Name="USER" Relationship="Self.CASES_FK1" FromRole="CASES" ToRole="USERS" />
+    <NavigationProperty Name="REQUESTER" Relationship="Self.FK_REQUESTER_ID" FromRole="CASES" ToRole="REQUESTERS" />
+    <Property Name="ULTIMATE_QUESTION" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="ULTIMATE_CATEGORY" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CASE_QUESTIONS" Relationship="Model.FK_CASE_ID" FromRole="Case" ToRole="CASE_QUESTIONS" />
+  </EntityType>
+  <EntityType Name="PERMISSION">
+    <Key>
+      <PropertyRef Name="PERMISSION_ID" />
+    </Key>
+    <Property Name="PERMISSION_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PERMISSION_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CONTROLLER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ACTION_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TYPE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Model.ROLE_PERMISSION_FK1" FromRole="PERMISSION" ToRole="ROLE_PERMISSIONS" />
+  </EntityType>
+  <EntityType Name="REGION">
+    <Key>
+      <PropertyRef Name="REGION_ID" />
+    </Key>
+    <Property Name="REGION_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REGION_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VISIBILITY_STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="USER" Relationship="Model.REGIONS_FK1" FromRole="REGION" ToRole="USER" />
+    <NavigationProperty Name="DEPARTMENTS" Relationship="Model.DEPARTMENTS_FK1" FromRole="REGION" ToRole="DEPARTMENT" />
+  </EntityType>
+  <EntityType Name="REQUESTER">
+    <Key>
+      <PropertyRef Name="REQUESTER_ID" />
+    </Key>
+    <Property Name="REQUESTER_ID" Type="Decimal" Nullable="false" />
+    <Property Name="REQUESTER_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CONTACT" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CALLING_FROM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DEPARTMENT_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <NavigationProperty Name="CASES" Relationship="Self.FK_REQUESTER_ID" FromRole="REQUESTERS" ToRole="CASES" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="USER" Relationship="Model.REQUESTERS_FK1" FromRole="REQUESTER" ToRole="USER" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Model.FK_DEPARTMENT_ID" FromRole="REQUESTER" ToRole="DEPARTMENT" />
+  </EntityType>
+  <EntityType Name="ROLE">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="USER" Relationship="Model.ROLES_FK1" FromRole="ROLE" ToRole="USER" />
+    <NavigationProperty Name="ROLE_PERMISSIONS" Relationship="Model.ROLE_PERMISSION_FK2" FromRole="ROLE" ToRole="ROLE_PERMISSIONS" />
+    <NavigationProperty Name="USER_ROLE" Relationship="Model.USER_ROLE_FK1" FromRole="ROLE" ToRole="USER_ROLE" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FULL_NAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CASES" Relationship="Self.CASES_FK1" FromRole="USERS" ToRole="CASES" />
+    <NavigationProperty Name="REGIONS" Relationship="Model.REGIONS_FK1" FromRole="USER" ToRole="REGION" />
+    <NavigationProperty Name="REQUESTERS" Relationship="Model.REQUESTERS_FK1" FromRole="USER" ToRole="REQUESTER" />
+    <NavigationProperty Name="ROLES" Relationship="Model.ROLES_FK1" FromRole="USER" ToRole="ROLE" />
+    <NavigationProperty Name="DEPARTMENTS" Relationship="Model.DEPARTMENTS_FK2" FromRole="USER" ToRole="DEPARTMENT" />
+    <Property Name="STATUS" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="REFERENCES" Relationship="Model.REFERENCES_FK1" FromRole="USER" ToRole="REFERENCE" />
+    <NavigationProperty Name="CATEGORIES" Relationship="Model.CATEGORIES_FK1" FromRole="USER" ToRole="CATEGORy" />
+    <NavigationProperty Name="COMORBIDITies" Relationship="Model.COMORBIDITY_FK1" FromRole="USER" ToRole="COMORBIDITY" />
+    <NavigationProperty Name="MULTIPLE_CHOICE" Relationship="Model.MULTIPLE_CHOICE_FK1" FromRole="USER" ToRole="MULTIPLE_CHOICE" />
+    <NavigationProperty Name="QUESTIONS" Relationship="Model.QUESTIONS_FK1" FromRole="USER" ToRole="QUESTION" />
+    <NavigationProperty Name="USER_ROLE" Relationship="Model.USER_ROLE_FK2" FromRole="USER" ToRole="USER_ROLE" />
+  </EntityType>
+  <Association Name="FK_CASE_ID_2">
+    <End Role="CASES" Type="Self.Case" Multiplicity="1" />
+    <End Role="CASE_CATEGORIES" Type="Self.CASE_CATEGORIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CASES">
+        <PropertyRef Name="CASE_ID" />
+      </Principal>
+      <Dependent Role="CASE_CATEGORIES">
+        <PropertyRef Name="CASE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CASE_ID_4">
+    <End Role="CASES" Type="Self.Case" Multiplicity="1" />
+    <End Role="CASE_COMORBIDITY" Type="Self.CASE_COMORBIDITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CASES">
+        <PropertyRef Name="CASE_ID" />
+      </Principal>
+      <Dependent Role="CASE_COMORBIDITY">
+        <PropertyRef Name="CASE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CASE_ID_3">
+    <End Role="CASES" Type="Self.Case" Multiplicity="1" />
+    <End Role="CASE_REFERENCES" Type="Self.CASE_REFERENCES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CASES">
+        <PropertyRef Name="CASE_ID" />
+      </Principal>
+      <Dependent Role="CASE_REFERENCES">
+        <PropertyRef Name="CASE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CASES_FK1">
+    <End Role="USERS" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="CASES" Type="Self.Case" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="CASES">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REQUESTER_ID">
+    <End Role="REQUESTERS" Type="Self.REQUESTER" Multiplicity="1" />
+    <End Role="CASES" Type="Self.Case" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REQUESTERS">
+        <PropertyRef Name="REQUESTER_ID" />
+      </Principal>
+      <Dependent Role="CASES">
+        <PropertyRef Name="REQUESTER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_Model" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CASE_CATEGORIES" EntityType="Self.CASE_CATEGORIES" />
+    <EntitySet Name="CASE_COMORBIDITY" EntityType="Self.CASE_COMORBIDITY" />
+    <EntitySet Name="CASE_REFERENCES" EntityType="Self.CASE_REFERENCES" />
+    <EntitySet Name="CASES" EntityType="Self.Case" />
+    <EntitySet Name="PERMISSIONS" EntityType="Self.PERMISSION" />
+    <EntitySet Name="REGIONS" EntityType="Self.REGION" />
+    <EntitySet Name="REQUESTERS" EntityType="Self.REQUESTER" />
+    <EntitySet Name="ROLES" EntityType="Self.ROLE" />
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <AssociationSet Name="FK_CASE_ID_2" Association="Self.FK_CASE_ID_2">
+      <End Role="CASES" EntitySet="CASES" />
+      <End Role="CASE_CATEGORIES" EntitySet="CASE_CATEGORIES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CASE_ID_4" Association="Self.FK_CASE_ID_4">
+      <End Role="CASES" EntitySet="CASES" />
+      <End Role="CASE_COMORBIDITY" EntitySet="CASE_COMORBIDITY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CASE_ID_3" Association="Self.FK_CASE_ID_3">
+      <End Role="CASES" EntitySet="CASES" />
+      <End Role="CASE_REFERENCES" EntitySet="CASE_REFERENCES" />
+    </AssociationSet>
+    <AssociationSet Name="CASES_FK1" Association="Self.CASES_FK1">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="CASES" EntitySet="CASES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REQUESTER_ID" Association="Self.FK_REQUESTER_ID">
+      <End Role="REQUESTERS" EntitySet="REQUESTERS" />
+      <End Role="CASES" EntitySet="CASES" />
+    </AssociationSet>
+    <AssociationSet Name="REGIONS_FK1" Association="Model.REGIONS_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="REGION" EntitySet="REGIONS" />
+    </AssociationSet>
+    <AssociationSet Name="REQUESTERS_FK1" Association="Model.REQUESTERS_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="REQUESTER" EntitySet="REQUESTERS" />
+    </AssociationSet>
+    <AssociationSet Name="ROLES_FK1" Association="Model.ROLES_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="ROLE" EntitySet="ROLES" />
+    </AssociationSet>
+    <EntitySet Name="DEPARTMENTS" EntityType="Model.DEPARTMENT" />
+    <AssociationSet Name="DEPARTMENTS_FK1" Association="Model.DEPARTMENTS_FK1">
+      <End Role="REGION" EntitySet="REGIONS" />
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="DEPARTMENTS_FK2" Association="Model.DEPARTMENTS_FK2">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DEPARTMENT_ID" Association="Model.FK_DEPARTMENT_ID">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTS" />
+      <End Role="REQUESTER" EntitySet="REQUESTERS" />
+    </AssociationSet>
+    <EntitySet Name="CASE_QUESTIONS" EntityType="Model.CASE_QUESTIONS" />
+    <EntitySet Name="REFERENCES" EntityType="Model.REFERENCE" />
+    <AssociationSet Name="FK_CASE_ID" Association="Model.FK_CASE_ID">
+      <End Role="Case" EntitySet="CASES" />
+      <End Role="CASE_QUESTIONS" EntitySet="CASE_QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REFRENSES_ID_" Association="Model.FK_REFRENSES_ID_">
+      <End Role="REFERENCE" EntitySet="REFERENCES" />
+      <End Role="CASE_REFERENCES" EntitySet="CASE_REFERENCES" />
+    </AssociationSet>
+    <AssociationSet Name="REFERENCES_FK1" Association="Model.REFERENCES_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="REFERENCE" EntitySet="REFERENCES" />
+    </AssociationSet>
+    <EntitySet Name="CATEGORIES" EntityType="Model.CATEGORy" />
+    <AssociationSet Name="FK_CATEGORY_ID_2" Association="Model.FK_CATEGORY_ID_2">
+      <End Role="CATEGORy" EntitySet="CATEGORIES" />
+      <End Role="CASE_CATEGORIES" EntitySet="CASE_CATEGORIES" />
+    </AssociationSet>
+    <AssociationSet Name="CATEGORIES_FK1" Association="Model.CATEGORIES_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="CATEGORy" EntitySet="CATEGORIES" />
+    </AssociationSet>
+    <EntitySet Name="COMORBIDITies" EntityType="Model.COMORBIDITY" />
+    <EntitySet Name="MULTIPLE_CHOICE" EntityType="Model.MULTIPLE_CHOICE" />
+    <AssociationSet Name="FK_COMORBIDITY_ID" Association="Model.FK_COMORBIDITY_ID">
+      <End Role="COMORBIDITY" EntitySet="COMORBIDITies" />
+      <End Role="CASE_COMORBIDITY" EntitySet="CASE_COMORBIDITY" />
+    </AssociationSet>
+    <AssociationSet Name="CASE_QUESTIONS_FK1" Association="Model.CASE_QUESTIONS_FK1">
+      <End Role="MULTIPLE_CHOICE" EntitySet="MULTIPLE_CHOICE" />
+      <End Role="CASE_QUESTIONS" EntitySet="CASE_QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="COMORBIDITY_FK1" Association="Model.COMORBIDITY_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="COMORBIDITY" EntitySet="COMORBIDITies" />
+    </AssociationSet>
+    <AssociationSet Name="MULTIPLE_CHOICE_FK1" Association="Model.MULTIPLE_CHOICE_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="MULTIPLE_CHOICE" EntitySet="MULTIPLE_CHOICE" />
+    </AssociationSet>
+    <EntitySet Name="QUESTIONS" EntityType="Model.QUESTION" />
+    <AssociationSet Name="FK_QUESTION_ID" Association="Model.FK_QUESTION_ID">
+      <End Role="QUESTION" EntitySet="QUESTIONS" />
+      <End Role="CASE_QUESTIONS" EntitySet="CASE_QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CATEGORY_ID" Association="Model.FK_CATEGORY_ID">
+      <End Role="CATEGORy" EntitySet="CATEGORIES" />
+      <End Role="QUESTION" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QUESTION_ID_1" Association="Model.FK_QUESTION_ID_1">
+      <End Role="QUESTION" EntitySet="QUESTIONS" />
+      <End Role="MULTIPLE_CHOICE" EntitySet="MULTIPLE_CHOICE" />
+    </AssociationSet>
+    <AssociationSet Name="QUESTIONS_FK1" Association="Model.QUESTIONS_FK1">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="QUESTION" EntitySet="QUESTIONS" />
+    </AssociationSet>
+    <EntitySet Name="ROLE_PERMISSIONS" EntityType="Model.ROLE_PERMISSIONS" />
+    <EntitySet Name="USER_ROLE" EntityType="Model.USER_ROLE" />
+    <AssociationSet Name="ROLE_PERMISSION_FK1" Association="Model.ROLE_PERMISSION_FK1">
+      <End Role="PERMISSION" EntitySet="PERMISSIONS" />
+      <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="ROLE_PERMISSION_FK2" Association="Model.ROLE_PERMISSION_FK2">
+      <End Role="ROLE" EntitySet="ROLES" />
+      <End Role="ROLE_PERMISSIONS" EntitySet="ROLE_PERMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="USER_ROLE_FK1" Association="Model.USER_ROLE_FK1">
+      <End Role="ROLE" EntitySet="ROLES" />
+      <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="USER_ROLE_FK2" Association="Model.USER_ROLE_FK2">
+      <End Role="USER" EntitySet="USERS" />
+      <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="REGIONS_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.REGION" Role="REGION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="REGION">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="REQUESTERS_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.REQUESTER" Role="REQUESTER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="REQUESTER">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ROLES_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.ROLE" Role="ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="ROLE">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DEPARTMENT">
+    <Key>
+      <PropertyRef Name="DEPARTMENT_ID" />
+    </Key>
+    <Property Name="DEPARTMENT_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COST_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DEPARTMENT_NAME" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="VSIBILITY_STATUS" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="REGION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <NavigationProperty Name="REGION" Relationship="Model.DEPARTMENTS_FK1" FromRole="DEPARTMENT" ToRole="REGION" />
+    <NavigationProperty Name="USER" Relationship="Model.DEPARTMENTS_FK2" FromRole="DEPARTMENT" ToRole="USER" />
+    <NavigationProperty Name="REQUESTERS" Relationship="Model.FK_DEPARTMENT_ID" FromRole="DEPARTMENT" ToRole="REQUESTER" />
+  </EntityType>
+  <Association Name="DEPARTMENTS_FK1">
+    <End Type="Model.REGION" Role="REGION" Multiplicity="1" />
+    <End Type="Model.DEPARTMENT" Role="DEPARTMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REGION">
+        <PropertyRef Name="REGION_ID" />
+      </Principal>
+      <Dependent Role="DEPARTMENT">
+        <PropertyRef Name="REGION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DEPARTMENTS_FK2">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.DEPARTMENT" Role="DEPARTMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="DEPARTMENT">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DEPARTMENT_ID">
+    <End Type="Model.DEPARTMENT" Role="DEPARTMENT" Multiplicity="1" />
+    <End Type="Model.REQUESTER" Role="REQUESTER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="DEPARTMENT_ID" />
+      </Principal>
+      <Dependent Role="REQUESTER">
+        <PropertyRef Name="DEPARTMENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CASE_QUESTIONS">
+    <Key>
+      <PropertyRef Name="CASE_ID" />
+      <PropertyRef Name="QUESTION_ID" />
+    </Key>
+    <Property Name="CASE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="QUESTION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="QUESTION_NAME" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="ANSWER" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="CHOICE_ID" Type="Decimal" Precision="38" Scale="0" />
+    <NavigationProperty Name="Case" Relationship="Model.FK_CASE_ID" FromRole="CASE_QUESTIONS" ToRole="Case" />
+    <NavigationProperty Name="MULTIPLE_CHOICE" Relationship="Model.CASE_QUESTIONS_FK1" FromRole="CASE_QUESTIONS" ToRole="MULTIPLE_CHOICE" />
+    <NavigationProperty Name="QUESTION" Relationship="Model.FK_QUESTION_ID" FromRole="CASE_QUESTIONS" ToRole="QUESTION" />
+  </EntityType>
+  <EntityType Name="REFERENCE">
+    <Key>
+      <PropertyRef Name="REFERENCE_ID" />
+    </Key>
+    <Property Name="REFERENCE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REFERENCE_NAME" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="VISIBILIT_STATUS" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DISPLAY_ORDER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="CASE_REFERENCES" Relationship="Model.FK_REFRENSES_ID_" FromRole="REFERENCE" ToRole="CASE_REFERENCES" />
+    <NavigationProperty Name="USER" Relationship="Model.REFERENCES_FK1" FromRole="REFERENCE" ToRole="USER" />
+  </EntityType>
+  <Association Name="FK_CASE_ID">
+    <End Type="Model.Case" Role="Case" Multiplicity="1" />
+    <End Type="Model.CASE_QUESTIONS" Role="CASE_QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Case">
+        <PropertyRef Name="CASE_ID" />
+      </Principal>
+      <Dependent Role="CASE_QUESTIONS">
+        <PropertyRef Name="CASE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REFRENSES_ID_">
+    <End Type="Model.REFERENCE" Role="REFERENCE" Multiplicity="1" />
+    <End Type="Model.CASE_REFERENCES" Role="CASE_REFERENCES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REFERENCE">
+        <PropertyRef Name="REFERENCE_ID" />
+      </Principal>
+      <Dependent Role="CASE_REFERENCES">
+        <PropertyRef Name="REFERENCE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="REFERENCES_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.REFERENCE" Role="REFERENCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="REFERENCE">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CATEGORy">
+    <Key>
+      <PropertyRef Name="CATEGORY_ID" />
+    </Key>
+    <Property Name="CATEGORY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CATEGORY_NAME" Type="String" Nullable="false" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="CATEGORY_TYPE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VSIBILITY_STATUS" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DEFUALT" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DISPLAY_ORDER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="CASE_CATEGORIES" Relationship="Model.FK_CATEGORY_ID_2" FromRole="CATEGORy" ToRole="CASE_CATEGORIES" />
+    <NavigationProperty Name="USER" Relationship="Model.CATEGORIES_FK1" FromRole="CATEGORy" ToRole="USER" />
+    <NavigationProperty Name="QUESTIONS" Relationship="Model.FK_CATEGORY_ID" FromRole="CATEGORy" ToRole="QUESTION" />
+  </EntityType>
+  <Association Name="FK_CATEGORY_ID_2">
+    <End Type="Model.CATEGORy" Role="CATEGORy" Multiplicity="1" />
+    <End Type="Model.CASE_CATEGORIES" Role="CASE_CATEGORIES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORy">
+        <PropertyRef Name="CATEGORY_ID" />
+      </Principal>
+      <Dependent Role="CASE_CATEGORIES">
+        <PropertyRef Name="CATEGORY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CATEGORIES_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.CATEGORy" Role="CATEGORy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="CATEGORy">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="COMORBIDITY">
+    <Key>
+      <PropertyRef Name="COMORBIDITY_ID" />
+    </Key>
+    <Property Name="COMORBIDITY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COMORBIDITY_NAME" Type="String" Nullable="false" MaxLength="220" FixedLength="false" Unicode="false" />
+    <Property Name="VISIBILIT_STATUS" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DISPLAY_ORDER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="CASE_COMORBIDITY" Relationship="Model.FK_COMORBIDITY_ID" FromRole="COMORBIDITY" ToRole="CASE_COMORBIDITY" />
+    <NavigationProperty Name="USER" Relationship="Model.COMORBIDITY_FK1" FromRole="COMORBIDITY" ToRole="USER" />
+  </EntityType>
+  <EntityType Name="MULTIPLE_CHOICE">
+    <Key>
+      <PropertyRef Name="CHOICE_ID" />
+    </Key>
+    <Property Name="CHOICE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CHOICE_NAM" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="QUESTION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="DISPLAY_ORDER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <Property Name="VISIBILITY_STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CASE_QUESTIONS" Relationship="Model.CASE_QUESTIONS_FK1" FromRole="MULTIPLE_CHOICE" ToRole="CASE_QUESTIONS" />
+    <NavigationProperty Name="USER" Relationship="Model.MULTIPLE_CHOICE_FK1" FromRole="MULTIPLE_CHOICE" ToRole="USER" />
+    <NavigationProperty Name="QUESTION" Relationship="Model.FK_QUESTION_ID_1" FromRole="MULTIPLE_CHOICE" ToRole="QUESTION" />
+  </EntityType>
+  <Association Name="FK_COMORBIDITY_ID">
+    <End Type="Model.COMORBIDITY" Role="COMORBIDITY" Multiplicity="1" />
+    <End Type="Model.CASE_COMORBIDITY" Role="CASE_COMORBIDITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMORBIDITY">
+        <PropertyRef Name="COMORBIDITY_ID" />
+      </Principal>
+      <Dependent Role="CASE_COMORBIDITY">
+        <PropertyRef Name="COMORBIDITY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CASE_QUESTIONS_FK1">
+    <End Type="Model.MULTIPLE_CHOICE" Role="MULTIPLE_CHOICE" Multiplicity="0..1" />
+    <End Type="Model.CASE_QUESTIONS" Role="CASE_QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MULTIPLE_CHOICE">
+        <PropertyRef Name="CHOICE_ID" />
+      </Principal>
+      <Dependent Role="CASE_QUESTIONS">
+        <PropertyRef Name="CHOICE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="COMORBIDITY_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.COMORBIDITY" Role="COMORBIDITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="COMORBIDITY">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MULTIPLE_CHOICE_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.MULTIPLE_CHOICE" Role="MULTIPLE_CHOICE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="MULTIPLE_CHOICE">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QUESTION">
+    <Key>
+      <PropertyRef Name="QUESTION_ID" />
+    </Key>
+    <Property Name="QUESTION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QUESTION1" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CATEGORY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="ANSWER_TYPE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VISIBILITY_STATUS" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DEFAULT_QUESTION" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DISPLAY_ORDER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CREATED_DATE" Type="DateTime" />
+    <Property Name="CREATED_BY" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANGED_DATE" Type="DateTime" />
+    <NavigationProperty Name="CASE_QUESTIONS" Relationship="Model.FK_QUESTION_ID" FromRole="QUESTION" ToRole="CASE_QUESTIONS" />
+    <NavigationProperty Name="CATEGORy" Relationship="Model.FK_CATEGORY_ID" FromRole="QUESTION" ToRole="CATEGORy" />
+    <NavigationProperty Name="MULTIPLE_CHOICE" Relationship="Model.FK_QUESTION_ID_1" FromRole="QUESTION" ToRole="MULTIPLE_CHOICE" />
+    <NavigationProperty Name="USER" Relationship="Model.QUESTIONS_FK1" FromRole="QUESTION" ToRole="USER" />
+  </EntityType>
+  <Association Name="FK_QUESTION_ID">
+    <End Type="Model.QUESTION" Role="QUESTION" Multiplicity="1" />
+    <End Type="Model.CASE_QUESTIONS" Role="CASE_QUESTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTION">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="CASE_QUESTIONS">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CATEGORY_ID">
+    <End Type="Model.CATEGORy" Role="CATEGORy" Multiplicity="1" />
+    <End Type="Model.QUESTION" Role="QUESTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORy">
+        <PropertyRef Name="CATEGORY_ID" />
+      </Principal>
+      <Dependent Role="QUESTION">
+        <PropertyRef Name="CATEGORY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QUESTION_ID_1">
+    <End Type="Model.QUESTION" Role="QUESTION" Multiplicity="1" />
+    <End Type="Model.MULTIPLE_CHOICE" Role="MULTIPLE_CHOICE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTION">
+        <PropertyRef Name="QUESTION_ID" />
+      </Principal>
+      <Dependent Role="MULTIPLE_CHOICE">
+        <PropertyRef Name="QUESTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="QUESTIONS_FK1">
+    <End Type="Model.USER" Role="USER" Multiplicity="0..1" />
+    <End Type="Model.QUESTION" Role="QUESTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="QUESTION">
+        <PropertyRef Name="CREATED_BY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ROLE_PERMISSIONS">
+    <Key>
+      <PropertyRef Name="PERMISSION_ID" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="PERMISSION_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="ROLE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="COLUMN1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PERMISSION" Relationship="Model.ROLE_PERMISSION_FK1" FromRole="ROLE_PERMISSIONS" ToRole="PERMISSION" />
+    <NavigationProperty Name="ROLE" Relationship="Model.ROLE_PERMISSION_FK2" FromRole="ROLE_PERMISSIONS" ToRole="ROLE" />
+  </EntityType>
+  <EntityType Name="USER_ROLE">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="ROLE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="COLUMN1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ROLE" Relationship="Model.USER_ROLE_FK1" FromRole="USER_ROLE" ToRole="ROLE" />
+    <NavigationProperty Name="USER" Relationship="Model.USER_ROLE_FK2" FromRole="USER_ROLE" ToRole="USER" />
+  </EntityType>
+  <Association Name="ROLE_PERMISSION_FK1">
+    <End Type="Model.PERMISSION" Role="PERMISSION" Multiplicity="1" />
+    <End Type="Model.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERMISSION">
+        <PropertyRef Name="PERMISSION_ID" />
+      </Principal>
+      <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="PERMISSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ROLE_PERMISSION_FK2">
+    <End Type="Model.ROLE" Role="ROLE" Multiplicity="1" />
+    <End Type="Model.ROLE_PERMISSIONS" Role="ROLE_PERMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="ROLE_PERMISSIONS">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="USER_ROLE_FK1">
+    <End Type="Model.ROLE" Role="ROLE" Multiplicity="1" />
+    <End Type="Model.USER_ROLE" Role="USER_ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="USER_ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="USER_ROLE_FK2">
+    <End Type="Model.USER" Role="USER" Multiplicity="1" />
+    <End Type="Model.USER_ROLE" Role="USER_ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="USER_ROLE">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

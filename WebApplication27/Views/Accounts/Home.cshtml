@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+@model WebApplication27.Models.CaseViewModel
+
+
+<div class="center">
+    <div class="row">
+        <div class="col-sm d-flex">
+            <div class="card w-100">
+                <div class="card-body">
+                    <p class="card-text"> Welecome to Drug and Poison Information Center</p>
+                    @foreach (var item in Model.PermissionList.Take(5))
+                    {
+                        if (item.PERMISSION_NAME != "Submit the case" || item.TYPE != "Requesters")
+                        {
+                            <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" style="color: #428bca" class="nav-link">
+                                @item.PERMISSION_NAME
+                            </a>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+        @if (TempData["Requesters"] != null)
+        {
+            <div class="col-sm d-flex">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Requesters</h5>
+                        <p class="card-text">Recent Registered Requesters</p>
+                        @foreach (var item in Model.RequesterList)
+                        {
+                            <span style="font-size: large; ">&#8250; @item.REQUESTER_NAME</span>
+                            <span class="form-text text-muted" style="font-size:10px;">(@item.CREATED_DATE)</span>
+                            <br />
+
+                        }
+
+                        <a href="@Url.Action("Create", "Requesters")" class="align-self-end btn" style="background-color: #428bca; color: #fff">+ Rrequester</a>
+                        <a href="@Url.Action("Index", "Requesters")" class="align-self-end card-link" style="color: #428bca">All Requesters </a>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (TempData["Case"] != null)
+        {
+            <div class="col-sm d-flex">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Cases </h5>
+                        <p class="card-text">My Recent Pending Cases</p>
+                        @foreach (var item in Model.userCases)
+                        {
+                            <span style="font-size: large; ">&#8250;</span>
+                            var s = string.Join(" ", item.CASE_DESCRIBTION.Split(' ').Take(5));
+
+                            <a href="@Url.Action("Edit", "Case", new { id = item.CASE_ID })" style="border-color: #428bca; color:#428bca">
+
+                                @Html.DisplayFor(x => s)<span>...</span>
+                            </a><span class="form-text text-muted" style="font-size:10px;">(@item.CASE_START_DATE) by @item.USER.FULL_NAME </span>
+
+                            <br />
+
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>

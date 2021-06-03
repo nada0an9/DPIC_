@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "Roles";
+}
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebApplication27.Models.ROLE>
+
+<h4 style="margin-bottom:20px; margin-top:30px">Roles</h4>
+
+
+@*alert messages*@
+@if (TempData["Danger"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["Danger"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["Success"]
+    </div>
+
+}
+
+@if (TempData["cannotEdit"] != null)
+{
+    <div class="success-message">
+        <div class="modal fade" id="Model" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Edit Role Information </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You cannot edit this role, since it has been used in pending case</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@*Search Form*@
+@using (Html.BeginForm("Index", "Role", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-10">
+            <div class="input-group mb-3 w-25">
+                @Html.TextBox("name", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "Name", })
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <a href="@Url.Action("Create", "Role")" class="btn" style=" background-color: #428bca; color: #fff;">+ Add Role</a>
+        </div>
+    </div>
+
+
+
+}
+
+
+
+@*model for delete role*@
+
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Delete Role</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="partial11">
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*Table To read  all roles*@
+
+
+
+<table class="table m-1">
+    <thead>
+        <tr>
+
+            <th>Role Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+
+        <tr id="@item.ROLE_ID">
+
+            <td>
+
+                @Html.DisplayFor(modelItem => item.ROLE_NAME)
+            </td>
+            <td>
+
+                <a class="btn btn-link" href="@Url.Action("Edit", "Role", new { id = item.ROLE_ID })">
+                    Edit
+                </a>  |
+                <a class="btn btn-link" href="@Url.Action("Details", "Role", new { id = item.ROLE_ID })">
+                    Details
+                </a>  |
+                <input class="vh btn btn-link" type="button" value="Delete"
+                       data-assigned-id="@item.ROLE_ID" data-toggle="modal" data-target="#exampleModalLong1" />
+
+
+
+
+            </td>
+
+
+        </tr>
+
+
+
+    }
+
+
+</table>
+
+
+
+@*pagination*@
+
+<p>
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Role",
+new
+{
+    page,
+    Filter_Value = ViewBag.FilterValue
+}))
+</p>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Model").modal();
+    });
+
+ $(function () {
+   $('.vh').click(function () {
+          var Role_id = $(this).data('assigned-id');
+       var route = '@Url.Action("GetID3", "Role")?id=' + Role_id;
+          $('#partial11').load(route);
+                });
+                });
+
+</script>

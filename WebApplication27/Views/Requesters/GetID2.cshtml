@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+}
+
+@model WebApplication27.Models.requesterModel
+
+<div class="container">
+
+
+    @using (Html.BeginForm("delete", "Requesters", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.REQUESTER_ID)
+
+
+        <fieldset id="SubmitForm">
+            Are you sure to delete @Html.DisplayFor(m => Model.REQUESTER_NAME) requester?
+        </fieldset>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+        </div>
+
+
+
+
+
+
+
+
+    }
+
+</div>

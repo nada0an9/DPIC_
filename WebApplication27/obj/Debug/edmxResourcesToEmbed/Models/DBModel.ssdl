@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CATEGORIES">
+    <Key>
+      <PropertyRef Name="CATEGORY_ID" />
+    </Key>
+    <Property Name="CATEGORY_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="CATEGORY_NAME" Type="varchar2" MaxLength="225" Nullable="false" />
+    <Property Name="VISIBILIT_STATUS" Type="varchar2" MaxLength="20" Nullable="false" />
+    <Property Name="DEFUALT" Type="varchar2" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DEPARTMENT">
+    <Key>
+      <PropertyRef Name="COST_CODE" />
+    </Key>
+    <Property Name="COST_CODE" Type="number" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="DEPARTMENT_NAME" Type="varchar2" MaxLength="15" Nullable="false" />
+    <Property Name="VSIBILITY_STATUS" Type="varchar2" MaxLength="10" />
+  </EntityType>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="DPIC" store:Type="Tables" />
+    <EntitySet Name="DEPARTMENT" EntityType="Self.DEPARTMENT" Schema="DPIC" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

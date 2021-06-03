@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container">
+    @model WebApplication27.Models.ReportModel
+
+
+    <h4 style="margin-bottom:20px; margin-top:30px"> Reports</h4>
+
+    @if (TempData["No_data"] != null)
+    {
+        <div class="success-message">
+            <div class="modal fade" id="Model" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Message</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>No records to display</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+    @using (Html.BeginForm("Validate", "Report", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row" style="margin-top:2rem">
+            <div class="col-md-12 d-flex">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter</h5>
+                        <div class="form-row">
+                            <div class="col-3">
+                                <label class="control-label">From</label>
+                                @Html.TextBoxFor(c => c.Start_date, new { @type = "datetime-local", @class = "form-control datepicker", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Start_date, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="col-3">
+                                <label class="control-label">To</label>
+                                @Html.TextBoxFor(c => c.End_date, new { @type = "datetime-local", @class = "form-control datepicker", required = "required" })
+                                @Html.ValidationMessageFor(m => m.End_date, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="col-2">
+                                <label class="control-label">All Users</label>
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(Models => Models.allUserOrOne, true, new { name = "Defult", required = "required", id = "Yes" })Yes<br />
+                                    @Html.RadioButtonFor(Models => Models.allUserOrOne, false, new { name = "Defult", required = "required", id = "No" })No
+
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+
+                                <div id="UserDiv" style="display:none">
+
+                                    <label class="control-label">Name</label>
+
+                                    @Html.DropDownListFor(Models => Models.USER_ID, ViewBag.userList as SelectList, new { @class = "form-control" })
+
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <br />
+
+                                <button type="submit" class="btn" style="background-color: #428bca; color: #fff ">Generate PDF</button>
+
+                                <a href="@Url.Action("Index", "Report")" class="btn btn-outline-secondary">Reset</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+                    </div>
+
+    }
+    </div>
+
+ <script>
+  $(document).ready(function () {
+                            $("#Model").modal();
+                        });
+
+  $(document).ready(function () {
+                            if ($('#No').is(':checked')) {
+                                document.getElementById('UserDiv').style.display = 'block';
+                            }
+
+                            if ($('#Yes').is(':checked')) {
+
+                                document.getElementById('UserDiv').style.display = 'none';
+
+                            }
+                        });
+
+  //hide and shoe
+  $('#No').click(function () {
+                            document.getElementById('UserDiv').style.display = 'block';
+                        });
+  $('#Yes').click(function () {
+                            document.getElementById('UserDiv').style.display = 'none';
+
+                        });
+
+
+
+                    </script>

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+@model WebApplication27.Models.UsersModel
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Edit User Information</legend>
+
+                @using (Html.BeginForm("EditUser", "Users", FormMethod.Post))
+                {
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.USER_ID)
+                    @Html.ValidationMessageFor(m => m.USER_ID, "", new { @class = "text-danger" })
+
+                    @*alert messages*@
+                    if (TempData["Danger"] != null)
+                    {
+
+                        <p class="text-danger"> @TempData["Danger"]</p>
+                    }
+
+
+                    <div class="form-group">
+                        <label>Full Name</label><br />
+                        @Html.TextBoxFor(Models => Models.FULL_NAME, new { @class = "form-control", required = "required", disabled = "true" })
+                    </div>
+                    <div class="form-group">
+                        <label>Email </label><br />
+                        @Html.TextBoxFor(Models => Models.EMAIL, new { @class = "form-control", required = "required", disabled = "true" })
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label><span class="text-danger">  *</span><br />
+                        @Html.RadioButtonFor(Models => Models.STATUS, "Active", new { required = "required", name = "Status" }) Active<br />
+                        @Html.RadioButtonFor(Models => Models.STATUS, "Inactive", new { required = "required", name = "Status" }) Inactive
+                        @Html.ValidationMessageFor(m => m.STATUS, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <lable>Roles</lable><span class="text-danger">  *</span>
+                        <span id="error" class="field-validation-error">
+                            <span class="text-danger">Select any role </span>
+                        </span>
+
+                        <div id="list1" class="dropdown-check-list" style="width:100%">
+                            <span class="form-control col-md-12 anchor">Select</span>
+
+                            <ul class="items">
+                                <li>
+                                    <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                    <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+                                        @for (int i = 0; i < Model.RoleList.Count(); i++)
+                                        {
+                                            <li>
+                                                @Html.CheckBoxFor(m => Model.RoleList[i].Checked, new { @class = "requierd-check", id = "" })
+                                                @Html.DisplayFor(m => Model.RoleList[i].name, new { @class = "Permissions", id = "List" })
+                                                @Html.HiddenFor(m => Model.RoleList[i].id)
+
+
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                        <button type="submit" id="btn2" style="background-color: #428bca; color: #fff" class="btn">Save Changes</button>
+                        }
+
+                </fieldset>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    //open list
+    var checkList = document.getElementById('list1');
+    checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+        if (checkList.classList.contains('visible'))
+            checkList.classList.remove('visible');
+        else
+            checkList.classList.add('visible');
+    }
+    //search on list
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myList li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    //validation list
+    var declarationsError = $('#error').hide();
+    $('#btn2').click(function () {
+
+        if ($(".requierd-check:checkbox:checked").length > 0) {
+            declarationsError.hide();
+            return true;
+        }
+        else {
+            declarationsError.show();
+            return false;
+        }
+    });
+
+</script>

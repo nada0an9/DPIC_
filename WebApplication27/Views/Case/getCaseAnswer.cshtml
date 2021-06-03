@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "Case Answer";
+}
+@model WebApplication27.Models.answersStage
+
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+
+
+<div class="card shadow-sm" style="margin-top:7%">
+    @if (Model != null)
+    {
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style=" color:gray">Case Description</a>
+                @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+                {
+                    <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+                }
+                <a class="nav-link" id="step3-tab" style=" color:gray">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:gray">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray">Case Details</a>
+                <a class="nav-link" id="step3-tab" style="color: #428bca;text-decoration: underline;">Answer</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+            @using (Html.BeginForm("updateCaseAnswer", "Case", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => Model.CASE_ID)
+       
+                    <div class="form-group">
+                        <label>Answer</label><span class="text-danger">  *</span>
+                        <div class="input-group">
+                            @Html.TextAreaFor(Models => Models.ANSWER, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ANSWER, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label> Researched By</label><span class="text-danger">  *</span>
+                        <div class="input-group">
+                            @Html.TextBoxFor(Models => Models.RESEARCHER_NAME, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RESEARCHER_NAME, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable>References</lable><span class="text-danger">  *</span>
+
+                        <div id="list1" class="dropdown-check-list" style="width:100%">
+                            <span class="form-control col-md-12 anchor">Select</span>
+
+                            <ul class="items">
+                                <li>
+                                    <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                    <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+                                        @for (int i = 0; i < Model.RefrensesList.Count(); i++)
+                                        {
+                                            <li>
+                                                @Html.CheckBoxFor(m => Model.RefrensesList[i].Checked, new { @class = "ReferencesCH", id = "References" })
+                                                @Html.DisplayFor(m => Model.RefrensesList[i].name, new { @class = "References", id = "List" })
+                                                @Html.HiddenFor(m => Model.RefrensesList[i].id)
+                                                @Html.HiddenFor(m => Model.RefrensesList[i].name)
+                                                @if (Model.RefrensesList[i].name == "Other")
+                                                {
+                                                    @Html.TextBoxFor(m => Model.RefrensesList[i].other, new { @class = "form-control", placeholder = "Other References", maxlength = 150 })
+
+                                                }
+
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span id="error-message" class="field-validation-error">
+                        <span class="text-danger">Select any reference </span>
+                    </span>
+                    <div class="row justify-content-between">
+                        <div class="col-auto">
+                            <a href="@Url.Action("getCasDetails", "Case", new { id = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+
+                        </div>
+                        <div class="col-auto">
+
+                            <button type="submit" name="SaveAsPending" id="btn3" class="btn" style="background-color: #428bca; color: #fff">Save as Pending Case</button>
+                            <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                                Save and continue
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+            
+        </div>
+    }
+    else
+    {
+        <p>No data found</p>
+    }
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        //to open references list
+        var checkList = document.getElementById('list1');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (checkList.classList.contains('visible'))
+                checkList.classList.remove('visible');
+            else
+                checkList.classList.add('visible');
+        }
+        //search on references list
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        //check if the list of checkbox is cheked
+
+        var declarationsError = $('#error-message').hide();
+        $('#btn2, #btn3').click(function () {
+
+            if ($(".ReferencesCH:checkbox:checked").length > 0) {
+                declarationsError.hide();
+                return true;
+            }
+            else {
+                declarationsError.show();
+                return false;
+            }
+        });
+
+        $('.ReferencesCH').change(function () {
+            if ($(this).is(':checked')) {
+                declarationsError.hide(); // hide error message
+            }
+        });
+
+    </script>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

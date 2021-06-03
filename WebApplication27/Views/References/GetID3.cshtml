@@ -1,0 +1,27 @@
+﻿
+@model WebApplication27.Models.REFERENCE
+
+
+    @using (Html.BeginForm("deleteref", "References", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.REFERENCE_ID)
+    <div class="form-horizontal">
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <p>Are you sure you want to delete @Html.DisplayFor(model => model.REFERENCE_NAME) reference</p>
+
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+        </div>
+
+    </div>
+            }
+
+
+

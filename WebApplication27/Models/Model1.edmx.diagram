@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4b8c0238ea0f4d5caec340a4faa69027" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="Model.CASE_CATEGORIES" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CASE_COMORBIDITY" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CASE_REFERENCES" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Case" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PERMISSION" Width="1.5" PointX="3.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REGION" Width="1.5" PointX="1.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.REQUESTER" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ROLE" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_CASE_ID_2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CASE_ID_4" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CASE_ID_3" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CASES_FK1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_REQUESTER_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.REGIONS_FK1" />
+        <AssociationConnector Association="Model.REQUESTERS_FK1" />
+        <AssociationConnector Association="Model.ROLES_FK1" />
+        <EntityTypeShape EntityType="Model.DEPARTMENT" Width="1.5" PointX="10.75" PointY="13.125" />
+        <AssociationConnector Association="Model.DEPARTMENTS_FK1" />
+        <AssociationConnector Association="Model.DEPARTMENTS_FK2" />
+        <AssociationConnector Association="Model.FK_DEPARTMENT_ID" />
+        <EntityTypeShape EntityType="Model.CASE_QUESTIONS" Width="1.5" PointX="8.75" PointY="11" />
+        <EntityTypeShape EntityType="Model.REFERENCE" Width="1.5" PointX="1.25" PointY="0.625" />
+        <AssociationConnector Association="Model.FK_CASE_ID" />
+        <AssociationConnector Association="Model.FK_REFRENSES_ID_" />
+        <AssociationConnector Association="Model.REFERENCES_FK1" />
+        <EntityTypeShape EntityType="Model.CATEGORy" Width="1.5" PointX="3" PointY="21.125" />
+        <AssociationConnector Association="Model.FK_CATEGORY_ID_2" />
+        <AssociationConnector Association="Model.CATEGORIES_FK1" />
+        <EntityTypeShape EntityType="Model.COMORBIDITY" Width="1.5" PointX="3" PointY="25.25" />
+        <EntityTypeShape EntityType="Model.MULTIPLE_CHOICE" Width="1.5" PointX="8.25" PointY="15.25" />
+        <AssociationConnector Association="Model.FK_COMORBIDITY_ID" />
+        <AssociationConnector Association="Model.CASE_QUESTIONS_FK1" />
+        <AssociationConnector Association="Model.COMORBIDITY_FK1" />
+        <AssociationConnector Association="Model.MULTIPLE_CHOICE_FK1" />
+        <EntityTypeShape EntityType="Model.QUESTION" Width="1.5" PointX="6.25" PointY="19.125" />
+        <AssociationConnector Association="Model.FK_QUESTION_ID" />
+        <AssociationConnector Association="Model.FK_CATEGORY_ID" />
+        <AssociationConnector Association="Model.FK_QUESTION_ID_1" />
+        <AssociationConnector Association="Model.QUESTIONS_FK1" />
+        <EntityTypeShape EntityType="Model.ROLE_PERMISSIONS" Width="1.5" PointX="11" PointY="10.375" />
+        <EntityTypeShape EntityType="Model.USER_ROLE" Width="1.5" PointX="6" PointY="3.25" />
+        <AssociationConnector Association="Model.ROLE_PERMISSION_FK1" />
+        <AssociationConnector Association="Model.ROLE_PERMISSION_FK2" />
+        <AssociationConnector Association="Model.USER_ROLE_FK1" />
+        <AssociationConnector Association="Model.USER_ROLE_FK2" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

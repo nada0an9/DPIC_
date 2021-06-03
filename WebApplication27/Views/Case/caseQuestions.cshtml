@@ -1,0 +1,141 @@
+﻿
+
+@{
+    ViewBag.Title = "Questions List";
+}
+@model WebApplication27.Models.CaseViewModel
+
+
+@using (Html.BeginForm("SaveCaseQuestions", "Case", FormMethod.Post))
+{
+    if (Model != null)
+    {
+
+        <span id="error" class="field-validation-error">
+            <span class="text-danger">Select any Questions </span>
+        </span>
+        @*alert messages*@
+        if (TempData["Danger"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @TempData["Danger"]
+            </div>
+        }
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.CheckBox("QuestionCH", new { id = "id-of-checkall-checkbox", name = "QuestionCH" })
+                    </th>
+                    <th>Question Name</th>
+                    <th>Category </th>
+
+
+                </tr>
+            </thead>
+
+            @for (int i = 0; i < Model.QuestionsList.Count(); i++)
+            {
+                @Html.Raw("<tr>")
+
+                @Html.HiddenFor(m => Model.CASE_ID)
+                @Html.Raw("<td>")
+
+                if (Model.QuestionsList[i].defult == "Yes")
+                {
+
+                    @Html.DisplayFor(m => Model.QuestionsList[i].Checked, new { @class = "QuestionCH", @checked = true, value = true, @disabled = "disabled" })
+                    @Html.CheckBoxFor(m => Model.CategoryList[i].Checked, new { @class = "QuestionCH", value = true, @checked = true, style = "display: none" })
+
+                    @Html.HiddenFor(m => Model.QuestionsList[i].Checked)
+
+
+                }
+                if (Model.QuestionsList[i].defult == "No")
+                {
+
+                    @Html.CheckBoxFor(m => Model.QuestionsList[i].Checked, new { @class = "QuestionCH", id = "Category", name = "CategoryCH" })
+
+
+                }
+
+                @Html.Raw("</td>")
+
+
+
+
+                @Html.Raw("<td>")
+                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                @Html.Raw("</td>")
+                @Html.Raw("<td>")
+                @Html.DisplayFor(m => Model.QuestionsList[i].Category)
+                @Html.Raw("</td>")
+                @Html.HiddenFor(m => Model.QuestionsList[i].id)
+                @Html.HiddenFor(m => Model.QuestionsList[i].name)
+
+
+                @Html.Raw("</tr>")
+
+            }
+
+
+
+
+
+        </table>
+        <br />
+        <br />
+
+
+        <div class="row justify-content-between">
+            <div class="col-auto">
+            </div>
+            <div class="col-auto">
+
+                <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                    Save
+                </button>
+            </div>
+        </div>
+
+
+    }
+    else
+    {
+        <p>No Data Found</p>
+    }
+
+
+
+}
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var declarationsError = $('#error').hide();
+        $('#btn2, #btn3').click(function () {
+
+
+
+            if ($(".QuestionCH:checkbox:checked").length > 0) {
+                declarationsError.hide();
+                return true;
+            } else {
+                declarationsError.show();
+                return false;
+            }
+        });
+
+        $('.QuestionCH').change(function () {
+            if ($(this).is(':checked')) {
+                declarationsError.hide(); // hide error message
+            }
+        });
+        //select all
+        $("#id-of-checkall-checkbox").click(function () {
+            $(".QuestionCH").attr('checked', this.checked);
+        });
+    </script>
+}

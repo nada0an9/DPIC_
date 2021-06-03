@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+
+@model WebApplication27.Models.UsersModel
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">User Information</legend>
+
+
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.USER_ID)
+
+                <div class="form-group">
+                    <label>Full Name</label><br />
+                    @Html.TextBoxFor(Models => Models.FULL_NAME, new { @class = "form-control", required = "required" })
+
+
+
+                </div>
+                <div class="form-group">
+                    <label>Email </label><br />
+                    @Html.TextBoxFor(Models => Models.EMAIL, new { @class = "form-control", required = "required" })
+
+
+
+                </div>
+                <div class="form-group">
+                    <label>Status</label><br />
+                    @Html.RadioButtonFor(Models => Models.STATUS, "Active", new { required = "required", name = "Status" }) Active<br />
+                    @Html.RadioButtonFor(Models => Models.STATUS, "Inactive", new { required = "required", name = "Status" }) Inactive
+                    @Html.ValidationMessageFor(m => m.STATUS, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group">
+                    <div id="list1" class="dropdown-check-list" tabindex="100" style="width:100%">
+                        <span class="form-control col-md-12 anchor">Roles</span>
+                        <ul class="items" style="overflow-y: scroll; height:100px; ">
+
+                            @for (int i = 0; i < Model.RoleList.Count(); i++)
+                            {
+                                <li>
+                                    @Html.CheckBoxFor(m => Model.RoleList[i].Checked, new { @class = "CategoryCH", id = "Category" })
+                                    @Html.DisplayFor(m => Model.RoleList[i].name, new { @class = "CategoryCH", id = "Category" })
+                                    @Html.HiddenFor(m => Model.RoleList[i].id, new { @class = "CategoryCH", id = "Category" })
+
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+                <a href="@Url.Action("Index", "Users")" style="background-color: #428bca; color: #fff" class="btn">Close</a>
+
+
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+        <script>
+            var checkList = document.getElementById('list1');
+            checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checkList.classList.contains('visible'))
+                    checkList.classList.remove('visible');
+                else
+                    checkList.classList.add('visible');
+            }
+        </script>

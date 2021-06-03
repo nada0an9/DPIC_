@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title </title>
+    <script src="~/Scripts/Chart.min.js"></script>
+    <script src="~/Scripts/JavaScript.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    @if (User.Identity.IsAuthenticated == true)
+    {
+
+
+        Html.RenderAction("menu", "Accounts");
+        <section class="wrapper">
+            <div class="container-sm">
+                <div class="row-cols-sm-1">
+                    <div class="col-sm-12 mb-2">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </section>
+  
+
+    }
+    @if (User.Identity.IsAuthenticated == false)
+    {
+        Html.Action("login", "Accounts");
+
+    }
+
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

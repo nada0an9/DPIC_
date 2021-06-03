@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+
+@model WebApplication27.Models.questionsModel
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Edit Question</legend>
+                <form method="post" action="@Url.Action("edit", "Questions")">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(Models => Models.QUESTION_ID)
+
+                    @Html.ValidationMessageFor(m => m.QUESTION_ID, "", new { @class = "text-danger" })
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            <lable>Question</lable><span class="text-danger">*</span><br />
+                            @Html.TextBoxFor(Models => Models.QUESTION1, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.QUESTION1, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Category Name</label><span class="text-danger">  *</span><br />
+                            @Html.DropDownListFor(Models => Models.CATEGORY_ID, Model.CategoriesList, "Select", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.CATEGORY_ID, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label> Answer Type</label><span class="text-danger">  *</span><br />
+                            @Html.DropDownListFor(Models => Models.ANSWER_TYPE, new List<SelectListItem>    {
+                                        new SelectListItem() {Text = "Text Area", Value="Text Area"},
+                                        new SelectListItem() {Text = "Text", Value="Text"},
+                                        new SelectListItem() {Text = "Yes/No", Value="Yes/No"},
+                                        new SelectListItem() {Text = "Date", Value="Date"},
+                                        new SelectListItem() {Text = "Multiple Choice", Value="Multiple Choice"} }, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.ANSWER_TYPE, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            <lable>Display Order</lable><span class="text-danger">  *</span><br />
+                            @Html.TextBoxFor(Models => Models.DISPLAY_ORDER, new { @class = "form-control", required = "required", onkeypress = "return validateNumber(event)" })
+                            @Html.ValidationMessageFor(m => m.DISPLAY_ORDER, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="form-group col-md-6">
+
+                            <label>Status</label><span class="text-danger">  *</span><br />
+                            @Html.RadioButtonFor(Models => Models.VISIBILITY_STATUS, "Visible", new { name = "Status", required = "required", }) Visible<br />
+                            @Html.RadioButtonFor(Models => Models.VISIBILITY_STATUS, "Hide", new { name = "Status" }) Hide
+                            @Html.ValidationMessageFor(m => m.VISIBILITY_STATUS, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Required</label><span class="text-danger">  *</span><br />
+                            @Html.RadioButtonFor(Models => Models.DEFAULT_QUESTION, "Yes", new { name = "Defult", required = "required", })Yes<br />
+                            @Html.RadioButtonFor(Models => Models.DEFAULT_QUESTION, "No", new { name = "Defult", required = "required", })No
+                            @Html.ValidationMessageFor(m => m.DEFAULT_QUESTION, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Save Changes</button>
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>
+

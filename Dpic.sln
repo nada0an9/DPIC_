@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPIC", "WebApplication27\DPIC.csproj", "{DF689F4E-80A3-4A1F-AEBE-0F7127918176}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{085C7560-562A-4DDC-8D3A-19A561F9D68A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF689F4E-80A3-4A1F-AEBE-0F7127918176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF689F4E-80A3-4A1F-AEBE-0F7127918176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF689F4E-80A3-4A1F-AEBE-0F7127918176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF689F4E-80A3-4A1F-AEBE-0F7127918176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82D78536-ACAC-4667-A5B4-B1B60FC317B7}
+	EndGlobalSection
+EndGlobal

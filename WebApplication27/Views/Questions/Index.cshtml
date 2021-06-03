@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Questions";
+}
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebApplication27.Models.QUESTION>
+
+<h4 style="margin-bottom:20px; margin-top:30px">Questions</h4>
+
+
+
+
+@*alert messages*@
+
+@if (TempData["Danger"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["Danger"]
+    </div>
+}
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["Success"]
+    </div>
+
+}
+
+@*model for delete question*@
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Delete Question</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="partial11">
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@*Search Form*@
+@using (Html.BeginForm("Index", "Questions", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-10">
+            <div class="input-group mb-3 w-25">
+                @Html.TextBox("name", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "Name", })
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+
+            <a href="@Url.Action("create", "Questions")" class="btn" style="background-color: #428bca;color: #fff; margin-bottom: 20px">+ Add Question</a>
+        </div>
+    </div>
+
+
+
+
+}
+
+
+
+@*question table*@
+<table class="table m-1">
+    <thead>
+        <tr>
+
+            <th>Question </th>
+            <th>Status</th>
+            <th>Required</th>
+            <th>Category </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+
+<tr id="@item.QUESTION_ID">
+
+    <td>
+
+
+        @{
+
+            var s = string.Join(" ", item.QUESTION1.Split(' ').Take(5));
+
+            @Html.DisplayFor(x => s)
+            <span>...</span>
+
+
+        }
+    </td>
+  
+    <td>
+        @item.VISIBILITY_STATUS
+    </td>
+    <td>
+        @item.DEFAULT_QUESTION
+    </td>
+
+    <td>
+        @item.CATEGORy.CATEGORY_NAME
+    </td>
+
+    <td>
+        <a class="btn btn-link" href="@Url.Action("GetID2", "Questions", new { id = item.QUESTION_ID })">
+            Edit
+        </a>  |
+        <a class="btn btn-link" href="@Url.Action("details", "Questions", new { id = item.QUESTION_ID })">
+            Details
+        </a>  |
+        <input class="vh btn btn-link" type="button" value="Delete"
+               data-assigned-id="@item.QUESTION_ID" data-toggle="modal" data-target="#exampleModalLong1" />
+
+    </td>
+
+
+</tr>
+
+
+
+    }
+
+
+</table>
+
+
+@*pagination*@
+
+<p>
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Questions",
+new
+{
+    page,
+    Filter_Value = ViewBag.FilterValue
+}))
+</p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Model").modal();
+    });
+            $(function () {
+            $('.search').click(function () {
+                var QUESTION_ID = $(this).data('assigned-id');
+                var route = '@Url.Action("GetID2", "Questions")?QUESTION_ID=' + QUESTION_ID;
+                $('#partial2').load(route);
+            });
+
+        });
+
+
+
+            $(function () {
+                $('.vh').click(function () {
+                    var QUESTION_ID = $(this).data('assigned-id');
+                    var route = '@Url.Action("GetID3", "Questions")?QUESTION_ID=' + QUESTION_ID;
+                $('#partial11').load(route);
+            });
+
+        });
+
+</script>

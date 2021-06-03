@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Case Recored";
+}
+
+@model WebApplication27.Models.recordStage
+
+
+
+
+<div class="card shadow-sm" style="margin-top:7%">
+
+    @if (Model != null)
+    {
+
+        <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+                <a class="nav-link" id="step1-tab" style=" color:gray">Case Description</a>
+                @if (Model != null && Model.CASE_TYPE == "Patient Specific Question")
+                {
+                    <a class="nav-link" id="step2-tab" style=" color:#ccc" data-toggle="tab" href="#step2">Patient Information</a>
+                }
+                <a class="nav-link" id="step3-tab" style=" color:gray">Categories</a>
+                <a class="nav-link" id="step1-tab" style=" color:gray">Questions</a>
+                <a class="nav-link" id="step2-tab" style=" color:gray">Case Details</a>
+                <a class="nav-link" id="step3-tab" style=" color:gray">Answer</a>
+                <a class="nav-link" id="step2-tab" style="color: #428bca;text-decoration: underline;">Record</a>
+            </div>
+        </nav>
+        <div class="card-body">
+            @using (Html.BeginForm("updateCaseRecored", "Case", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => Model.CASE_ID)
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>Answer Given to The Same Requester</label><span class="text-danger">  *</span><br />
+                        @Html.RadioButtonFor(Models => Models.ANSWER_GIVEN, "Yes", new { id = "Yes" })
+                        Yes<br />
+                        @Html.RadioButtonFor(Models => Models.ANSWER_GIVEN, "No", new { id = "No" })
+                        No<br />
+                        @Html.RadioButtonFor(Models => Models.ANSWER_GIVEN, "Not Reachable", new { id = "Reachable" })
+                        Not Reachable
+                        <br />
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ANSWER_GIVEN, "", new { @class = "text-danger" })
+
+                    <div id="ReceiverDiv" style="display:none">
+                        <div class="col-md-3">
+                            <label>Receiver ID</label><span class="text-danger">  *</span>
+                            @Html.TextBoxFor(Models => Models.RECEIVER_ID, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RECEIVER_ID, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-3">
+                            <label>Receiver Name</label><span class="text-danger">  *</span>
+                            @Html.TextBoxFor(Models => Models.RECEIVER_NAME, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RECEIVER_NAME, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div id="NotReachableDiv" style="display:none">
+                        <div class="form-group col-md-6">
+                            <label>Not Reachable Comment</label><span class="text-danger">  *</span>
+                            @Html.TextAreaFor(Models => Models.NOT_REACHABLE_COMMENT, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NOT_REACHABLE_COMMENT, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-11">
+                    <label>Attempts Made to Contact Requester </label><span class="text-danger">  *</span><br />
+                    @Html.RadioButtonFor(Models => Models.CONTACT_ATTEMPT, "1", false)
+                    1<br />
+                    @Html.RadioButtonFor(Models => Models.CONTACT_ATTEMPT, "2", false)
+                    2<br />
+                    @Html.RadioButtonFor(Models => Models.CONTACT_ATTEMPT, "3", false)
+                    3<br />
+                    @Html.RadioButtonFor(Models => Models.CONTACT_ATTEMPT, "4", false)
+                    4<br />
+                    @Html.RadioButtonFor(Models => Models.CONTACT_ATTEMPT, "5 or more", false)
+                    5 or more<br />
+                    @Html.ValidationMessageFor(model => model.CONTACT_ATTEMPT, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group col-md-11">
+                    <label>Was The Ultimate Question Different from Original Question</label><span class="text-danger">  *</span><br />
+                    @Html.RadioButtonFor(Models => Models.IS_DIFFER, "Yes", false)
+                    Yes<br />
+                    @Html.RadioButtonFor(Models => Models.IS_DIFFER, "No", false) No<br />
+                    @Html.ValidationMessageFor(model => model.IS_DIFFER, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <a href="@Url.Action("getCasDetails", "Case", new { Id = Model.CASE_ID })" class="btn btn-secondary">Previous</a>
+                    </div>
+                    <div class="col-auto">
+
+                        <button type="submit" name="save" id="btn2" class="btn" style="background-color: #428bca; color: #fff">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    }
+    else
+    {
+        <p>No data found</p>
+    }
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#No').is(':checked')) {
+                document.getElementById('ReceiverDiv').style.display = 'block';
+                document.getElementById('NotReachableDiv').style.display = 'none';
+
+            }
+            if ($('#Reachable').is(':checked')) {
+                document.getElementById('ReceiverDiv').style.display = 'none';
+                document.getElementById('NotReachableDiv').style.display = 'block';
+
+
+            }
+            if ($('#Yes').is(':checked')) {
+
+                document.getElementById('ReceiverDiv').style.display = 'none';
+                document.getElementById('NotReachableDiv').style.display = 'none';
+
+            }
+        });
+        $('#No').click(function () {
+            document.getElementById('ReceiverDiv').style.display = 'block';
+            document.getElementById('NotReachableDiv').style.display = 'none';
+        });
+        $('#Reachable').click(function () {
+            document.getElementById('ReceiverDiv').style.display = 'none';
+            document.getElementById('NotReachableDiv').style.display = 'block';
+
+        });
+        $('#Yes').click(function () {
+            document.getElementById('ReceiverDiv').style.display = 'none';
+            document.getElementById('NotReachableDiv').style.display = 'none';
+
+        });
+    </script>
+}
+
+

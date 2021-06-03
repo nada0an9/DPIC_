@@ -1,0 +1,609 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+}
+
+<br />
+<br />
+@model WebApplication27.Models.GroupedUserCostsViewModel
+
+@*Table reading all case per employee *@
+<table id="t01">
+    <thead>
+        <tr>
+
+            <th>Employee Full Name </th>
+            <th>Cases</th>
+
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model.Items)
+    {
+
+        <tr>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+
+
+        </tr>
+
+
+
+    }
+
+</table>
+
+<div class="container" style="padding-top:60px;">
+    <label> Pregnancy-Related Cases:</label>  @ViewBag.Pregnancy<br />
+    <label> Average Time Per Urgent Cases (Minutes):</label>  @ViewBag.m<br />
+    <label> Average Time Per Regular Cases (Hours) :</label>  @ViewBag.h
+
+
+
+    <div class="card" id="DepChart1">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+            <canvas id="departmentChart"></canvas>
+        </div>
+    </div>
+    <div class="card" id="refChart1">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+
+            <canvas id="referencesChart"></canvas>
+
+
+        </div>
+    </div>
+    <div class="card" id="catChart">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+
+            <canvas id="categoriesChart"></canvas>
+
+
+        </div>
+    </div>
+    <div class="card" id="speCatChart">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+
+            <canvas id="specificCategoriesChart"></canvas>
+
+
+        </div>
+    </div>
+    <div class="card" id="inquiryChart">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+            <div style="max-width:600px;">
+                <canvas id="InquirysourceChart"></canvas>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="card" id="differPieChart">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+            <canvas id="IsDifferChart"></canvas>
+
+
+        </div>
+    </div>
+    <div class="card" id="ultimateChart">
+        <div class="card-header">
+            Dashboard
+        </div>
+        <div class="card-body">
+
+            <canvas id="ultimateCategoryChart"></canvas>
+
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @*<script>
+        $(document).ready(function () {
+            $(function () {
+                $("#DepChart1").hide();
+                $("#refChart1").hide();
+                $("#catChart").hide();
+                $("#speCatChart").hide();
+                $("#inquiryChart").hide();
+                $("#differPieChart").hide();
+                $("#ultimateChart").hide();
+
+                $('#GraphSelector').change(function () {
+
+                    if ($('#GraphSelector').val() == "ab1") {
+
+                        $("#DepChart1").show();
+                        $("#refChart1").hide();
+                        $("#catChart").hide();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").hide();
+                        $("#differPieChart").hide();
+                        $("#ultimateChart").hide();
+                    }
+
+                    else if ($('#GraphSelector').val() == "ab2") {
+                        $("#ultimateChart").hide();
+                        $("#DepChart1").hide();
+                        $("#refChart1").hide();
+                        $("#catChart").hide();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").show();
+                        $("#differPieChart").hide();
+
+                    }
+                    else if ($('#GraphSelector').val() == "ab3") {
+                        $("#ultimateChart").hide();
+                        $("#DepChart1").hide();
+                        $("#refChart1").show();
+                        $("#catChart").hide();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").hide();
+                        $("#differPieChart").hide();
+
+                    }
+                    else if ($('#GraphSelector').val() == "ab4") {
+                        $("#ultimateChart").hide();
+                        $("#DepChart1").hide();
+                        $("#refChart1").hide();
+                        $("#catChart").show();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").hide();
+                        $("#differPieChart").hide();
+
+                    }
+                    else if ($('#GraphSelector').val() == "ab5") {
+
+                        $("#ultimateChart").hide();
+                        $("#DepChart1").hide();
+                        $("#refChart1").hide();
+                        $("#catChart").hide();
+                        $("#speCatChart").show();
+                        $("#inquiryChart").hide();
+                        $("#differPieChart").hide();
+
+                    }
+
+
+                    else if ($('#GraphSelector').val() == "ab6") {
+                        $("#ultimateChart").hide();
+                        $("#DepChart1").hide();
+                        $("#refChart1").hide();
+                        $("#catChart").hide();
+                        $("#differPieChart").show();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").hide();
+
+
+
+
+                    }
+                    else if ($('#GraphSelector').val() == "ab7") {
+                        $("#ultimateChart").show();
+                        $("#DepChart1").hide();
+                        $("#refChart1").hide();
+                        $("#catChart").hide();
+                        $("#speCatChart").hide();
+                        $("#inquiryChart").hide();
+                        $("#differPieChart").hide();
+
+
+
+
+                    }
+
+
+                });
+            });
+
+
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        var repArray = @Html.Raw(Json.Encode(ViewBag.rep));
+        var Depatment = @Html.Raw(Json.Encode(ViewBag.depName));
+        var ctx = $("#departmentChart");
+        var Barchat1 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+
+                labels: Depatment,
+                datasets: [{
+                    label: "Departments",
+                    data: repArray,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(154,65,72)", "rgb(74,25,92)"],
+                    borderWidth: 1
+
+
+
+
+                }]
+
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        display: true
+
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }                    }],
+                },
+                legend: { display: false }
+
+            },
+        });
+
+
+
+
+
+
+        });
+
+          $(document).ready(function ()  {
+
+
+        var rep_2_Array = @Html.Raw(Json.Encode(ViewBag.rep_2));
+        var refrenses = @Html.Raw(Json.Encode(ViewBag.refrensesName));
+        var ctx_2 = $("#referencesChart");
+        var Barchat2= new Chart(ctx_2, {
+
+            type: 'bar',
+            data: {
+
+                labels: refrenses,
+                datasets: [{
+                    label: "References",
+                    data: rep_2_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(154,65,72)", "rgb(74,25,92)"],
+                    borderWidth: 1
+
+
+
+
+                }]
+
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        display: true
+
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }                    }],
+                },
+                legend: { display: false }
+
+            },
+        });
+
+
+
+
+
+
+          });
+
+                  $(document).ready(function () {
+
+
+        var rep_3_Array = @Html.Raw(Json.Encode(ViewBag.rep_3));
+        var categories = @Html.Raw(Json.Encode(ViewBag.categoriesName));
+        var ctx_3 = $("#categoriesChart");
+        var Barchat3 = new Chart(ctx_3, {
+
+            type: 'bar',
+            data: {
+
+                labels: categories,
+                datasets: [{
+                    label: "Categories",
+                    data: rep_3_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(154,65,72)", "rgb(74,25,92)"],
+                    borderWidth: 1
+
+
+
+
+                }]
+
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        display: true
+
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }                    }],
+                },
+                legend: { display: false }
+
+            },
+        });
+
+
+
+
+
+
+                  });
+
+
+
+                          $(document).ready(function () {
+
+
+        var rep_4_Array = @Html.Raw(Json.Encode(ViewBag.rep_4));
+      var specificCategories = @Html.Raw(Json.Encode(ViewBag.specificCategoriesName));
+                              var ctx_4 = $("#specificCategoriesChart");
+        var Barchat4 = new Chart(ctx_4, {
+
+            type: 'bar',
+            data: {
+
+                labels: specificCategories,
+                datasets: [{
+                    label: "Specific Categories",
+                    data: rep_4_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(154,65,72)", "rgb(74,25,92)"],
+                    borderWidth: 1
+
+
+
+
+                }]
+
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        display: true
+
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }                    }],
+                },
+                legend: { display: false }
+
+            },
+        });
+
+
+
+
+
+
+                          });
+
+
+
+
+                                  $(document).ready(function () {
+
+
+        var rep_5_Array = @Html.Raw(Json.Encode(ViewBag.rep_5));
+        var Inquirysource = @Html.Raw(Json.Encode(ViewBag.Inquirysource));
+       var ctx_5 = $("#InquirysourceChart");
+        var Barchat5 = new Chart(ctx_5, {
+
+            type: 'pie',
+            data: {
+
+                labels: Inquirysource,
+                datasets: [{
+                    label: "Inquiry Source",
+                    data: rep_5_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"]
+
+
+
+
+                }]
+
+            },
+
+
+        });
+
+
+
+
+
+
+                                  });
+
+
+
+
+        $(document).ready(function () {
+
+        var rep_6_Array = @Html.Raw(Json.Encode(ViewBag.rep_6));
+            var IsDiffer = @Html.Raw(Json.Encode(ViewBag.IsDiffer));
+            var ctx_6 = $("#IsDifferChart");
+        var Barchat6 = new Chart(ctx_6, {
+
+            type: 'pie',
+            data: {
+
+                labels: IsDiffer,
+                datasets: [{
+                    label: "Is Differ",
+                    data: rep_6_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+
+
+
+
+                }]
+
+            },
+
+
+        });
+
+
+
+
+
+
+        });
+
+
+
+
+
+                         $(document).ready(function () {
+
+
+        var rep_7_Array = @Html.Raw(Json.Encode(ViewBag.rep_7));
+        var ultimateCategory = @Html.Raw(Json.Encode(ViewBag.ultimateCategory));
+         var ctx_7 = $("#ultimateCategoryChart");
+        var Barchat7 = new Chart(ctx_7, {
+
+            type: 'bar',
+            data: {
+
+                labels: ultimateCategory,
+                datasets: [{
+                    label: "Ultimate Categories",
+                    data: rep_7_Array,
+                    backgroundColor: ["rgba(242,166,54,.5)", "rgba(154,65,72,.5)", "(74,25,92,.5)"],
+                    borderColor: ["rgb(242,166,54)", "rgb(154,65,72)", "rgb(74,25,92)"],
+                    borderWidth: 1
+
+
+
+
+                }]
+
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        display: true
+
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            min: 0
+                        }                    }],
+                },
+                legend: { display: false }
+
+            },
+        });
+
+
+
+
+
+
+                  });
+
+        $('#downloadPdf').click(function (event) {
+            // get size of report page
+            var reportPageHeight = $('#reportPage').innerHeight();
+            var reportPageWidth = $('#reportPage').innerWidth();
+
+            // create a new canvas object that we will populate with all other canvas objects
+            var pdfCanvas = $('<canvas />').attr({
+                id: "canvaspdf",
+                width: reportPageWidth,
+                height: reportPageHeight
+            });
+
+            // keep track canvas position
+            var pdfctx = $(pdfCanvas)[0].getContext('2d');
+            var pdfctxX = 0;
+            var pdfctxY = 0;
+            var buffer = 100;
+
+            // for each chart.js chart
+            $("canvas").each(function (index) {
+                // get the chart height/width
+                var canvasHeight = $(this).innerHeight();
+                var canvasWidth = $(this).innerWidth();
+
+                // draw the chart into the new canvas
+                pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
+                pdfctxX += canvasWidth + buffer;
+
+                // our report page is in a grid pattern so replicate that in the new canvas
+                if (index % 2 === 1) {
+                    pdfctxX = 0;
+                    pdfctxY += canvasHeight + buffer;
+                }
+            });
+
+            // create new pdf and add our new canvas as an image
+            var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+            pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+
+            // download the pdf
+            pdf.save('filename.pdf');
+        });
+
+
+
+    </script>
+
+
+
+}

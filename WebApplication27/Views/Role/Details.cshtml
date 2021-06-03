@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+@model WebApplication27.Models.rolesModel
+
+<link href="~/Content/StyleSheet2.css" rel="stylesheet" type="text/css" />
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Role Information</legend>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ROLE_ID)
+
+                <div class="form-group">
+                    <label>Role Name</label><br />
+                    @Html.TextBoxFor(Models => Models.ROLE_NAME, new { @class = "form-control", required = "required" })
+
+
+
+                </div>
+
+                <div class="form-group">
+                    <lable>Permissions</lable><span class="text-danger">  *</span><br />
+                    <div id="list1" class="dropdown-check-list" style="width:100%">
+                        <span class="form-control col-md-12 anchor">Select Permission</span>
+
+                        <ul class="items">
+                            <li>
+                                <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                                <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+
+                                    @for (int i = 0; i < Model.PermissionList.Count(); i++)
+                                    {
+                                        <li>
+                                            @Html.CheckBoxFor(m => Model.PermissionList[i].Checked, new { @class = "", id = "Category" })
+                                            @Html.DisplayFor(m => Model.PermissionList[i].PERMISSION_DESCRIPTION, new { @class = "Permissions", id = "List" })
+                                            @Html.HiddenFor(m => Model.PermissionList[i].PERMISSION_ID, new { @class = "", id = "Category" })
+
+                                        </li>
+
+                                    }
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <a href="@Url.Action("Index", "Role")" style="background-color: #428bca; color: #fff" class="btn">Close</a>
+
+
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myList li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    var checkList = document.getElementById('list1');
+    checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+        if (checkList.classList.contains('visible'))
+            checkList.classList.remove('visible');
+        else
+            checkList.classList.add('visible');
+    }
+</script>

@@ -1,0 +1,239 @@
+﻿
+
+@{
+    ViewBag.Title = "Cases";
+}
+
+
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebApplication27.Models.Case>
+<h4 style="margin-bottom:20px; margin-top:30px">Cases</h4>
+
+
+
+
+
+    @*alert messages*@
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> @TempData["Success"]
+        </div>
+
+    }
+    @if (TempData["warning"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @TempData["warning"]
+        </div>
+
+    }
+
+    @if (TempData["alert"] != null)
+    {
+        <div class="alert alert-secondary alert-dismissible fade show">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @TempData["alert"]
+        </div>
+
+    }
+
+    <div class="card">
+        <div class="card-body">
+
+            @using (Html.BeginForm("Filter", "Case", FormMethod.Get))
+            {
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-2">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Requester Name</label>
+                        @Html.DropDownList("Requestrt_id", ViewBag.ListRequester as SelectList, "", new { @class = "form-control" })
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">From </label>
+                        @Html.TextBox("start_date", new { @value = ViewBag.FilterValue3 }, new { @type = "datetime-local", @class = "form-control datepicker" })
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">To </label>
+                        @Html.TextBox("End_date", new { @value = ViewBag.FilterValue6 }, new { @type = "datetime-local", @class = "form-control datepicker" })
+
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Category Name</label>
+                        @Html.DropDownList("Category_id", ViewBag.CategoryList as SelectList, "", new { @class = "form-control" })
+
+
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Name</label>
+                        @Html.DropDownList("User_id", ViewBag.userList as SelectList, "", new { @class = "form-control" })
+
+
+                    </div>
+                    <div class="form-group col-md-8">
+
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">Case Status</label>
+                        <div class="form-check-inline">
+                            @Html.RadioButton("Status", "Pending", new { @value = ViewBag.FilterValue7, @checked = "checked" })
+                            <label class="form-check-label" for="exampleRadios1">
+                                Pending
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            @Html.RadioButton("Status", "Pending for Approval", new { @value = ViewBag.FilterValue7 })
+                            <label class="form-check-label" for="exampleRadios2">
+                                Pending for Approval
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            @Html.RadioButton("Status", "Completed", new { @value = ViewBag.FilterValue7 })
+                            <label class="form-check-label" for="exampleRadios3">
+                                Completed
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button type="submit" style="background-color: #428bca; color: #fff" class="btn">Apply Filter </button>
+                        <button type="submit" name="ExportExcel" id="btn3" class="btn" style="background-color: #428bca; color: #fff">Export to Excel</button>
+                        <a href="@Url.Action("Filter", "Case")" class="btn btn-outline-secondary">Reset</a>
+                    </div>
+
+                </div>
+
+
+            }
+
+        </div>
+    </div>
+
+    @if (Model != null && Model.Count() != 0)
+    {
+
+        @*Table to reading all cases  *@
+        <table class="table" style="margin-top:1rem">
+            <thead>
+                <tr>
+                    <th>Case Description </th>
+                    <th>
+                        Start Date
+                    </th>
+                    @if (ViewBag.FilterValue7 == "Completed")
+                    {
+                        <th>End Date </th>
+                    }
+                    <th>Status</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+
+                <tr id="@item.CASE_ID">
+                    <td>
+
+                        @{
+
+                            var s = string.Join(" ", item.CASE_DESCRIBTION.Split(' ').Take(5));
+
+                            @Html.DisplayFor(x => s)<span>...</span>
+
+
+                        }
+
+
+
+
+                    </td>
+
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.CASE_START_DATE)
+                    </td>
+                    @if (ViewBag.FilterValue7 == "Completed")
+                    {
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.CASE_END_DATE)
+                        </td>
+                    }
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.CASE_STATUS)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.USER.FULL_NAME)
+                    </td>
+
+                    <td>
+
+
+                        @if (ViewBag.FilterValue7 == "Completed")
+                        {
+
+                            <a href="@Url.Action("CaseDescriptionSatge", "CompletedCases", new { CASE_ID = item.CASE_ID })">
+                                View
+                            </a>
+                        }
+                        @if (ViewBag.FilterValue7 == "Pending" || ViewBag.FilterValue7 == "Pending for Approval" || ViewBag.FilterValue7 == null)
+                        {
+
+
+                            <a href="@Url.Action("Edit", "Case", new { id = item.CASE_ID })">
+                                Edit
+                            </a>
+                        }
+                    </td>
+
+
+                </tr>
+
+
+
+            }
+
+
+        </table>
+
+        <p>
+            @Html.PagedListPager(Model, Page_No => Url.Action("Filter", "Case",
+        new
+        {
+            Page_No,
+            Filter_Value2 = ViewBag.FilterValue2,
+            Filter_Value3 = ViewBag.FilterValue3,
+            Filter_Value4 = ViewBag.FilterValue4,
+            Filter_Value5 = ViewBag.FilterValue5,
+            Filter_Value6 = ViewBag.FilterValue6,
+            Filter_Value7 = ViewBag.FilterValue7,
+
+
+
+
+
+        }))
+        </p>
+
+    }
+    else
+    {
+        <p>No Case found</p>
+    }
+
+
+<script>
+    $(document).ready(function () {
+        $("#Model").modal();
+    });
+</script>

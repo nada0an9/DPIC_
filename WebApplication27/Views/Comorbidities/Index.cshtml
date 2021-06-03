@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "Comorbidities";
+}
+
+
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebApplication27.Models.COMORBIDITY>
+
+
+<h4 style="margin-bottom:20px; margin-top:30px">Comorbidities </h4>
+
+
+@*alert messages*@
+@if (TempData["Danger"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["Danger"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["Success"]
+    </div>
+
+}
+@if (TempData["cannotEdit"] != null)
+{
+    <div class="success-message">
+        <div class="modal fade" id="Model" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Edit Comorbidity </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You cannot edit this comorbidity, since it has been used in pending case</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@*Search Form*@
+@using (Html.BeginForm("Index", "Comorbidities", FormMethod.Get))
+{
+<div class="row">
+    <div class="col-9">
+        <div class="input-group mb-3 w-25">
+            @Html.TextBox("name", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "Name", })
+
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <a href="@Url.Action("Create", "Comorbidities")" class="btn" style=" background-color: #428bca; color: #fff;">+ Add Comorbidity</a>
+        </div>
+    </div>
+
+    }
+    @*model for delete Comorbidity *@
+    <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Delete Comorbidity </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="partial11">
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @*Table To read  all Comorbidity *@
+    <table class="table m-1">
+        <thead>
+            <tr>
+
+                <th>Comorbidity Name </th>
+                <th> Status</th>
+                <th> Display Order</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+
+
+        @foreach (var item in Model)
+        {
+
+            <tr id="@item.COMORBIDITY_ID">
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.COMORBIDITY_NAME)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.VISIBILIT_STATUS)
+                </td>
+                <td>
+                    @{
+
+                        var s = item.DISPLAY_ORDER.ToString();
+
+                        @Html.DisplayFor(x => s)
+
+
+                    }
+                </td>
+                <td>
+
+                    <a class="btn btn-link" href="@Url.Action("Edit", "Comorbidities", new { id = item.COMORBIDITY_ID })">
+                        Edit
+                    </a>  |
+                    <input class="vh btn btn-link" type="button" value="Delete"
+                           data-assigned-id="@item.COMORBIDITY_ID" data-toggle="modal" data-target="#exampleModalLong1" />
+
+
+
+                </td>
+
+
+            </tr>
+
+
+
+        }
+
+
+    </table>
+
+    @*pagination*@
+
+    <p>
+        @Html.PagedListPager(Model, page => Url.Action("Index", "Comorbidities",
+    new
+    {
+        page,
+        Filter_Value = ViewBag.FilterValue
+    }))
+    </p>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#Model").modal();
+    });
+
+                $(function () {
+                $('.vh').click(function () {
+                    var COMORBIDITY_ID = $(this).data('assigned-id');
+                    var route = '@Url.Action("GetID3", "Comorbidities")?COMORBIDITY_ID=' + COMORBIDITY_ID;
+                $('#partial11').load(route);
+                });
+                });
+
+    </script>

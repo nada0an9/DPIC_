@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+@model WebApplication27.Models.questionsModel
+
+
+<div class="d-flex justify-content-center" style="margin:5rem; ">
+
+    <div class="card w-75">
+        <div class="card-body">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Question Information</legend>
+
+                @Html.HiddenFor(model => model.QUESTION_ID)
+                @Html.ValidationMessageFor(m => m.QUESTION_ID, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <lable>Question :</lable><br />
+                    @Html.DisplayFor(Models => Models.QUESTION1, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.QUESTION1, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(Models => Models.QUESTION1)
+
+
+                </div>
+                <div class="form-group">
+                    @Html.DisplayFor(Models => Models.CATEGORy.CATEGORY_NAME, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.CATEGORY_ID, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(Models => Models.CATEGORY_ID)
+
+                </div>
+                <div class="form-group">
+                    <label> Answer Type :</label><br />
+                    @Html.DisplayFor(Models => Models.ANSWER_TYPE, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ANSWER_TYPE, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(Models => Models.ANSWER_TYPE)
+
+
+                </div>
+                <div class="form-group">
+                    <lable>Display Order :</lable><br />
+                    @Html.DisplayFor(Models => Models.DISPLAY_ORDER, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.DISPLAY_ORDER, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(Models => Models.DISPLAY_ORDER)
+
+                </div>
+                <div class="form-group">
+                    <label>Status :</label><br />
+                    @Html.DisplayFor(Models => Models.VISIBILITY_STATUS, new { @class = "form-control", required = "required" })
+
+                </div>
+                <div class="form-group">
+                    <label>Required :</label><br />
+                    @Html.DisplayFor(Models => Models.DEFAULT_QUESTION, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.DEFAULT_QUESTION, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(Models => Models.DEFAULT_QUESTION)
+
+
+                </div>
+                <a href="@Url.Action("Index", "Questions")" style="background-color: #428bca; color: #fff" class="btn">Close</a>
+
+
+            </fieldset>
+        </div>
+    </div>
+</div>

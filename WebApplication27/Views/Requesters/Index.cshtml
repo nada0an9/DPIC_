@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Requesters";
+}
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<WebApplication27.Models.REQUESTER>
+
+
+<h4 style="margin-bottom:20px; margin-top:30px">Requesters</h4>
+
+
+
+
+@*alert messages*@
+@if (TempData["Danger"] != null)
+{
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["Danger"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> @TempData["Success"]
+    </div>
+
+}
+
+@*search form*@
+@using (Html.BeginForm("Index", "Requesters", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-10">
+            <div class="input-group mb-3 w-50">
+                @Html.TextBox("Search_data", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "Name or Requester ID", })
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <a href="@Url.Action("Create", "Requesters")" class="btn" style=" background-color: #428bca; color: #fff; ">+ Add Requester</a>
+        </div>
+    </div>
+
+}
+
+
+@*model for delete Requester *@
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Delete Requester </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="partial11">
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@*Table reading all Requesters  *@
+<table class="table m-1">
+    <thead>
+        <tr>
+            <th>Requester ID </th>
+            <th>Requester Name </th>
+            <th>Contact</th>
+            <th>Calling From</th>
+            <th>Departement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @if (Model != null && Model.Count() != 0)
+    {
+
+        foreach (var item in Model)
+        {
+
+ 
+            <tr id="@item.REQUESTER_ID">
+                <td>
+                    @{
+
+                        var s = item.REQUESTER_ID.ToString();
+
+                        @Html.DisplayFor(x => s)
+
+
+                    }
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.REQUESTER_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTACT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CALLING_FROM)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DEPARTMENT.DEPARTMENT_NAME)
+                </td>
+                <td>
+                    <a class="btn btn-link" href="@Url.Action("GetID", "Requesters", new { id = item.REQUESTER_ID })">
+                        Edit
+                    </a>  |
+                    <input class="vh btn btn-link" type="button" value="Delete"
+                           data-assigned-id="@item.REQUESTER_ID" data-toggle="modal" data-target="#exampleModalLong1" />
+
+
+
+                </td>
+
+
+            </tr>
+
+        }
+
+    }
+    else
+    {
+        <tr>No data found</tr>
+
+    }
+
+</table>
+
+
+@*pagination*@
+<p>
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Requesters",
+new
+{
+    page,
+    Filter_Value = ViewBag.FilterValue
+}))
+</p>
+
+
+@section scripts {
+    <script type="text/javascript">
+    //popup modal
+    $(document).ready(function () {
+        $("#Model").modal();
+    });
+    //popup delete modal
+    $(function () {
+     $('.vh').click(function () {
+     var REQUESTER_ID = $(this).data('assigned-id');
+     var route = '@Url.Action("GetID2", "Requesters")?REQUESTER_ID=' + REQUESTER_ID;
+         $('#partial11').load(route);
+     });
+    });
+    </script>
+}

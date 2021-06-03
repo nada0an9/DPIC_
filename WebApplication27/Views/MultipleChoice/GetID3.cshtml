@@ -1,0 +1,33 @@
+﻿
+@model WebApplication27.Models.choiceModel
+
+<div>
+
+    @using (Html.BeginForm("Delete", "MultipleChoice", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.CHOICE_ID)
+        <div class="form-horizontal">
+            <form method="post">
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        <h6>Are you sure you want to delete @Html.DisplayFor(model => model.CHOICE_NAM) choice</h6>
+
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+                </div>
+
+            </form>
+        </div>
+    }
+
+
+</div>
+
+
