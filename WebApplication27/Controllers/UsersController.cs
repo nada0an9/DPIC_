@@ -245,13 +245,13 @@ namespace WebApplication27.Controllers
 
                          }; //get roles to the given user's id
 
-            var Roles = new List<RoleCheckboxViewModel>(); // make a list of roles 
+            var Roles = new List<roles_>(); // make a list of roles 
 
 
             foreach (var item in Result)
             {
 
-                Roles.Add(new RoleCheckboxViewModel { id = item.ROLE_ID, name = item.ROLE_NAME, Checked = item.Checked }); //add every item in Result query to the (Roles) list
+                Roles.Add(new roles_ { id = item.ROLE_ID, name = item.ROLE_NAME, Checked = item.Checked }); //add every item in Result query to the (Roles) list
 
 
 

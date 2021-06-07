@@ -14,7 +14,7 @@ namespace WebApplication27.Models
         [MaxLength(20, ErrorMessage = "Cannot exceed 20 characters. ")]
         public string ROLE_NAME { get; set; }
 
-        public List<PermissioncheckboxViewModel> PermissionList { get; set; }
+        public List<permissions_> PermissionList { get; set; }
 
 
     }

@@ -209,7 +209,7 @@ namespace WebApplication27.Controllers
                              };
 
                 //make list of comorbidities
-                var ComorbidityCheckboxlist = new List<CheckBoxModel>();
+                var ComorbidityCheckboxlist = new List<comorbidities_>();
 
                 foreach (var item in Result)
                 {
@@ -219,7 +219,7 @@ namespace WebApplication27.Controllers
                                       select c.OTHER_COMORBIDITY).FirstOrDefault();//query to get other comorbidity if exists
 
                     //add every item in result query to the (ComorbidityCheckboxlist)
-                    ComorbidityCheckboxlist.Add(new CheckBoxModel { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = item.Checked, other = result2 });
+                    ComorbidityCheckboxlist.Add(new comorbidities_ { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = item.Checked, other = result2 });
 
 
                 }
@@ -354,19 +354,19 @@ namespace WebApplication27.Controllers
                                              select ab).Count() > 0) ////subquery to check if the category is assigned to the current case's id or not 
                              };
 
-                var categoryCheckboxlist = new List<categoryCheckboxViewModel>();
+                var categoryCheckboxlist = new List<categories_>();
 
                 //assign every item from the query to the "categoryCheckboxlist" list
                 foreach (var item in Result)
                 {
                     if (item.DEFUALT == "Yes")
                     {
-                        categoryCheckboxlist.Add(new categoryCheckboxViewModel { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = true, defult = item.DEFUALT });
+                        categoryCheckboxlist.Add(new categories_ { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = true, defult = item.DEFUALT });
 
                     }
                     if (item.DEFUALT == "No")
                     {
-                        categoryCheckboxlist.Add(new categoryCheckboxViewModel { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = item.Checked, defult = item.DEFUALT });
+                        categoryCheckboxlist.Add(new categories_ { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = item.Checked, defult = item.DEFUALT });
 
                     }
 
@@ -476,7 +476,7 @@ namespace WebApplication27.Controllers
                     myviewmodel.CASE_ID = id;
 
                     //make list of questions
-                    var QuestionsCheckboxlist = new List<QuestionsCheckboxViewModel>();
+                    var QuestionsCheckboxlist = new List<questions_>();
 
 
 
@@ -485,13 +485,13 @@ namespace WebApplication27.Controllers
                 {
                     if(item.DEFAULT_QUESTION == "Yes")
                     {
-                        QuestionsCheckboxlist.Add(new QuestionsCheckboxViewModel { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = true });
+                        QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = true });
 
 
                     }
                     if (item.DEFAULT_QUESTION == "No")
                     {
-                        QuestionsCheckboxlist.Add(new QuestionsCheckboxViewModel { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = item.Checked });
+                        QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = item.Checked });
 
                     
                 }
@@ -539,7 +539,7 @@ namespace WebApplication27.Controllers
 
                     var myviewmodel = new CaseViewModel();
                     myviewmodel.CASE_ID = Id;
-                    var QuestionsCheckboxlist = new List<QuestionsCheckboxViewModel>();
+                    var QuestionsCheckboxlist = new List<questions_>();
 
                     //assign every item in the query to the "QuestionsCheckboxlist" list
                     foreach (var item in Result)
@@ -566,7 +566,7 @@ namespace WebApplication27.Controllers
                                      .Where(p => p.QUESTION_ID == item.QUESTION_ID)
                                      .Select(p => p.CHOICE_ID).FirstOrDefault();
 
-                    QuestionsCheckboxlist.Add(new QuestionsCheckboxViewModel { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, Answer = RelatedAnswers, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION , Choice_Id = RelatedChoiceId });
+                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, Answer = RelatedAnswers, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION , Choice_Id = RelatedChoiceId });
                     }
 
 
@@ -817,7 +817,7 @@ namespace WebApplication27.Controllers
 
 
                 //make list of refrences
-                var refrensesCheckboxlist = new List<CheckBoxModel>();
+                var refrensesCheckboxlist = new List<references_>();
 
                 foreach (var item in Result)
                 {
@@ -828,7 +828,7 @@ namespace WebApplication27.Controllers
                           select c.OTHER_REFRENSES).FirstOrDefault();//query to get other refrences if exist
 
                     //add every item in result query to the (refrensesCheckboxlist)
-                    refrensesCheckboxlist.Add(new CheckBoxModel { id = item.REFERENCE_ID, name = item.REFERENCE_NAME, Checked = item.Checked, other = result2 });
+                    refrensesCheckboxlist.Add(new references_ { id = item.REFERENCE_ID, name = item.REFERENCE_NAME, Checked = item.Checked, other = result2 });
 
 
                 }

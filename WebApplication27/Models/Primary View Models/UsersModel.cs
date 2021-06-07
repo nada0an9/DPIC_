@@ -36,7 +36,7 @@ namespace WebApplication27.Models
         [MaxLength(10, ErrorMessage = "The Status cannot exceed 10 characters. ")]
         public string STATUS { get; set; }
 
-        public List<RoleCheckboxViewModel> RoleList { get; set; }
+        public List<roles_> RoleList { get; set; }
 
     }
 

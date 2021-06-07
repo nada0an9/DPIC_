@@ -21,7 +21,7 @@ namespace WebApplication27.Models
 
 
 
-        public List<CheckBoxModel> RefrensesList { get; set; }
+        public List<references_> RefrensesList { get; set; }
 
     }
 }

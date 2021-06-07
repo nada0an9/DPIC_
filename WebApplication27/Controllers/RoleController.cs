@@ -64,7 +64,7 @@ namespace WebApplication27.Controllers
                              };//get Permetions
 
            
-                var Permission = new List<PermissioncheckboxViewModel>();//make list of Permission
+                var Permission = new List<permissions_>();//make list of Permission
 
                 rolesModel RoleModel = new rolesModel();
 
@@ -79,7 +79,7 @@ namespace WebApplication27.Controllers
             foreach (var item in Result)  //assign every item in (Result) to the (Permission) list
             {
                 //add every item in result query to the (Permission)
-                Permission.Add(new PermissioncheckboxViewModel { PERMISSION_ID = item.PERMISSION_ID, PERMISSION_NAME = item.PERMISSION_NAME, PERMISSION_DESCRIPTION = item.PERMISSION_DESCRIPTION });
+                Permission.Add(new permissions_ { id = item.PERMISSION_ID, name = item.PERMISSION_NAME, description = item.PERMISSION_DESCRIPTION });
              
                 RoleModel.PermissionList = Permission; //assign (Permission) items to the PermissionList;
             }
@@ -115,11 +115,11 @@ namespace WebApplication27.Controllers
                     //add the role permissions
                     foreach (var item in model.PermissionList)
                     {
-                            var checkid = db.PERMISSIONS.Where(x => x.PERMISSION_ID == item.PERMISSION_ID).Any();
+                            var checkid = db.PERMISSIONS.Where(x => x.PERMISSION_ID == item.id).Any();
                             if (item.Checked && checkid)//if checkbox is checked => we add the permission to the role permission table
                             {
                                 //insert
-                                db.ROLE_PERMISSIONS.Add(new ROLE_PERMISSIONS() { PERMISSION_ID = item.PERMISSION_ID, ROLE_ID = id });
+                                db.ROLE_PERMISSIONS.Add(new ROLE_PERMISSIONS() { PERMISSION_ID = item.id, ROLE_ID = id });
                                 db.SaveChanges();
                             }
 
@@ -196,10 +196,10 @@ namespace WebApplication27.Controllers
                     foreach (var item in model.PermissionList)
                     {
 
-                        var checkid = db.PERMISSIONS.Where(x => x.PERMISSION_ID == item.PERMISSION_ID).Any();
+                        var checkid = db.PERMISSIONS.Where(x => x.PERMISSION_ID == item.id).Any();
                         if (item.Checked && checkid)//if checkbox is checked => we add the permission to the role permission table
                         {
-                            db.ROLE_PERMISSIONS.Add(new ROLE_PERMISSIONS() { PERMISSION_ID = item.PERMISSION_ID, ROLE_ID = model.ROLE_ID });
+                            db.ROLE_PERMISSIONS.Add(new ROLE_PERMISSIONS() { PERMISSION_ID = item.id, ROLE_ID = model.ROLE_ID });
                             db.SaveChanges();
 
                         }
@@ -335,17 +335,17 @@ namespace WebApplication27.Controllers
                          };
 
             //make list of Permissions
-            var Permissions = new List<PermissioncheckboxViewModel>();
+            var Permissions = new List<permissions_>();
 
             foreach (var item in Result)
             {
 
                 //add every item in result query to the (Permission)
-                Permissions.Add(new PermissioncheckboxViewModel
+                Permissions.Add(new permissions_
                 {
-                    PERMISSION_ID = item.PERMISSION_ID,
-                    PERMISSION_DESCRIPTION = item.PERMISSION_DESCRIPTION,
-                    PERMISSION_NAME = item.PERMISSION_NAME,
+                    id = item.PERMISSION_ID,
+                    description = item.PERMISSION_DESCRIPTION,
+                    name = item.PERMISSION_NAME,
                     Checked = item.Checked
                 });
 

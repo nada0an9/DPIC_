@@ -125,7 +125,7 @@ namespace WebApplication27.Models
 
         public string other { get; set; }
 
-        public List<CheckBoxModel> ComorbidityList { get; set; }
+        public List<comorbidities_> ComorbidityList { get; set; }
 
 
 

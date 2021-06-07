@@ -15,9 +15,9 @@ namespace WebApplication27.Models
 
         public string CASE_TYPE { get; set; }
 
-        public List<categoryCheckboxViewModel> CategoryList { get; set; }
+        public List<categories_> CategoryList { get; set; }
 
-        public List<QuestionsCheckboxViewModel> QuestionsList { get; set; }
+        public List<questions_> QuestionsList { get; set; }
 
         public List<Case> userCases { get; set; }
 

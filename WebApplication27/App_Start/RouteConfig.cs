@@ -20,11 +20,6 @@ namespace WebApplication27
             );
 
 
-        routes.MapRoute(
-        name: "Requesters",
-        url: "{Requesters}/{GetID}/{id}",
-        defaults: new { controller = "Requesters", action = "GetID", id = UrlParameter.Optional},
-        constraints: new { id = @"\d+" });
 
 
         }

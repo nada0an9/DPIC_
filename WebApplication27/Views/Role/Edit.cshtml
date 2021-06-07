@@ -54,8 +54,8 @@
                                         {
                                             <li>
                                                 @Html.CheckBoxFor(m => Model.PermissionList[i].Checked, new { @class = "requierd-check", id = "Category" })
-                                                @Html.DisplayFor(m => Model.PermissionList[i].PERMISSION_DESCRIPTION, new { @class = "Permissions", id = "List" })
-                                                @Html.HiddenFor(m => Model.PermissionList[i].PERMISSION_ID, new { @class = "", id = "Category" })
+                                                @Html.DisplayFor(m => Model.PermissionList[i].description, new { @class = "Permissions", id = "List" })
+                                                @Html.HiddenFor(m => Model.PermissionList[i].id, new { @class = "", id = "Category" })
 
 
                                             </li>

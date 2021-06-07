@@ -9,6 +9,8 @@ using WebApplication27.Models.Infrastructure;
 namespace WebApplication27.Controllers
 {
     [CustomAuthenticationFilter]
+    [CustomAuthorize("Create New Case")]
+
 
     public class CompletedCasesController : Controller
     {    private DB_Model db = new DB_Model();
@@ -102,7 +104,7 @@ namespace WebApplication27.Controllers
 
 
              //make list of comorbidities
-             var ComorbidityCheckboxlist = new List<CheckBoxModel>();
+             var ComorbidityCheckboxlist = new List<comorbidities_>();
 
             foreach (var item in Result)
             {
@@ -112,7 +114,7 @@ namespace WebApplication27.Controllers
                                        select c.OTHER_COMORBIDITY).FirstOrDefault();//query to get other comorbidity if exists
 
                     //add every item in result query to the (ComorbidityCheckboxlist)
-                    ComorbidityCheckboxlist.Add(new CheckBoxModel { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = true, other =result2 });
+                    ComorbidityCheckboxlist.Add(new comorbidities_ { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = true, other =result2 });
 
 
             }
@@ -149,12 +151,12 @@ namespace WebApplication27.Controllers
                 myviewmodel.CASE_ID = CASE_ID;
                 myviewmodel.CASE_TYPE = model.CASE_TYPE;
 
-                var categoryCheckboxlist = new List<categoryCheckboxViewModel>();
+                var categoryCheckboxlist = new List<categories_>();
                 //get categories list
                 foreach (var item in Result)
                 {
                     //add every item in result query to the (categoryCheckboxlist)
-                    categoryCheckboxlist.Add(new categoryCheckboxViewModel { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = true });
+                    categoryCheckboxlist.Add(new categories_ { id = item.CATEGORY_ID, name = item.CATEGORY_NAME, Checked = true });
 
 
                 }
@@ -196,7 +198,7 @@ namespace WebApplication27.Controllers
                 myviewmodel.CASE_ID = CASE_ID;
 
                 //make list of questions
-                var QuestionsCheckboxlist = new List<QuestionsCheckboxViewModel>();
+                var QuestionsCheckboxlist = new List<questions_>();
 
                 foreach (var item in Result)
                 {
@@ -208,7 +210,7 @@ namespace WebApplication27.Controllers
                     List<MULTIPLE_CHOICE> lst = Result2.ToList(); //get a list of related multiple-choice to the current question's id in (item)
 
                     //add every item in result query to the (QuestionsCheckboxlist)
-                    QuestionsCheckboxlist.Add(new QuestionsCheckboxViewModel { id = item.QUESTION_ID, name = item.QUESTION_NAME, Answer = item.ANSWER, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION, Category = item.CATEGORY_NAME, Choice_Id =item.CHOICE_ID });
+                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, name = item.QUESTION_NAME, Answer = item.ANSWER, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION, Category = item.CATEGORY_NAME, Choice_Id =item.CHOICE_ID });
                 }
 
                 myviewmodel.QuestionsList = QuestionsCheckboxlist;
@@ -274,7 +276,7 @@ namespace WebApplication27.Controllers
 
 
                 //make list of references
-                var refrensesCheckboxlist = new List<CheckBoxModel>();
+                var refrensesCheckboxlist = new List<references_>();
 
                 foreach (var item in Result)
                 {
@@ -285,7 +287,7 @@ namespace WebApplication27.Controllers
                           select c.OTHER_REFRENSES).FirstOrDefault();
 
                     //add every item in result query to the (refrensesCheckboxlist)
-                    refrensesCheckboxlist.Add(new CheckBoxModel { id = item.REFERENCE_ID, name = item.REFERENCE_NAME, Checked = true, other = result2 });
+                    refrensesCheckboxlist.Add(new references_ { id = item.REFERENCE_ID, name = item.REFERENCE_NAME, Checked = true, other = result2 });
 
 
                 }
