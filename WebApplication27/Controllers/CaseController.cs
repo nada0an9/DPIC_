@@ -265,7 +265,6 @@ namespace WebApplication27.Controllers
                     data.CASE_STATUS = "Pending";
                     data.CURRENT_STAGE = "Patient stage";
                     data.CASE_END_DATE = DateTime.Now;
-
                     db.SaveChanges();
 
                     //delete all comorbidities with the current case's id
@@ -273,7 +272,6 @@ namespace WebApplication27.Controllers
                     {
 
                         if (item.CASE_ID == CASE_ID)
-
                         {
                             db.Entry(item).State = System.Data.EntityState.Deleted;
 
