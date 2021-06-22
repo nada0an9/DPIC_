@@ -51,7 +51,6 @@ namespace WebApplication27.Controllers
                     data.CASE_END_DATE = DateTime.Now;
                     db.CASES.Add(data); //insert the data
                     db.SaveChanges();
-
                     decimal id = data.CASE_ID;// get crrunt user id  
                     string CaseType = data.CASE_TYPE; // get case type
 
@@ -68,7 +67,6 @@ namespace WebApplication27.Controllers
 
                     List<REQUESTER> list = db.REQUESTERS.ToList();
                     ViewBag.Requester = new SelectList(list, "REQUESTER_ID", "REQUESTER_NAME");//requesters list to bind it in the view 
-
                     return View("Index", model);//if model is not valid  //we return the view with all validation messages
 
 
@@ -104,9 +102,9 @@ namespace WebApplication27.Controllers
                 return View(data);
             }
 
-              return View();
+            return View();
 
-            
+
         }
 
         [HttpPost]
@@ -194,7 +192,6 @@ namespace WebApplication27.Controllers
                 data.MEDICATIONS = model.MEDICATIONS;
                 data.RELATED_SINGS = model.RELATED_SINGS;
 
-
                 //get comorbidities of the case
                 var Result = from b in db.COMORBIDITies
                              where (b.VISIBILIT_STATUS == "Visible")
@@ -232,7 +229,7 @@ namespace WebApplication27.Controllers
             return View();
 
         }
-      
+
         [HttpPost]
         public ActionResult UpdatePatientInformation(decimal CASE_ID, patientInformationStage model, string SaveAsPending)
         {
@@ -241,6 +238,7 @@ namespace WebApplication27.Controllers
             if (ModelState.IsValid)
             {
                 Case data = db.CASES.Where(Models => Models.CASE_ID == CASE_ID).SingleOrDefault();
+
                 if (data != null)
                 {
                     //save Patient information
@@ -272,6 +270,7 @@ namespace WebApplication27.Controllers
                     {
 
                         if (item.CASE_ID == CASE_ID)
+
                         {
                             db.Entry(item).State = System.Data.EntityState.Deleted;
 
@@ -334,7 +333,7 @@ namespace WebApplication27.Controllers
             {
                 var myviewmodel = new CaseViewModel();
                 myviewmodel.CASE_ID = id;
-                ViewBag.type = model.CASE_TYPE;
+                myviewmodel.CASE_TYPE = model.CASE_TYPE;
 
 
                 //command to get a List of categories and subquery to check for each category it is assigned to the current case or not 
@@ -416,7 +415,7 @@ namespace WebApplication27.Controllers
                     {
                         var categoryIdCheck = db.CATEGORIES.Where(x => x.CATEGORY_ID == item.id).Any();
 
-                        if (item.Checked && categoryIdCheck && (item.name != null &&item.name.Length <= 255))
+                        if (item.Checked && categoryIdCheck && (item.name != null && item.name.Length <= 255))
                         {
                             //insert every item to case categories table
                             db.CASE_CATEGORIES.Add(new CASE_CATEGORIES() { CASE_ID = model.CASE_ID, CATEGORY_ID = item.id, CATEGORY_NAME = item.name });
@@ -454,34 +453,34 @@ namespace WebApplication27.Controllers
             {
                 //query to get a list of questions and check for each question (if it is assigned to the current case's id or not) 
                 var Result = from b in db.QUESTIONS
-                                 join f in db.CASE_CATEGORIES on b.CATEGORY_ID equals f.CATEGORY_ID
-                                 where (f.CASE_ID == id) & (b.VISIBILITY_STATUS == "Visible")
-                                 orderby (b.DISPLAY_ORDER)
-                                 select new
-                                 {
-                                     b.QUESTION_ID,
-                                     b.QUESTION1,
-                                     b.ANSWER_TYPE,
-                                     b.DEFAULT_QUESTION,
-                                     b.CATEGORy.CATEGORY_NAME,
-                                     Checked = ((from ab in db.CASE_QUESTIONS
-                                                 where (ab.CASE_ID == id) & (ab.QUESTION_ID == b.QUESTION_ID)
-                                                 select ab).Count() > 0)
-                                 };
+                             join f in db.CASE_CATEGORIES on b.CATEGORY_ID equals f.CATEGORY_ID
+                             where (f.CASE_ID == id) & (b.VISIBILITY_STATUS == "Visible")
+                             orderby (b.DISPLAY_ORDER)
+                             select new
+                             {
+                                 b.QUESTION_ID,
+                                 b.QUESTION1,
+                                 b.ANSWER_TYPE,
+                                 b.DEFAULT_QUESTION,
+                                 b.CATEGORy.CATEGORY_NAME,
+                                 Checked = ((from ab in db.CASE_QUESTIONS
+                                             where (ab.CASE_ID == id) & (ab.QUESTION_ID == b.QUESTION_ID)
+                                             select ab).Count() > 0)
+                             };
 
 
-                    var myviewmodel = new CaseViewModel();
-                    myviewmodel.CASE_ID = id;
+                var myviewmodel = new CaseViewModel();
+                myviewmodel.CASE_ID = id;
 
-                    //make list of questions
-                    var QuestionsCheckboxlist = new List<questions_>();
+                //make list of questions
+                var QuestionsCheckboxlist = new List<questions_>();
 
 
 
-             //assign every item in the query to the "QuestionsCheckboxlist" list
-            foreach (var item in Result)
+                //assign every item in the query to the "QuestionsCheckboxlist" list
+                foreach (var item in Result)
                 {
-                    if(item.DEFAULT_QUESTION == "Yes")
+                    if (item.DEFAULT_QUESTION == "Yes")
                     {
                         QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = true });
 
@@ -491,24 +490,24 @@ namespace WebApplication27.Controllers
                     {
                         QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, fieldType = item.ANSWER_TYPE, defult = item.DEFAULT_QUESTION, Checked = item.Checked });
 
-                    
+
+                    }
+
                 }
-                
-            }
 
 
 
-            myviewmodel.QuestionsList = QuestionsCheckboxlist;
-            return View(myviewmodel);
+                myviewmodel.QuestionsList = QuestionsCheckboxlist;
+                return View(myviewmodel);
 
             }
-          
-                return View();
 
-           
+            return View();
+
+
 
         }
-   
+
         [HttpGet]
         public ActionResult getListQuestions(decimal Id)
         {
@@ -517,46 +516,48 @@ namespace WebApplication27.Controllers
 
             if (model != null)
             {
-                    //query to get a list of case questions to the current case's id
-                    var Result = from b in db.QUESTIONS
-                                 join f in db.CASE_CATEGORIES on b.CATEGORY_ID equals f.CATEGORY_ID
-                                 join l in db.CASE_QUESTIONS on b.QUESTION_ID equals l.QUESTION_ID
-                                 where (f.CASE_ID == Id) & (b.VISIBILITY_STATUS == "Visible") & (l.CASE_ID == Id)
-                                 orderby(b.DISPLAY_ORDER)
-                                 select new
-                                 {
-                                     b.QUESTION_ID,
-                                     b.QUESTION1,
-                                     b.ANSWER_TYPE,
-                                     b.DEFAULT_QUESTION,
-                                     b.CATEGORy.CATEGORY_NAME,
-                                     b.DISPLAY_ORDER,
-                                 };
+                //query to get a list of case questions to the current case's id
+                var Result = from b in db.QUESTIONS
+                             join f in db.CASE_CATEGORIES on b.CATEGORY_ID equals f.CATEGORY_ID
+                             join l in db.CASE_QUESTIONS on b.QUESTION_ID equals l.QUESTION_ID
+                             where (f.CASE_ID == Id) & (b.VISIBILITY_STATUS == "Visible") & (l.CASE_ID == Id)
+                             orderby b.CATEGORy.DISPLAY_ORDER, b.DISPLAY_ORDER
+                             select new
+                             {
+                                 b.QUESTION_ID,
+                                 b.QUESTION1,
+                                 b.ANSWER_TYPE,
+                                 b.DEFAULT_QUESTION,
+                                 b.CATEGORy.CATEGORY_NAME,
+                                 b.DISPLAY_ORDER,
+                             };
 
 
 
-                    var myviewmodel = new CaseViewModel();
-                    myviewmodel.CASE_ID = Id;
-                    var QuestionsCheckboxlist = new List<questions_>();
+                var myviewmodel = new CaseViewModel();
+                myviewmodel.CASE_ID = Id;
+                myviewmodel.CASE_TYPE = model.CASE_TYPE;
 
-                    //assign every item in the query to the "QuestionsCheckboxlist" list
-                    foreach (var item in Result)
-                    {
+                var QuestionsCheckboxlist = new List<questions_>();
 
-                        //if the answer type to (current question id) is multiple choice, we will get the choices for this question from the multiple choice table
-                        var RelatedChoices = from b in db.MULTIPLE_CHOICE
-                                             where (b.QUESTION_ID == item.QUESTION_ID) && (b.VISIBILITY_STATUS == "Visible")
-                                             orderby (b.DISPLAY_ORDER)
-                                             select b;
-                        //then, make related choice as a list
-                        List<MULTIPLE_CHOICE> lst = RelatedChoices.ToList();
+                //assign every item in the query to the "QuestionsCheckboxlist" list
+                foreach (var item in Result)
+                {
+
+                    //if the answer type to (current question id) is multiple choice, we will get the choices for this question from the multiple choice table
+                    var RelatedChoices = from b in db.MULTIPLE_CHOICE
+                                         where (b.QUESTION_ID == item.QUESTION_ID) && (b.VISIBILITY_STATUS == "Visible")
+                                         orderby (b.DISPLAY_ORDER)
+                                         select b;
+                    //then, make related choice as a list
+                    List<MULTIPLE_CHOICE> lst = RelatedChoices.ToList();
 
 
-                        //get related answer to the (current question id)
-                        var RelatedAnswers = db.CASE_QUESTIONS
-                                         .Where(p => p.CASE_ID == Id)
-                                         .Where(p => p.QUESTION_ID == item.QUESTION_ID)
-                                         .Select(p => p.ANSWER).FirstOrDefault();
+                    //get related answer to the (current question id)
+                    var RelatedAnswers = db.CASE_QUESTIONS
+                                     .Where(p => p.CASE_ID == Id)
+                                     .Where(p => p.QUESTION_ID == item.QUESTION_ID)
+                                     .Select(p => p.ANSWER).FirstOrDefault();
 
                     //get related choice id to the (current question id) //may contains a null value
                     var RelatedChoiceId = db.CASE_QUESTIONS
@@ -564,21 +565,15 @@ namespace WebApplication27.Controllers
                                      .Where(p => p.QUESTION_ID == item.QUESTION_ID)
                                      .Select(p => p.CHOICE_ID).FirstOrDefault();
 
-                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, Answer = RelatedAnswers, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION , Choice_Id = RelatedChoiceId });
-                    }
+                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, Category = item.CATEGORY_NAME, name = item.QUESTION1, Answer = RelatedAnswers, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION, Choice_Id = RelatedChoiceId });
+                }
 
 
-                    myviewmodel.QuestionsList = QuestionsCheckboxlist;
-                    return View(myviewmodel);
+                myviewmodel.QuestionsList = QuestionsCheckboxlist;
+                return View(myviewmodel);
 
             }
             return View();
-
-
-
-
-
-
         }
 
         [HttpPost]
@@ -658,7 +653,7 @@ namespace WebApplication27.Controllers
             decimal Id = model.CASE_ID;
             var checkcasehavequestions = db.CASE_QUESTIONS.Where(c => c.CASE_ID == Id).Any();
 
-            if (checkcasehavequestions && data !=null)
+            if (checkcasehavequestions && data != null)
             {
                 //Update cruennt stage
                 data.CURRENT_STAGE = "Questions stage";
@@ -694,16 +689,16 @@ namespace WebApplication27.Controllers
                 //add all questions in list to the case questions table
                 foreach (var item in model.QuestionsList)
                 {
-          
-                        db.CASE_QUESTIONS.Add(new CASE_QUESTIONS() { CASE_ID = model.CASE_ID, QUESTION_ID = item.id, QUESTION_NAME = item.name, ANSWER = item.Answer, CHOICE_ID = item.Choice_Id });
-                        db.SaveChanges();
 
-                    
+                    db.CASE_QUESTIONS.Add(new CASE_QUESTIONS() { CASE_ID = model.CASE_ID, QUESTION_ID = item.id, QUESTION_NAME = item.name, ANSWER = item.Answer, CHOICE_ID = item.Choice_Id });
+                    db.SaveChanges();
+
+
                 }
 
-       
 
-               
+
+
                 if (SaveAsPending != null) //if the "save as pending" button clicked, it will go to the "filter" action
                 {
 
@@ -721,27 +716,28 @@ namespace WebApplication27.Controllers
             }
         }
 
-    
+
         [HttpGet]
         public ActionResult getCasDetails(decimal id)
         {
             Case model = db.CASES.Where(Models => Models.CASE_ID == id).Where(x => x.CASE_STATUS == "Pending" || x.CASE_STATUS == "Pending for Approval").FirstOrDefault();
 
             //categories list to bind it in the view 
-            List<CATEGORy> list = db.CATEGORIES.Where(x=>x.VSIBILITY_STATUS == "Visible").OrderBy(x=>x.DISPLAY_ORDER).ToList();
+            List<CATEGORy> list = db.CATEGORIES.Where(x => x.VSIBILITY_STATUS == "Visible").OrderBy(x => x.DISPLAY_ORDER).ToList();
             ViewBag.catelist = new SelectList(list, "CATEGORY_NAME", "CATEGORY_NAME");
 
             if (model != null)
             {
-                  //get case details info 
-                 caseDetailsStage data = new caseDetailsStage();
-                 data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
-                 data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
-                 data.CASE_ID = model.CASE_ID;
-                  return View(data);
+                //get case details info 
+                caseDetailsStage data = new caseDetailsStage();
+                data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
+                data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
+                data.CASE_ID = model.CASE_ID;
+                data.CASE_TYPE = model.CASE_TYPE;
+                View(data);
             }
-      
-                return View();
+
+            return View();
         }
 
         [HttpPost]
@@ -752,15 +748,15 @@ namespace WebApplication27.Controllers
             {
 
                 Case data = db.CASES.FirstOrDefault(Models => Models.CASE_ID == CASE_ID);
-                if (data != null) 
-                { 
-                data.CASE_STATUS = "Pending";
-                data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
-                data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
-                data.CURRENT_STAGE = "Details stage";
-                data.USER_ID = Convert.ToDecimal(User.Identity.Name);
-                data.CASE_END_DATE = DateTime.Now;
-                db.SaveChanges();
+                if (data != null)
+                {
+                    data.CASE_STATUS = "Pending";
+                    data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
+                    data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
+                    data.CURRENT_STAGE = "Details stage";
+                    data.USER_ID = Convert.ToDecimal(User.Identity.Name);
+                    data.CASE_END_DATE = DateTime.Now;
+                    db.SaveChanges();
                 }
                 if (SaveAsPending != null)
                 {
@@ -769,18 +765,18 @@ namespace WebApplication27.Controllers
                 }
 
                 decimal Id = model.CASE_ID;
-                return RedirectToAction("getCaseAnswer", "Case", new {  Id });
+                return RedirectToAction("getCaseAnswer", "Case", new { Id });
             }
-            else 
+            else
             {
                 List<CATEGORy> list = db.CATEGORIES.Where(x => x.VSIBILITY_STATUS == "Visible").OrderBy(x => x.DISPLAY_ORDER).ToList();
                 ViewBag.catelist = new SelectList(list, "CATEGORY_ID", "CATEGORY_NAME");  //categories list to bind it in the view 
 
- 
+
                 return View("getCasDetails", model); //if model is not valid //we return the view with all validation messages
 
             }
-         
+
 
         }
 
@@ -797,6 +793,8 @@ namespace WebApplication27.Controllers
                 data.CASE_ID = model.CASE_ID;
                 data.ANSWER = model.ANSWER;
                 data.RESEARCHER_NAME = model.RESEARCHER_NAME;
+                data.CASE_TYPE = model.CASE_TYPE;
+
 
 
                 //get references of the case
@@ -842,15 +840,15 @@ namespace WebApplication27.Controllers
 
             }
 
-            
+
 
         }
 
-  
+
         [HttpPost]
         public ActionResult updateCaseAnswer(decimal CASE_ID, answersStage model, string SaveAsPending)
         {
-            Case data = db.CASES.Where(x=>x.CASE_STATUS== "Pending" || x.CASE_STATUS == "Pending for Approval").FirstOrDefault(Models => Models.CASE_ID == CASE_ID);
+            Case data = db.CASES.Where(x => x.CASE_STATUS == "Pending" || x.CASE_STATUS == "Pending for Approval").FirstOrDefault(Models => Models.CASE_ID == CASE_ID);
 
             if (ModelState.IsValid)
             {
@@ -939,7 +937,7 @@ namespace WebApplication27.Controllers
             //get recored Information
             Case model = db.CASES.Where(Models => Models.CASE_ID == id).Where(x => x.CASE_STATUS == "Pending" || x.CASE_STATUS == "Pending for Approval").SingleOrDefault();
 
-            if(model != null) 
+            if (model != null)
             {
 
                 recordStage data = new recordStage();
@@ -950,7 +948,7 @@ namespace WebApplication27.Controllers
                 data.RECEIVER_NAME = model.RECEIVER_NAME;
                 data.CONTACT_ATTEMPT = model.CONTACT_ATTEMPT;
                 data.IS_DIFFER = model.IS_DIFFER;
-
+                data.CASE_TYPE = model.CASE_TYPE;
                 return View(data);
             }
             else
@@ -961,7 +959,7 @@ namespace WebApplication27.Controllers
 
         }
 
-    
+
         [HttpPost]
         public ActionResult updateCaseRecored(recordStage model)
         {
@@ -969,7 +967,7 @@ namespace WebApplication27.Controllers
             {
 
                 Case data = db.CASES.FirstOrDefault(Models => Models.CASE_ID == model.CASE_ID);
-                if (data != null) 
+                if (data != null)
                 {
                     DateTime startTime = data.CASE_START_DATE; //get the start date to find the time span
                     DateTime EndTime = DateTime.Now;
@@ -1025,7 +1023,7 @@ namespace WebApplication27.Controllers
                 return View("getCaseRecored", model);//if model's data are not valid  //we return the view with all validation messages
 
 
-            }    
+            }
 
         }
         public ActionResult Filter(string Start_date, string Filter_Value7, string Status,
@@ -1089,7 +1087,7 @@ namespace WebApplication27.Controllers
                 var Case2 = (from c in db.CASES
                              join ca in db.CASE_CATEGORIES on c.CASE_ID equals ca.CASE_ID
                              where ca.CATEGORY_ID == categoryId
-                             select  c );
+                             select c);
 
                 if (!String.IsNullOrEmpty(User_id) && decimal.TryParse(User_id, out _))
                 {
@@ -1143,60 +1141,60 @@ namespace WebApplication27.Controllers
 
 
             }
-     
-                if (!String.IsNullOrEmpty(User_id) && decimal.TryParse(User_id, out _))
-                {
-                    var User = Convert.ToDecimal(User_id);
-                    Case = Case.Where(stu => stu.USER_ID == User);
-                }
 
-                if (!String.IsNullOrEmpty(Requestrt_id) && decimal.TryParse(Requestrt_id, out _))
-                {
-                    var requesterID = Convert.ToDecimal(Requestrt_id);
-                    Case = Case.Where(stu => stu.REQUESTER_ID == requesterID);
-                }
+            if (!String.IsNullOrEmpty(User_id) && decimal.TryParse(User_id, out _))
+            {
+                var User = Convert.ToDecimal(User_id);
+                Case = Case.Where(stu => stu.USER_ID == User);
+            }
 
-                if (!String.IsNullOrEmpty(Status))
-                {
-                    Case = Case.Where(stu => stu.CASE_STATUS == Status);
-                }
-                if (String.IsNullOrEmpty(Status))
-                {
-                    Case = Case.Where(stu => stu.CASE_STATUS == "Pending");
-                }
+            if (!String.IsNullOrEmpty(Requestrt_id) && decimal.TryParse(Requestrt_id, out _))
+            {
+                var requesterID = Convert.ToDecimal(Requestrt_id);
+                Case = Case.Where(stu => stu.REQUESTER_ID == requesterID);
+            }
 
-                if (!String.IsNullOrEmpty(Start_date))
-                {
-                    DateTime dateTime = DateTime.Parse(Start_date);
-                    Case = Case.Where(stu => stu.CASE_START_DATE >= dateTime);
-                }
-                if (!String.IsNullOrEmpty(End_date))
-                {
-                    DateTime dateTime = DateTime.Parse(End_date);
-                    Case = Case.Where(stu => stu.CASE_START_DATE <= dateTime);
+            if (!String.IsNullOrEmpty(Status))
+            {
+                Case = Case.Where(stu => stu.CASE_STATUS == Status);
+            }
+            if (String.IsNullOrEmpty(Status))
+            {
+                Case = Case.Where(stu => stu.CASE_STATUS == "Pending");
+            }
 
-                }
+            if (!String.IsNullOrEmpty(Start_date))
+            {
+                DateTime dateTime = DateTime.Parse(Start_date);
+                Case = Case.Where(stu => stu.CASE_START_DATE >= dateTime);
+            }
+            if (!String.IsNullOrEmpty(End_date))
+            {
+                DateTime dateTime = DateTime.Parse(End_date);
+                Case = Case.Where(stu => stu.CASE_START_DATE <= dateTime);
 
-                switch (Status)//sort according to status
-                {
-                    case "Pending":
-                        Case = Case.OrderByDescending(s => s.CASE_START_DATE);
-                        break;
-                    case "Pending for Approval":
-                        Case = Case.OrderByDescending(s => s.CASE_START_DATE);
-                        break;
-                    case "Completed":
-                        Case = Case.OrderByDescending(s => s.CASE_END_DATE);
-                        break;
-                    default:
-                        Case = Case.OrderByDescending(s => s.CASE_START_DATE);
-                        break;
-                }
+            }
+
+            switch (Status)//sort according to status
+            {
+                case "Pending":
+                    Case = Case.OrderByDescending(s => s.CASE_START_DATE);
+                    break;
+                case "Pending for Approval":
+                    Case = Case.OrderByDescending(s => s.CASE_START_DATE);
+                    break;
+                case "Completed":
+                    Case = Case.OrderByDescending(s => s.CASE_END_DATE);
+                    break;
+                default:
+                    Case = Case.OrderByDescending(s => s.CASE_START_DATE);
+                    break;
+            }
 
 
 
-                return View(Case.ToPagedList(pagenum, pagesize));
-            
+            return View(Case.ToPagedList(pagenum, pagesize));
+
         }
 
         public ActionResult Edit(decimal id)
@@ -1204,7 +1202,7 @@ namespace WebApplication27.Controllers
             //to check the stage of the current case's Id 
             var checkStage = db.CASES.Where(c => c.CASE_ID == id).Select(c => c.CURRENT_STAGE).FirstOrDefault();
 
-            
+
             switch (checkStage.ToString())
             {
                 case "Description stage":
@@ -1300,16 +1298,16 @@ namespace WebApplication27.Controllers
                         }
                     }
                 }
-            
-                    dt1.Columns.AddRange(new DataColumn[4] { new DataColumn("Case Start Date"),
+
+                dt1.Columns.AddRange(new DataColumn[4] { new DataColumn("Case Start Date"),
                                                         new DataColumn("Case End Date"),
                                                         new DataColumn("Status"),
                                                         new DataColumn("Full Name"),
                 });
-                    foreach (var item in Result2)
-                    {
-                        dt1.Rows.Add(item.CASE_START_DATE, item.CASE_END_DATE, item.CASE_STATUS, item.USER.FULL_NAME);
-                    }
+                foreach (var item in Result2)
+                {
+                    dt1.Rows.Add(item.CASE_START_DATE, item.CASE_END_DATE, item.CASE_STATUS, item.USER.FULL_NAME);
+                }
                 using (XLWorkbook wb = new XLWorkbook())
                 {
                     wb.Worksheets.Add(dt1);
@@ -1381,27 +1379,27 @@ namespace WebApplication27.Controllers
                     }
                 }
 
-             
-                    dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Case Start Date"),
+
+                dt.Columns.AddRange(new DataColumn[4] { new DataColumn("Case Start Date"),
                                                         new DataColumn("Case End Date"),
                                                         new DataColumn("Status"),
                                                         new DataColumn("Full Name"),
                 });
-                    foreach (var item in result)
+                foreach (var item in result)
+                {
+                    dt.Rows.Add(item.CASE_START_DATE, item.CASE_END_DATE, item.CASE_STATUS, item.USER.FULL_NAME);
+                }
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt);
+                    using (MemoryStream stream = new MemoryStream())
                     {
-                        dt.Rows.Add(item.CASE_START_DATE, item.CASE_END_DATE, item.CASE_STATUS, item.USER.FULL_NAME);
-                    }
-                    using (XLWorkbook wb = new XLWorkbook())
-                    {
-                        wb.Worksheets.Add(dt);
-                        using (MemoryStream stream = new MemoryStream())
-                        {
-                            wb.SaveAs(stream);
+                        wb.SaveAs(stream);
 
-                            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DPIC Cases.xlsx");
-                        }
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DPIC Cases.xlsx");
                     }
-              
+                }
+
             }
 
 
@@ -1423,33 +1421,33 @@ namespace WebApplication27.Controllers
 
 
             }
-                //count the hours (within work hours) and (without weekend days)
-                for (var i = start; i < end; i = i.AddHours(1))
+            //count the hours (within work hours) and (without weekend days)
+            for (var i = start; i < end; i = i.AddHours(1))
+            {
+                if (i.DayOfWeek != DayOfWeek.Friday && i.DayOfWeek != DayOfWeek.Saturday)
                 {
-                    if (i.DayOfWeek != DayOfWeek.Friday && i.DayOfWeek != DayOfWeek.Saturday)
+                    if (i.TimeOfDay.Hours >= 8 && i.TimeOfDay.Hours <= 17)
                     {
-                        if (i.TimeOfDay.Hours >= 8 && i.TimeOfDay.Hours <= 17)
-                        {
-                            count++;
-                        }
+                        count++;
                     }
                 }
+            }
 
 
-                return count;
+            return count;
 
         }
 
-        private string CheckCaseStatus(decimal caseID , decimal userId)
+        private string CheckCaseStatus(decimal caseID, decimal userId)
         {
 
-            var CaseData = 
+            var CaseData =
                            (from b in db.CASES
-                           where (b.CASE_ID == caseID) & (b.CASE_START_DATE != null) &
-                           (b.CASE_DESCRIBTION != null) & (b.CASE_TYPE != null) & (b.ULTIMATE_QUESTION != null) &
-                           (b.ULTIMATE_CATEGORY != null) & (b.URGENCY != null) & (b.ANSWER != null) & (b.USER_ID != null) 
-                           select new
-                           {b}).Any();
+                            where (b.CASE_ID == caseID) & (b.CASE_START_DATE != null) &
+                            (b.CASE_DESCRIBTION != null) & (b.CASE_TYPE != null) & (b.ULTIMATE_QUESTION != null) &
+                            (b.ULTIMATE_CATEGORY != null) & (b.URGENCY != null) & (b.ANSWER != null) & (b.USER_ID != null)
+                            select new
+                            { b }).Any();
 
             var UserIsAllowed =
                             (from u in db.USERS
@@ -1459,7 +1457,7 @@ namespace WebApplication27.Controllers
                              join p in db.PERMISSIONS on rp.PERMISSION_ID equals p.PERMISSION_ID
                              where u.USER_ID == userId && p.PERMISSION_DESCRIPTION == "Allow to submit the case" && r.USER_ID == userId
                              select new
-                             {p.PERMISSION_DESCRIPTION }).Any();
+                             { p.PERMISSION_DESCRIPTION }).Any();
 
             var checkCaseType = db.CASES.Where(x => x.CASE_ID == caseID).Select(x => x.CASE_TYPE).FirstOrDefault();
             var CaseHaveCategories = db.CASE_CATEGORIES.Where(x => x.CASE_ID == caseID).Any();
@@ -1479,7 +1477,7 @@ namespace WebApplication27.Controllers
                 status = "Completed";
 
             }
-            else if (CaseData && CaseHaveCategories && CaseHaveQuestions  && CaseHasRefrences && UserIsAllowed == false)
+            else if (CaseData && CaseHaveCategories && CaseHaveQuestions && CaseHasRefrences && UserIsAllowed == false)
             {
 
                 status = "Pending for Approval";

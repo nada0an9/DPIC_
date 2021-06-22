@@ -196,6 +196,8 @@ namespace WebApplication27.Controllers
 
                 var myviewmodel = new CaseViewModel();
                 myviewmodel.CASE_ID = CASE_ID;
+                myviewmodel.CASE_TYPE = model.CASE_TYPE;
+
 
                 //make list of questions
                 var QuestionsCheckboxlist = new List<questions_>();
@@ -239,6 +241,8 @@ namespace WebApplication27.Controllers
                 data.CASE_ID = model.CASE_ID;
                 data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
                 data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
+                data.CASE_TYPE = model.CASE_TYPE;
+
                 return View(data);
             }
             return View();
@@ -259,6 +263,7 @@ namespace WebApplication27.Controllers
                 data.CASE_ID = model.CASE_ID;
                 data.ANSWER = model.ANSWER;
                 data.RESEARCHER_NAME = model.RESEARCHER_NAME;
+                data.CASE_TYPE = model.CASE_TYPE;
 
 
                 //get case reference
@@ -319,8 +324,10 @@ namespace WebApplication27.Controllers
             data.RECEIVER_NAME = model.RECEIVER_NAME;
             data.CONTACT_ATTEMPT = model.CONTACT_ATTEMPT;
             data.IS_DIFFER = model.IS_DIFFER;
+            data.CASE_TYPE = model.CASE_TYPE;
 
-            return View(data);
+
+                return View(data);
             }
 
 
