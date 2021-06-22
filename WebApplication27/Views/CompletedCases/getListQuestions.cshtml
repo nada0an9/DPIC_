@@ -42,180 +42,169 @@
                             for (int i = 0; i < Model.QuestionsList.Count(); i++)
 
                             {
-
-                                if (Model.QuestionsList[i].fieldType == "Text" && Model.QuestionsList[i].defult == "Yes")
+                                if (group.Key == Model.QuestionsList[i].Category)
                                 {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><span class="text-danger">  *</span>
-
-                                        @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control", required = "required" })
-                                    </div>
-                                }
-
-
-                                if (Model.QuestionsList[i].fieldType == "Date" && Model.QuestionsList[i].defult == "No")
-                                {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><span class="text-danger">  *</span>
-
-                                        @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @type = "datetime-local", @class = "form-control datepicker" })
-
-                                    </div>
-                                }
-                                if (Model.QuestionsList[i].fieldType == "Date" && Model.QuestionsList[i].defult == "Yes")
-                                {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><span class="text-danger">  *</span>
-
-                                        @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @type = "datetime-local", @class = "form-control datepicker", required = "required" })
-
-                                    </div>
-                                }
-
-
-                                else if (Model.QuestionsList[i].fieldType == "Text" && Model.QuestionsList[i].defult == "No")
-                                {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label>
-
-                                        @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control" })
-                                    </div>
-                                }
-
-                                else if (Model.QuestionsList[i].fieldType == "Text Area" && Model.QuestionsList[i].defult == "Yes")
-                                {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><lable class="text-danger">  *</lable>
-
-                                        @Html.TextAreaFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control", required = "required" })
-                                    </div>
-                                }
-
-                                else if (Model.QuestionsList[i].fieldType == "Text Area" && Model.QuestionsList[i].defult == "No")
-                                {
-
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label>
-
-                                        @Html.TextAreaFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control" })
-                                    </div>
-                                }
-
-
-                                else if (Model.QuestionsList[i].fieldType == "Yes/No" && Model.QuestionsList[i].defult == "No")
-                                {
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><br />
-
-                                        @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "Yes") Yes
-                                        @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "No") No
-                                    </div>
-
-
-                                }
-
-
-
-                                else if (Model.QuestionsList[i].fieldType == "Yes/No" && Model.QuestionsList[i].defult == "Yes")
-                                {
-                                    <div class="form-group col-md-6">
-                                        <label>
-                                            @Html.DisplayFor(m => Model.QuestionsList[i].name)
-                                        </label><lable class="text-danger">  *</lable><br />
-
-                                        @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "Yes", new { required = "required" }) Yes
-                                        @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "No", new { required = "required" }) No
-                                    </div>
-
-
-                                }
-
-
-                                else if (Model.QuestionsList[i].fieldType == "Multiple Choice" && Model.QuestionsList[i].defult == "No")
-                                {
-
-
-                                    @Html.Raw("<div class=\"form-group col-md-6\">")
-
-                                    <label>  @Html.DisplayFor(m => Model.QuestionsList[i].name)</label><br />
-
-
-                                    foreach (var item in Model.QuestionsList[i].Choices)
+                                    if (Model.QuestionsList[i].fieldType == "Text" && Model.QuestionsList[i].defult == "Yes")
                                     {
 
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><span class="text-danger">  *</span>
 
-                                        <div class="form-check form-check-inline">
+                                            @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control requireded", maxlength = 3000 })
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Text" && Model.QuestionsList[i].defult == "No")
+                                    {
 
-                                            @Html.RadioButtonFor(b => b.QuestionsList[i].Choice_Id, item.CHOICE_ID, new { @class = "form-check-input" })  @item.CHOICE_NAM
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label>
 
+                                            @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control", maxlength = 3000 })
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Date" && Model.QuestionsList[i].defult == "Yes")
+                                    {
 
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><span class="text-danger">  *</span>
+
+                                            @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @type = "datetime-local", @class = "form-control datepicker requireded" })
+
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Date" && Model.QuestionsList[i].defult == "No")
+                                    {
+
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><span class="text-danger">  *</span>
+
+                                            @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @type = "datetime-local", @class = "form-control datepicker" })
+
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Text Area" && Model.QuestionsList[i].defult == "Yes")
+                                    {
+
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><lable class="text-danger">  *</lable>
+
+                                            @Html.TextAreaFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control requireded", maxlength = 3000 })
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Text Area" && Model.QuestionsList[i].defult == "No")
+                                    {
+
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label>
+
+                                            @Html.TextAreaFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control", maxlength = 3000 })
+                                        </div>
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Yes/No" && Model.QuestionsList[i].defult == "No")
+                                    {
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><br />
+
+                                            @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "Yes", false) Yes
+                                            @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "No", false) No
                                         </div>
 
 
                                     }
-
-                                    @Html.Raw("</div>")
-                                }
-
-
-
-                                else if (Model.QuestionsList[i].fieldType == "Multiple Choice" && Model.QuestionsList[i].defult == "Yes")
-                                {
-
-
-                                    @Html.Raw("<div class=\"form-group col-md-6\">")
-
-                                    <label>  @Html.DisplayFor(m => Model.QuestionsList[i].name)</label><span class="text-danger">  *</span><br />
-
-
-                                    foreach (var item in Model.QuestionsList[i].Choices)
+                                    else if (Model.QuestionsList[i].fieldType == "Yes/No" && Model.QuestionsList[i].defult == "Yes")
                                     {
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><lable class="text-danger">  *</lable><br />
 
-
-                                        <div class="form-check form-check-inline">
-
-                                            @Html.RadioButtonFor(b => b.QuestionsList[i].Choice_Id, item.CHOICE_ID, new { @class = "form-check-input", required = "required" })  @item.CHOICE_NAM
-
-
+                                            @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "Yes", new { @class = "requireded", name = "yesorno" }) Yes
+                                            @Html.RadioButtonFor(m => Model.QuestionsList[i].Answer, "No", new { @class = "requireded", name = "yesorno" }) No
                                         </div>
 
 
                                     }
+                                    else if (Model.QuestionsList[i].fieldType == "Multiple Choice" && Model.QuestionsList[i].defult == "No")
+                                    {
 
-                                    @Html.Raw("</div>")
+
+                                        @Html.Raw("<div class=\"form-group col-md-6\">")
+
+                                        <label>  @Html.DisplayFor(m => Model.QuestionsList[i].name)</label><br />
+
+
+                                        foreach (var item in Model.QuestionsList[i].Choices)
+                                        {
+
+
+                                            <div class="form-check form-check-inline">
+                                                @Html.RadioButtonFor(b => b.QuestionsList[i].Choice_Id, item.CHOICE_ID, new { @class = "form-check-input" })  @item.CHOICE_NAM
+
+                                            </div>
+
+
+                                        }
+
+                                        @Html.Raw("</div>")
+                                    }
+                                    else if (Model.QuestionsList[i].fieldType == "Multiple Choice" && Model.QuestionsList[i].defult == "Yes")
+                                    {
+
+
+                                        @Html.Raw("<div class=\"form-group col-md-6\">")
+
+                                        <label>  @Html.DisplayFor(m => Model.QuestionsList[i].name)</label><span class="text-danger">  *</span><br />
+
+
+                                        foreach (var item in Model.QuestionsList[i].Choices)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                @Html.RadioButtonFor(b => b.QuestionsList[i].Choice_Id, item.CHOICE_ID, new { @class = "requireded", name = "choise" })  @item.CHOICE_NAM
+
+                                            </div>
+
+                                        }
+
+                                        @Html.Raw("</div>")
+                                    }
+                                    else
+                                    {
+
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @Html.DisplayFor(m => Model.QuestionsList[i].name)
+                                            </label><span class="text-danger">  *</span>
+
+                                            @Html.TextBoxFor(m => Model.QuestionsList[i].Answer, new { @class = "form-control requireded", maxlength = 3000 })
+                                        </div>
+                                    }
+
+
+                                    @Html.HiddenFor(m => Model.QuestionsList[i].id)
+                                    @Html.HiddenFor(m => Model.QuestionsList[i].name)
+                                    @Html.HiddenFor(m => Model.CASE_ID)
+
+
                                 }
-
-
-
-
-                                @Html.HiddenFor(m => Model.QuestionsList[i].id)
-                                @Html.HiddenFor(m => Model.CASE_ID)
-
-
-
                             }
 
+
                         }
-                        </div>
+                    </div>
 
 
 
@@ -243,6 +232,7 @@
         {
             @Html.Raw("No Question found")
         }
+
 
 
 

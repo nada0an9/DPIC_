@@ -11,12 +11,12 @@ namespace WebApplication27.Controllers
     [CustomAuthenticationFilter]
     [CustomAuthorize("Create New Case")]
 
-
     public class CompletedCasesController : Controller
-    {    private DB_Model db = new DB_Model();
+    {
+        private DB_Model db = new DB_Model();
 
         // GET: CompletedCases
-     
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -24,33 +24,33 @@ namespace WebApplication27.Controllers
         }
 
         [HttpGet]
-        public ActionResult CaseDescriptionSatge(decimal CASE_ID) 
+        public ActionResult CaseDescriptionSatge(decimal CASE_ID)
         {
             //requesters list to bind it in the view 
             List<REQUESTER> list = db.REQUESTERS.ToList();
             ViewBag.Requester = new SelectList(list, "REQUESTER_ID", "REQUESTER_NAME");
 
-                Case model = db.CASES.Where(Models => Models.CASE_ID == CASE_ID).Where(x => x.CASE_STATUS == "Completed").SingleOrDefault();
+            Case model = db.CASES.Where(Models => Models.CASE_ID == CASE_ID).Where(x => x.CASE_STATUS == "Completed").SingleOrDefault();
 
-                if (model != null)
-                {    //get case description stage info from (model)
+            if (model != null)
+            {    //get case description stage info from (model)
 
-                    caseDescriptionStage data = new caseDescriptionStage();
-                    data.CASE_ID = model.CASE_ID;
-                    data.CASE_START_DATE = model.CASE_START_DATE;
-                    data.REQUESTER_ID = model.REQUESTER_ID;
-                    data.CASE_DESCRIBTION = model.CASE_DESCRIBTION;
-                    data.CASE_TYPE = model.CASE_TYPE;
-                    data.URGENCY = model.URGENCY;
+                caseDescriptionStage data = new caseDescriptionStage();
+                data.CASE_ID = model.CASE_ID;
+                data.CASE_START_DATE = model.CASE_START_DATE;
+                data.REQUESTER_ID = model.REQUESTER_ID;
+                data.CASE_DESCRIBTION = model.CASE_DESCRIBTION;
+                data.CASE_TYPE = model.CASE_TYPE;
+                data.URGENCY = model.URGENCY;
 
-                    return View(data);
+                return View(data);
 
-                }
+            }
 
-                return View();
+            return View();
 
 
-           
+
 
 
 
@@ -66,26 +66,26 @@ namespace WebApplication27.Controllers
             //get patient information from (model)
             if (model != null)
             {
-            patientInformationStage data = new patientInformationStage();
-            data.CASE_ID = model.CASE_ID;
-            data.MRN = model.MRN;
-            data.NAME = model.NAME;
-            data.AGE = model.AGE;
-            data.GENDER = model.GENDER;
-            data.PREGNANT_OR_NOT = model.PREGNANT_OR_NOT;
-            data.PREGNANT_WEEK = model.PREGNANT_WEEK;
-            data.ALLERGY_HISTORY = model.ALLERGY_HISTORY;
-            data.HEIGHT = model.HEIGHT;
-            data.WEIGHT = model.WEIGHT;
-            data.patientMRN = model.HAS_MRN_OR_NOT;
-            data.CASE_START_DATE = model.CASE_START_DATE;
-            data.DIAGNOSIS = model.DIAGNOSIS;
-            data.ELECTROLYTES = model.ELECTROLYTES;
-            data.LIVER_FUNCTION = model.LIVER_FUNCTION;
-            data.LABORATORY_RESULT = model.LABORATORY_RESULT;
-            data.SERUM_CREATININE = model.SERUM_CREATININE;
-            data.MEDICATIONS = model.MEDICATIONS;
-            data.RELATED_SINGS = model.RELATED_SINGS;
+                patientInformationStage data = new patientInformationStage();
+                data.CASE_ID = model.CASE_ID;
+                data.MRN = model.MRN;
+                data.NAME = model.NAME;
+                data.AGE = model.AGE;
+                data.GENDER = model.GENDER;
+                data.PREGNANT_OR_NOT = model.PREGNANT_OR_NOT;
+                data.PREGNANT_WEEK = model.PREGNANT_WEEK;
+                data.ALLERGY_HISTORY = model.ALLERGY_HISTORY;
+                data.HEIGHT = model.HEIGHT;
+                data.WEIGHT = model.WEIGHT;
+                data.patientMRN = model.HAS_MRN_OR_NOT;
+                data.CASE_START_DATE = model.CASE_START_DATE;
+                data.DIAGNOSIS = model.DIAGNOSIS;
+                data.ELECTROLYTES = model.ELECTROLYTES;
+                data.LIVER_FUNCTION = model.LIVER_FUNCTION;
+                data.LABORATORY_RESULT = model.LABORATORY_RESULT;
+                data.SERUM_CREATININE = model.SERUM_CREATININE;
+                data.MEDICATIONS = model.MEDICATIONS;
+                data.RELATED_SINGS = model.RELATED_SINGS;
 
 
 
@@ -93,7 +93,7 @@ namespace WebApplication27.Controllers
                 var Result = from b in db.CASE_COMORBIDITY
                              join c in db.COMORBIDITies on b.COMORBIDITY_ID equals c.COMORBIDITY_ID
                              where (b.CASE_ID == CASE_ID)
-                             orderby(c.DISPLAY_ORDER)
+                             orderby (c.DISPLAY_ORDER)
                              select new
                              {
                                  b.COMORBIDITY_ID,
@@ -103,30 +103,30 @@ namespace WebApplication27.Controllers
                              };
 
 
-             //make list of comorbidities
-             var ComorbidityCheckboxlist = new List<comorbidities_>();
+                //make list of comorbidities
+                var ComorbidityCheckboxlist = new List<comorbidities_>();
 
-            foreach (var item in Result)
-            {
+                foreach (var item in Result)
+                {
                     string result2 =
                                       (from c in db.CASE_COMORBIDITY
                                        where c.CASE_ID == CASE_ID && c.OTHER_COMORBIDITY != null
                                        select c.OTHER_COMORBIDITY).FirstOrDefault();//query to get other comorbidity if exists
 
                     //add every item in result query to the (ComorbidityCheckboxlist)
-                    ComorbidityCheckboxlist.Add(new comorbidities_ { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = true, other =result2 });
+                    ComorbidityCheckboxlist.Add(new comorbidities_ { id = item.COMORBIDITY_ID, name = item.COMORBIDITY_NAME, Checked = true, other = result2 });
 
 
-            }
+                }
 
-            data.ComorbidityList = ComorbidityCheckboxlist;
-            return View(data);
+                data.ComorbidityList = ComorbidityCheckboxlist;
+                return View(data);
 
             }
             return View();
 
         }
-      
+
         [HttpGet]
         public ActionResult getListCategories(decimal CASE_ID)
         {
@@ -178,10 +178,10 @@ namespace WebApplication27.Controllers
             {
                 //query to get case questions
                 var Result = from b in db.QUESTIONS
-                             join c in db.CASE_QUESTIONS on b.QUESTION_ID equals c.QUESTION_ID
                              join f in db.CASE_CATEGORIES on b.CATEGORY_ID equals f.CATEGORY_ID
+                             join c in db.CASE_QUESTIONS on b.QUESTION_ID equals c.QUESTION_ID
                              where (c.CASE_ID == CASE_ID) & (c.QUESTION_ID == b.QUESTION_ID) & (f.CASE_ID == CASE_ID)
-                             orderby (b.DISPLAY_ORDER)
+                             orderby b.CATEGORy.DISPLAY_ORDER, b.DISPLAY_ORDER
                              select new
                              {
                                  c.QUESTION_ID,
@@ -198,7 +198,6 @@ namespace WebApplication27.Controllers
                 myviewmodel.CASE_ID = CASE_ID;
                 myviewmodel.CASE_TYPE = model.CASE_TYPE;
 
-
                 //make list of questions
                 var QuestionsCheckboxlist = new List<questions_>();
 
@@ -212,7 +211,7 @@ namespace WebApplication27.Controllers
                     List<MULTIPLE_CHOICE> lst = Result2.ToList(); //get a list of related multiple-choice to the current question's id in (item)
 
                     //add every item in result query to the (QuestionsCheckboxlist)
-                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, name = item.QUESTION_NAME, Answer = item.ANSWER, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION, Category = item.CATEGORY_NAME, Choice_Id =item.CHOICE_ID });
+                    QuestionsCheckboxlist.Add(new questions_ { id = item.QUESTION_ID, name = item.QUESTION_NAME, Answer = item.ANSWER, fieldType = item.ANSWER_TYPE, Choices = lst, defult = item.DEFAULT_QUESTION, Category = item.CATEGORY_NAME, Choice_Id = item.CHOICE_ID });
                 }
 
                 myviewmodel.QuestionsList = QuestionsCheckboxlist;
@@ -221,7 +220,7 @@ namespace WebApplication27.Controllers
             }
             return View();
 
-            
+
 
 
 
@@ -242,14 +241,13 @@ namespace WebApplication27.Controllers
                 data.ULTIMATE_QUESTION = model.ULTIMATE_QUESTION;
                 data.ULTIMATE_CATEGORY = model.ULTIMATE_CATEGORY;
                 data.CASE_TYPE = model.CASE_TYPE;
-
                 return View(data);
             }
             return View();
-            
+
 
         }
-   
+
         [HttpGet]
         public ActionResult getCaseAnswer(decimal CASE_ID)
         {
@@ -313,19 +311,18 @@ namespace WebApplication27.Controllers
 
             Case model = db.CASES.Where(Models => Models.CASE_ID == CASE_ID).SingleOrDefault();
 
-            if(model != null)
+            if (model != null)
             {
-             // get record stage info from (model)
-             recordStage data = new recordStage();
-            data.CASE_ID = model.CASE_ID;
-            data.ANSWER_GIVEN = model.ANSWER_GIVEN;
-            data.NOT_REACHABLE_COMMENT = model.NOT_REACHABLE_COMMENT;
-            data.RECEIVER_ID = model.RECEIVER_ID;
-            data.RECEIVER_NAME = model.RECEIVER_NAME;
-            data.CONTACT_ATTEMPT = model.CONTACT_ATTEMPT;
-            data.IS_DIFFER = model.IS_DIFFER;
-            data.CASE_TYPE = model.CASE_TYPE;
-
+                // get record stage info from (model)
+                recordStage data = new recordStage();
+                data.CASE_ID = model.CASE_ID;
+                data.ANSWER_GIVEN = model.ANSWER_GIVEN;
+                data.NOT_REACHABLE_COMMENT = model.NOT_REACHABLE_COMMENT;
+                data.RECEIVER_ID = model.RECEIVER_ID;
+                data.RECEIVER_NAME = model.RECEIVER_NAME;
+                data.CONTACT_ATTEMPT = model.CONTACT_ATTEMPT;
+                data.IS_DIFFER = model.IS_DIFFER;
+                data.CASE_TYPE = model.CASE_TYPE;
 
                 return View(data);
             }
