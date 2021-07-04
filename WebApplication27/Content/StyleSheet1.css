@@ -81,8 +81,8 @@ fieldset {
         .dropdown-check-list .anchor:after {
             position: absolute;
             content: "";
-            border-left: 2px solid black;
-            border-top: 2px solid black;
+            border-left: 2px solid #ccc;
+            border-top: 2px solid #ccc;
             padding: 5px;
             right: 10px;
             top: 20%;
@@ -122,3 +122,4 @@ fieldset {
     padding: 10px;
     margin-top: 6rem;
 }
+

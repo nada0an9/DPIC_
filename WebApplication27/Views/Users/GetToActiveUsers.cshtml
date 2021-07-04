@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "GetToActiveUsers";
+}
+@model WebApplication27.Models.ActiveUsersModel
+@using (Html.BeginForm("activateUsers", "Users", FormMethod.Post))
+{
+<div class="row">
+    <div class="col-7">
+
+        <div id="list1" class="dropdown-check-list" style="width:100%">
+            <span class="form-control col-md-12 input-group anchor">Select</span>
+
+            <ul class="items">
+                <li>
+                    <input id="myInput" class="form-control col-md-12" type="text" style="border-top:none;border-left:none; border-right:none" placeholder="Search..">
+                    <ul class="items" id="myList" style="overflow-y: scroll; border:none; height:100px; ">
+                        <li>
+                            @Html.CheckBox("select all", new { id = "id-of-checkall-checkbox" })<span> Select All</span>
+                        </li>
+                        @for (int i = 0; i < Model.UserList.Count(); i++)
+                        {
+                            <li>
+                                @Html.CheckBoxFor(m => Model.UserList[i].Checked, new { @class = "requierd-check", id = "" })
+                                @Html.DisplayFor(m => Model.UserList[i].email, new { @class = "Permissions", id = "List" })
+                                (
+                                @Html.DisplayFor(m => Model.UserList[i].name, new { @class = "Permissions", id = "List" }))
+                                @Html.HiddenFor(m => Model.UserList[i].id)
+                            </li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-1">
+
+        <button id="btn2" style="background-color: #428bca; color: #fff" class="btn" type="submit">Activate</button>
+        <span id="error" class="field-validation-error">
+            <span class="text-danger">At least one user must be selected</span>
+        </span>
+    </div>
+
+</div>
+
+}
+    <script>
+        //open list
+        var checkList = document.getElementById('list1');
+        checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+            if (checkList.classList.contains('visible'))
+                checkList.classList.remove('visible');
+            else
+                checkList.classList.add('visible');
+        }
+        //search on list
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        //validation list
+        var declarationsError = $('#error').hide();
+        $('#btn2').click(function () {
+
+            if ($(".requierd-check:checkbox:checked").length > 0) {
+                declarationsError.hide();
+                return true;
+            }
+            else {
+                declarationsError.show();
+                return false;
+            }
+        });
+        //select all
+        $("#id-of-checkall-checkbox").click(function () {
+            $(".requierd-check").attr('checked', this.checked);
+        });
+
+    </script>
+

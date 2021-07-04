@@ -84,7 +84,7 @@
 
                         <div class="row justify-content-between">
                             <div class="col-auto">
-                                @if (@ViewBag.type == "General Questions")
+                                @if (Model.CASE_TYPE == "General Questions")
                                 {
                                     <a href="@Url.Action("getCaseDescription", "Case" , new { id= Model.CASE_ID })" class="btn btn-secondary">Previous</a>
 

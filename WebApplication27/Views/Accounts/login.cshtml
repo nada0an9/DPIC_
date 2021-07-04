@@ -14,7 +14,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="~/Scripts/jquery-3.0.0.min.js"></script>
-    <script src="~/Scripts/Chart.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -28,7 +27,6 @@
 
 
 
-        <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
@@ -61,6 +59,14 @@
                                     @TempData["Danger"]
                                 </div>
                             }
+                            @if (TempData["alert"] != null)
+                            {
+                                <div class="alert alert-secondary alert-dismissible fade show">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    @TempData["alert"]
+                                </div>
+
+                            }
 
                             @using (Html.BeginForm("Login", "Accounts", FormMethod.Post))
 
@@ -86,15 +92,7 @@
                                         <button type="submit" class="form-control" style="background-color: #428bca;color: #fff">Login</button>
 
                                     </div>
-                                    <div class="col-md-8">
-                                        <br />
-                                        @Html.Label("Don't have an account?", new { @class = "control-label" })
-
-                                        <a href="@Url.Action("Register", "Accounts")">
-                                            Register
-                                        </a>
-
-                                    </div>
+                        
                                 </div>
 
                             }

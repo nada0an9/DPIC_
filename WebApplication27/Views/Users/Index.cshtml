@@ -7,8 +7,6 @@
 @model PagedList.IPagedList<WebApplication27.Models.USER>
 <h4 style="margin-bottom:20px; margin-top:30px">Users</h4>
 
-
-
 @*alert messages*@
 
 @if (TempData["Danger"] != null)
@@ -18,8 +16,6 @@
         @TempData["Danger"]
     </div>
 }
-
-
 @if (TempData["Success"] != null)
 {
     <div class="alert alert-success alert-dismissible">
@@ -28,53 +24,43 @@
     </div>
 
 }
-@if (TempData["cannotEdit"] != null)
-{
-    <div class="success-message">
-        <div class="modal fade" id="Model" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
 
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5>Edit User Information </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+                {
+
+                    <div class="input-group">
+                        @Html.TextBox("name", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "name..email...", })
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>You cannot edit this reference, since it has been used in pending case</p>
-                    </div>
-                </div>
+                }
+            </div>
+            <div class="form-group col-md-8">
+                @if (ViewBag.TotalToActiveUsers > 0)
+                {
+                    @Html.Action("GetToActiveUsers", "Users")
+
+                }
 
             </div>
+
+
+
+
+
         </div>
+
+
     </div>
-
-}
-
-
-@*Search Form*@
-@using (Html.BeginForm("Index", "Users", FormMethod.Get))
-{
-    <div class="row">
-        <div class="col-10">
-            <div class="input-group mb-3 w-25">
-
-                <div class="input-group mb-3">
-                    @Html.TextBox("name", ViewBag.FilterValue as string, new { @class = "form-control", placeholder = "Name", })
-
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-}
-
-
-
+</div>
 @*model for delete user*@
 <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -97,12 +83,14 @@
     </div>
 </div>
 
-@*Table To read  all users*@
 
-<table class="table m-1">
+
+@*Table To read  all users*@
+<table class="table" style="margin-top:1rem">
     <thead>
         <tr>
             <th>Full Name </th>
+            <th>Role </th>
             <th>Email</th>
             <th>Status</th>
 
@@ -117,6 +105,25 @@
             <td>
 
                 @Html.DisplayFor(modelItem => item.FULL_NAME)
+            </td>
+            <td>
+                @{
+                    string[] members = item.USER_ROLE.Where(x => x.USER_ID == item.USER_ID).Select(x => x.ROLE.ROLE_NAME).ToArray();
+                    int counter = 0;
+                }
+                @foreach (var character in members)
+                {
+                    counter++;
+
+                    @character
+                    if (counter < members.Count())
+                    {
+                        @Html.Raw(", ")
+                    }
+
+                }
+
+
             </td>
             <td>
 
@@ -151,10 +158,7 @@
 
 </table>
 
-
-
 @*pagination*@
-
 <p>
     @Html.PagedListPager(Model, page => Url.Action("Index", "Users",
 new
@@ -172,7 +176,6 @@ new
     $(document).ready(function () {
         $("#Model").modal();
     });
-
  $(function () {
    $('.vh').click(function () {
           var user_id = $(this).data('assigned-id');

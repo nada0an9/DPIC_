@@ -1,18 +1,12 @@
 ﻿
-
 @{
     ViewBag.Title = "Cases";
 }
-
 
 @using PagedList.Mvc
 
 @model PagedList.IPagedList<WebApplication27.Models.Case>
 <h4 style="margin-bottom:20px; margin-top:30px">Cases</h4>
-
-
-
-
 
     @*alert messages*@
     @if (TempData["Success"] != null)

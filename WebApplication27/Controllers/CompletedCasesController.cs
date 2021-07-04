@@ -52,8 +52,6 @@ namespace WebApplication27.Controllers
 
 
 
-
-
         }
 
         [HttpGet]

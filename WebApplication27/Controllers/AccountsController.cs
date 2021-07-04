@@ -26,52 +26,46 @@ namespace WebApplication27.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var h_password = GetMD5(model.PASSWORD);
+                string userSituation = userChecker(model.EMAIL, model.PASSWORD);
+                var UserID = db.USERS.Where(user => user.EMAIL.ToLower() == model.EMAIL.ToLower() && user.PASSWORD == h_password).Select(x=>x.USER_ID).FirstOrDefault();
+
+                switch (userSituation)
                 {
-                    var f_password = GetMD5(model.PASSWORD);
-                    //query to check if the email and password of the user are correct
-                    bool IsValidUser = db.USERS.Any(user => user.EMAIL.ToLower() == model.EMAIL.ToLower() && user.PASSWORD == f_password);
+                    case "Active & Valid":
 
-                    //check if the given email is assigned to an active user       
-                    bool IsActiveUser = db.USERS.Any(user => user.EMAIL.ToLower() == model.EMAIL.ToLower() && user.PASSWORD == f_password && user.STATUS =="Active");
-
-
-                    if (IsValidUser && IsActiveUser)
-                    {
-
-                        //query to get the user ID to assign the user ID in the Forms Authentication as an authenticated user
-                        var userid1 = db.USERS.Where(x => x.EMAIL == model.EMAIL).Select(x => x.USER_ID).FirstOrDefault();
-                        string userid = userid1.ToString();
-
-
-
-                        FormsAuthentication.SetAuthCookie(userid, false);
+                        FormsAuthentication.SetAuthCookie(UserID.ToString(), false);
                         return RedirectToAction("Home", "Accounts");
-                    }
-                    else if(IsValidUser && IsActiveUser == false)
-                    {
-                        TempData["Danger"] = "Sorry, Your Account is disabled";
+
+                    case "Inctive & Valid":
+
+                        TempData["Danger"] = "Sorry, Your Account is Inactive.";
                         return RedirectToAction("Login");
 
-                    }
+                    case "To Active & Valid":
 
-                    ModelState.AddModelError("Email", "invalid Username or Password");
-                    return View();
-                }
-                else
-                {
-                    return View(model);
+                        TempData["alert"] = "Your account has not been activated.";
+                        return RedirectToAction("Login");
+
+                    case "Email Exists & Invalid":
+                        ModelState.AddModelError("Email", "invalid Username or Password");
+                        return View();
+
+                    case "Email not Exists":
+                        return RedirectToAction("Register");
+
+                    default:
+                        return RedirectToAction("Register");
 
                 }
             }
 
-            catch (OracleException e)
+            else
             {
-                string errorMessage = "Code: " + e.ErrorCode + "\n" +
-                         "Message: " + e.Message;
-                return View();
+                return View(model);
 
             }
 
@@ -102,7 +96,7 @@ namespace WebApplication27.Controllers
                 newobj.FULL_NAME = obj.FULL_NAME;
                 newobj.EMAIL = obj.EMAIL;
                 newobj.PASSWORD = GetMD5(obj.PASSWORD);
-                newobj.STATUS = "Active";
+                newobj.STATUS = "To Active";
                 db.USERS.Add(newobj);
                 db.SaveChanges();
                 decimal Id = newobj.USER_ID;
@@ -200,6 +194,11 @@ namespace WebApplication27.Controllers
 
                                   select p);
 
+            //count the users with status (To Active)
+            var ActiveUsers = db.USERS.Where(x => x.STATUS == "To Active").Count();
+
+            ViewBag.TotalToActiveUsers = ActiveUsers;
+
 
             //make list of permissions
             var Menulist = new List<PERMISSION>();
@@ -240,6 +239,7 @@ namespace WebApplication27.Controllers
 
             }
         }
+
         [CustomAuthenticationFilter]
         [HttpGet]
         public ActionResult EditName()
@@ -261,6 +261,7 @@ namespace WebApplication27.Controllers
 
             }
         }
+
         [CustomAuthenticationFilter]
         [HttpPost]
         public ActionResult UpdateName(Profile data)
@@ -303,6 +304,7 @@ namespace WebApplication27.Controllers
 
             }
         }
+
         [CustomAuthenticationFilter]
         [HttpPost]
         public ActionResult UpdateEmail(Profile data)
@@ -332,6 +334,7 @@ namespace WebApplication27.Controllers
 
             }
         }
+
         [CustomAuthenticationFilter]
         [HttpGet]
         public ActionResult EditPassword()
@@ -423,6 +426,58 @@ namespace WebApplication27.Controllers
             }
             return byte2String;
         }
+
+
+        private string userChecker(string email, string password)
+        {
+
+            string userSituation = "";
+
+            var h_password = GetMD5(password);
+
+            //query to check if the email and password of the user are correct
+            bool IsValidUser = db.USERS.Any(user => user.EMAIL.ToLower() == email.ToLower() && user.PASSWORD == h_password);
+
+            //query to check if the email is not exists in DB to open Register View
+            bool emailExists = db.USERS.Any(user => user.EMAIL.ToLower() == email.ToLower());
+
+            //check if the given email is assigned to an active user       
+            var IsActiveUser = db.USERS.Where(user => user.EMAIL.ToLower() == email.ToLower() && user.PASSWORD == h_password).Select(x => x.STATUS).FirstOrDefault();
+
+            if (IsValidUser && IsActiveUser == "Active")
+            {
+                userSituation = "Active & Valid";
+
+            }
+            else if (IsValidUser && IsActiveUser == "Inactive")
+            {
+
+                userSituation = "Inctive & Valid";
+
+            }
+            else if (IsValidUser && IsActiveUser == "To Active")
+            {
+                userSituation = "To Active & Valid";
+
+
+            }
+            else if (emailExists == true && IsValidUser == false)
+            {
+                userSituation = "Email Exists & Invalid";
+
+            }
+            else
+            {
+                userSituation = "Email not Exists";
+
+            }
+
+            return userSituation;
+
+
+
+        }
+
 
 
     }

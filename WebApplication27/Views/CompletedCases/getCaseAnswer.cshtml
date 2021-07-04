@@ -5,12 +5,6 @@
 
 @model WebApplication27.Models.answersStage
 
-
-
-
-
-
-
 <div class="card shadow-sm" style="margin-top:7%">
 
 
@@ -69,9 +63,6 @@
 
                 }
 
-
-
-
             </div>
             <div class="row justify-content-between">
                 <div class="col-auto">
@@ -82,7 +73,7 @@
                 </div>
                 <div class="col-auto">
 
-                    <a href="@Url.Action("Completed", "Case" )" class="btn" style="background-color: #428bca; color: #fff">Close</a>
+                    <a href="@Url.Action("Filter", "Case" )" class="btn" style="background-color: #428bca; color: #fff">Close</a>
                     <a href="@Url.Action("getCaseRecored", "CompletedCases", new { CASE_ID = Model.CASE_ID })" class="btn" style="background-color: #428bca; color: #fff">Next</a>
 
                 </div>

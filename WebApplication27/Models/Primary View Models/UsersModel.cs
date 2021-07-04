@@ -38,7 +38,13 @@ namespace WebApplication27.Models
 
         public List<roles_> RoleList { get; set; }
 
+
+
     }
 
+    public class ActiveUsersModel
+    {
+        public List<Users_> UserList { get; set; }
 
+    }
 }

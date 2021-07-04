@@ -30,7 +30,7 @@ namespace WebApplication27.Controllers
                 else
                 {
 
-                    name = Filter_Value; // to filter the list by name across all pages ... not only the first page
+                    name = Filter_Value; //to filter the list by name across all pages ... not only the first page
 
                 }
                 ViewBag.FilterValue = name;
@@ -40,16 +40,69 @@ namespace WebApplication27.Controllers
 
                 if (!String.IsNullOrEmpty(name) && name.Length < 150)
                 {
-                     data = data.Where(m => m.FULL_NAME.ToLower().Contains(name.ToLower())).ToList(); //filter by the name
+                     data = data.Where(m => m.FULL_NAME.ToLower().Contains(name.ToLower()) || m.EMAIL.ToLower().Contains(name.ToLower())).ToList(); //filter by the name
 
                 }
+            var Users = new List<USER>(); // make a list of roles 
+            foreach (var item in data)
+            {
 
-                return View(data.ToPagedList(pagenum, pagesize));
+                Users.Add(new USER { USER_ID = item.USER_ID, EMAIL = item.EMAIL }); //add every item in data query to the (Users) list
+            }
+
+            ViewBag.TotalToActiveUsers= data.Where(x=>x.STATUS == "To Active").Count();
+
+
+
+            return View(data.ToPagedList(pagenum, pagesize));
 
             
  
         }
 
+
+        [HttpGet]
+        public ActionResult GetToActiveUsers()
+        {
+            List<USER> data = db.USERS.OrderBy(x => x.FULL_NAME).Where(x=>x.STATUS == "To Active").ToList(); //list to all new users  ...ordred by name ..
+            
+            if (data != null)
+            {
+                var users = new List<Users_>(); // make a list of roles 
+
+                foreach (var item in data)
+                {
+                    users.Add(new Users_ { id = item.USER_ID, email = item.EMAIL, Checked = false, name = item.FULL_NAME}); //add every item in Result query to the (Roles) list
+
+                }
+                ActiveUsersModel User = new ActiveUsersModel();
+                User.UserList = users;
+                return PartialView(User);
+
+            }
+            return RedirectToAction("Index", "Error");
+
+        }
+
+
+        [HttpPost]
+        public ActionResult activateUsers(ActiveUsersModel model)
+        {
+
+                    foreach (var item in model.UserList)
+                    {
+                        var UserIdCheck = db.USERS.Where(x => x.USER_ID == item.id).FirstOrDefault(); //Check if given user id exists
+
+                        if (item.Checked && UserIdCheck != null)
+                        {
+                            UserIdCheck.STATUS = "Active";// update user status 
+                            db.SaveChanges();
+                        }
+                    }
+
+                    TempData["Success"] = "The changes are saved successfully";//display a message to inform that  (changes are saved successfully)
+                    return RedirectToAction("Index");
+        }
 
         [HttpGet]
         public ActionResult Edit(decimal id)

@@ -255,7 +255,6 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\StyleSheet1.css" />
-    <Content Include="Content\StyleSheet2.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -665,6 +664,7 @@
     <Content Include="Views\Case\Filter.cshtml" />
     <Content Include="Views\Questions\details.cshtml" />
     <Content Include="Views\MultipleChoice\EditUsed.cshtml" />
+    <Content Include="Views\Users\GetToActiveUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

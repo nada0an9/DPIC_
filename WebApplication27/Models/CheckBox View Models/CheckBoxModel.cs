@@ -51,6 +51,12 @@ namespace WebApplication27.Models
 
     }
 
+    public class Users_ : CheckBoxModel
+    {
+        public string email { get; set; }
+    }
+
+
 
 
 

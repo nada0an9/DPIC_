@@ -65,9 +65,6 @@ namespace WebApplication27.Controllers
                 return View("Index", model);//validation in view 
             }
 
-
-
-
         }
 
         public ActionResult ReportToAll(DateTime start, DateTime end, string user_id, bool AllUsers)
@@ -165,29 +162,45 @@ namespace WebApplication27.Controllers
                         table.AddCell(CellLine);
                         PdfFile.NewPage();
                         //get patient information stage if the case type was specific
-
-                        if (item.e.CASE_TYPE == "Patient Spesific Question")
+                        if (item.e.CASE_TYPE == "Patient Specific Question")
                         {
-
 
                             table.AddCell(new Phrase("Patient Information Stage", boldFont));
                             table.AddCell(new Phrase("", boldFont));
+                            if (item.e.HAS_MRN_OR_NOT == "Yes")
+                            {
+                                table.AddCell(new Phrase("MRN", boldFont));
+                                table.AddCell(new Phrase(item.e.MRN, Font));
 
-                            table.AddCell(new Phrase("MRN", boldFont));
+                            }
+
                             table.AddCell(new Phrase("Name", boldFont));
-                            table.AddCell(new Phrase(item.e.MRN, Font));
                             table.AddCell(new Phrase(item.e.NAME, Font));
+                            if (item.e.HAS_MRN_OR_NOT == "Yes")
+                            {
+                                table.AddCell(new Phrase(item.e.MRN, Font));
+                            }
 
                             table.AddCell(new Phrase("Age", boldFont));
                             table.AddCell(new Phrase("Gender", boldFont));
                             table.AddCell(new Phrase(item.e.AGE, Font));
                             table.AddCell(new Phrase(item.e.GENDER, Font));
-
-                            table.AddCell(new Phrase("Pregnant", boldFont));
-                            table.AddCell(new Phrase("Trimester / Week", boldFont));
-                            table.AddCell(new Phrase(item.e.PREGNANT_OR_NOT, Font));
-                            table.AddCell(new Phrase(item.e.PREGNANT_WEEK, Font));
-
+                            if (item.e.GENDER == "Female")
+                            {
+                                table.AddCell(new Phrase("Pregnant", boldFont));
+                            }
+                            if (item.e.PREGNANT_OR_NOT == "Yes")
+                            {
+                                table.AddCell(new Phrase("Trimester / Week", boldFont));
+                            }
+                            if (item.e.GENDER == "Female")
+                            {
+                                table.AddCell(new Phrase(item.e.PREGNANT_OR_NOT, Font));
+                            }
+                            if (item.e.PREGNANT_OR_NOT == "Yes")
+                            {
+                                table.AddCell(new Phrase(item.e.PREGNANT_WEEK, Font));
+                            }
                             table.AddCell(new Phrase("Allergy History", boldFont));
                             table.AddCell(new Phrase("Weight (Kg)", boldFont));
                             table.AddCell(new Phrase(item.e.ALLERGY_HISTORY, Font));
@@ -218,7 +231,6 @@ namespace WebApplication27.Controllers
                             table.AddCell(CellLine);
                             table.AddCell(CellLine);
 
-                            //ناقص الاذر 
                             //Query to get the case comorbidities
                             table.AddCell(new Phrase("Case Comorbidities", boldFont));
                             table.AddCell(new Phrase(""));
@@ -233,10 +245,28 @@ namespace WebApplication27.Controllers
                             c6.Border = 0;
                             c6.PaddingBottom = 10;
                             c6.PaddingTop = 5;
+
+                            Phrase C= new Phrase();
+                            C.Font = Font;
+                            Phrase C2 = new Phrase();
+                            C2.Font = Font;  
+
+
                             foreach (var item6 in GetCasecomorbidity)
-                            { list5.Add(new ListItem(item6.COMORBIDITY.COMORBIDITY_NAME, Font)); }
+                            {
+                                list5.Add(new ListItem(item6.COMORBIDITY.COMORBIDITY_NAME, Font));
+                                if (item6.COMORBIDITY.COMORBIDITY_NAME == "Other")
+                                {
+                                    C.Add("Other Comorbidities");
+                                    C2.Add(item6.OTHER_COMORBIDITY);
+                                }
+                            }
                             c6.AddElement(list5);
                             table.AddCell(c6);
+                            table.AddCell("");
+                            table.AddCell(C);
+                            table.AddCell("");
+                            table.AddCell(C2);
                             table.AddCell("");
 
                             table.AddCell(CellLine);
@@ -276,14 +306,23 @@ namespace WebApplication27.Controllers
                         table.AddCell(new Phrase("Answers", boldFont));
                         foreach (var item3 in GetCaseQuestions)
                         {
-                            table.AddCell(new Phrase(item3.QUESTION.QUESTION1, Font));
-                            table.AddCell(new Phrase(item3.ANSWER, Font));
+                            if (item3.QUESTION.ANSWER_TYPE == "Multiple Choice")
+                            {
+                                table.AddCell(new Phrase(item3.QUESTION.QUESTION1, Font));
+                                table.AddCell(new Phrase(item3.MULTIPLE_CHOICE.CHOICE_NAM, Font));
+
+                            }
+                            else
+                            {
+                                table.AddCell(new Phrase(item3.QUESTION.QUESTION1, Font));
+                                table.AddCell(new Phrase(item3.ANSWER, Font));
+                            }
                         }
 
                         table.AddCell(CellLine);
                         table.AddCell(CellLine);
 
-                        // get  case detailes stage inforamation
+                        //get  case detailes stage inforamation
                         table.AddCell(new Phrase("Case Details Stage", boldFont));
                         table.AddCell(new Phrase("", boldFont));
 
@@ -332,7 +371,7 @@ namespace WebApplication27.Controllers
                         c5.PaddingTop = 5;
 
                         Phrase p = new Phrase();
-                        p.Font = boldFont;
+                        p.Font = Font;
                         Phrase p2 = new Phrase();
                         p2.Font = Font;
 
@@ -340,7 +379,7 @@ namespace WebApplication27.Controllers
                         {
 
                             list2.Add(new ListItem(item4.REFERENCE.REFERENCE_NAME, Font));
-                            if (item4.REFERENCE.REFERENCE_NAME == "other")
+                            if (item4.REFERENCE.REFERENCE_NAME == "Other")
                             {
                                 p.Add("Other Refrenses");
                                 p2.Add(item4.OTHER_REFRENSES);
@@ -361,7 +400,6 @@ namespace WebApplication27.Controllers
 
 
                         //get record stage inforamation
-
                         table.AddCell(new Phrase("Case Record Stage", boldFont));
                         table.AddCell(new Phrase("", boldFont));
 
@@ -470,7 +508,6 @@ namespace WebApplication27.Controllers
 
 
         //page Header
-
         String Header = "Drug & Poison Information Center";
         String Header2 = "Clinical Pharmacy Department";
         String Header3 = "Pharmaceutical Care Services";

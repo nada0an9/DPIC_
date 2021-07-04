@@ -15,9 +15,6 @@
         </div>
     </div>
 
-
-
-
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
         <ul class="navbar-nav ml-auto flex-nowrap">
             <li class="nav-item">
@@ -61,11 +58,24 @@
 
                     @foreach (var item in Model.PermissionList.GroupBy(x => x.PERMISSION_ID).Select(x => x.First()).Where(x => x.TYPE == "settings").ToList())
                     {
+                        if (ViewBag.TotalToActiveUsers > 0 && item.PERMISSION_NAME == "Users")
+                        {
+
+                    <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="dropdown-item">
+
+                        @item.PERMISSION_NAME <span class="badge badge-warning">@ViewBag.TotalToActiveUsers</span>
+
+                    </a>
+
+                        }
+                        else
+                        {
                         <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="dropdown-item">
                             @item.PERMISSION_NAME
 
-                        </a>
 
+                        </a>
+                        }
                     }
                     <a href="@Url.Action("Profile", "Accounts")" class="dropdown-item">My Account</a>
 
